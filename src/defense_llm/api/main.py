@@ -50,7 +50,7 @@ DB_PATH = os.environ.get(
 )
 INDEX_PATH = os.environ.get(
     "DEFENSE_LLM_INDEX_PATH",
-    os.path.join(_PROJECT_ROOT, "data", "defense.index"),
+    os.path.join(_PROJECT_ROOT, "data", "index"),
 )
 LOG_PATH = os.environ.get(
     "DEFENSE_LLM_LOG_PATH",
@@ -77,13 +77,13 @@ async def lifespan(app: FastAPI):
     index = DocumentIndex()
     if os.path.exists(os.path.join(INDEX_PATH, "meta.json")):
         try:
-            index.load(INDEX_PATH)
+            index = DocumentIndex.load(INDEX_PATH)
         except Exception:
             pass  # start fresh if corrupt
 
     # Use Qwen25Adapter for production
     from ..serving.qwen_adapter import Qwen25Adapter
-    llm = Qwen25Adapter(model_id="Qwen/Qwen2.5-1.5B-Instruct")
+    llm = Qwen25Adapter(model_id="Qwen/Qwen2.5-1.5B-Instruct", preload=True)
 
     audit_logger = AuditLogger(DB_PATH)
 
@@ -186,6 +186,7 @@ class IndexResponse(BaseModel):
     file_hash: str
     index_version: str
     status: str
+    scanned_pages: Optional[int] = None
 
 
 # ---------------------------------------------------------------------------
@@ -198,12 +199,14 @@ def health():
     """Health check endpoint."""
     index: DocumentIndex = _state.get("index")
     chunk_count = len(index._meta) if index else 0
+    llm = _state.get("llm")
+    model_name = llm.model_name if llm else "unknown"
     return {
         "status": "ok",
         "db_path": DB_PATH,
         "index_path": INDEX_PATH,
         "chunks_indexed": chunk_count,
-        "model": "mock-llm-v1",
+        "model": model_name,
         "index_version": _load_index_version(INDEX_PATH),
     }
 
@@ -288,14 +291,46 @@ async def index_document(
             raise HTTPException(status_code=409, detail=err_str)
         raise HTTPException(status_code=422, detail=err_str)
 
-    # Decode text
-    try:
-        text = content.decode("utf-8")
-    except UnicodeDecodeError:
+    # Decode text or extract from PDF
+    filename = file.filename or ""
+    is_pdf = filename.lower().endswith(".pdf") or content.startswith(b"%PDF")
+
+    parsed_pages = 0
+    if is_pdf:
+        import io
         try:
-            text = content.decode("cp949")
-        except Exception:
-            raise HTTPException(status_code=422, detail="File must be UTF-8 or CP949 text.")
+            import fitz  # PyMuPDF
+            doc = fitz.open("pdf", content)
+            pages = [page.get_text() for page in doc]
+            doc.close()
+        except ImportError:
+            import pypdf
+            fp = io.BytesIO(content)
+            reader = pypdf.PdfReader(fp)
+            pages = [page.extract_text() or "" for page in reader.pages]
+
+        n_pages = len(pages)
+        parsed_pages = n_pages
+        if n_pages == 0:
+            raise HTTPException(status_code=422, detail="PDF has no pages.")
+
+        text = "\n\n".join(pages)
+        char_density = len(text) / n_pages
+        
+        # UF-021: Reject Scanned PDFs
+        if char_density < 50:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Scanned PDF detected (Density: {char_density:.1f} chars/page). Indexing rejected as per UF-021."
+            )
+    else:
+        try:
+            text = content.decode("utf-8")
+        except UnicodeDecodeError:
+            try:
+                text = content.decode("cp949")
+            except Exception:
+                raise HTTPException(status_code=422, detail="File must be UTF-8, CP949, or PDF.")
 
     # Chunk and index
     chunks = chunk_document(
@@ -339,6 +374,7 @@ async def index_document(
         file_hash=file_hash,
         index_version=version,
         status="indexed",
+        scanned_pages=parsed_pages,
     )
 
 

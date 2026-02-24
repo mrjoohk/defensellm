@@ -165,15 +165,31 @@ class Executor:
 
         # Generate answer via LLM
         context_text = self._build_context(collected_chunks, db_results)
+        
+        # Extract query text from plan
+        query_text = ""
+        for step in tool_plan:
+            query_text = query_text or step.get("params", {}).get("query", "")
+
         if not context_text and not error_code:
             answer = "검색 결과가 없습니다. 질의와 관련된 문서가 색인되지 않았거나 접근 권한이 없습니다."
         else:
             messages = [
-                {"role": "system", "content": "당신은 방산 도메인 지식 보조 AI입니다. 제공된 근거 자료만을 기반으로 답변하십시오."},
-                {"role": "user", "content": f"근거 자료:\n{context_text}\n\n질문에 답변하시오."},
+                {"role": "system", "content": "당신은 방산 도메인 지식 보조 AI입니다. 제공된 근거 자료만을 기반으로 질문에 명확하게 답변하십시오. 답변에 사용된 정보의 출처를 밝히지 말고 내용만 요약하세요."},
+                {"role": "user", "content": f"질문: {query_text}\n\n근거 자료:\n{context_text}"},
             ]
             llm_resp = self._llm.chat(messages)
             answer = llm_resp.get("content", "")
+
+            # UF-023: Response Translation Processor
+            is_korean_requested = "한글" in query_text or "한국어" in query_text
+            if is_korean_requested and answer:
+                trans_messages = [
+                    {"role": "system", "content": "당신은 전문 번역가입니다. 주어진 영문 응답을 자연스러운 한국어로 번역하십시오. 결과만 말하십시오."},
+                    {"role": "user", "content": answer},
+                ]
+                trans_resp = self._llm.chat(trans_messages)
+                answer = trans_resp.get("content", answer)
 
         return answer, citations, error_code
 
