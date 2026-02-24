@@ -1,0 +1,20 @@
+[
+  {
+    "id": "QA-001",
+    "question": "DUMMY-F1 항공기의 최대 순항 고도는 얼마입니까?",
+    "expected_answer_keywords": ["15000"],
+    "expected_citation_doc_ids": ["DOC-AIR-001"]
+  },
+  {
+    "id": "QA-002",
+    "question": "정비 주기 기준에서 기본 점검 주기는?",
+    "expected_answer_keywords": ["50"],
+    "expected_citation_doc_ids": ["DOC-AIR-001"]
+  },
+  {
+    "id": "QA-003",
+    "question": "비상 상황 시 첫 번째 절차는 무엇입니까?",
+    "expected_answer_keywords": [],
+    "expected_citation_doc_ids": ["DOC-AIR-001"]
+  }
+]
