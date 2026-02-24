@@ -10,7 +10,7 @@ mkdir -p "$PROJECT_ROOT/data/logs"
 
 # Default paths (can be overridden via env)
 export DEFENSE_LLM_DB_PATH="${DEFENSE_LLM_DB_PATH:-$PROJECT_ROOT/data/defense.db}"
-export DEFENSE_LLM_INDEX_PATH="${DEFENSE_LLM_INDEX_PATH:-$PROJECT_ROOT/data/defense.index}"
+export DEFENSE_LLM_INDEX_PATH="${DEFENSE_LLM_INDEX_PATH:-$PROJECT_ROOT/data/index}"
 export DEFENSE_LLM_LOG_PATH="${DEFENSE_LLM_LOG_PATH:-$PROJECT_ROOT/data/logs}"
 
 echo "Starting Defense LLM API on http://localhost:8000"

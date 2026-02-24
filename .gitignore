@@ -32,7 +32,10 @@ web/dist/
 # Local data and generated indexes
 data/defense.db
 data/defense.index/
+data/index/
 data/logs/
+api.log
+curl_out.json
 
 # OS files
 .DS_Store

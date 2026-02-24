@@ -75,20 +75,15 @@ async def lifespan(app: FastAPI):
 
     # Load or create document index
     index = DocumentIndex()
-    if os.path.exists(INDEX_PATH + ".meta.json"):
+    if os.path.exists(os.path.join(INDEX_PATH, "meta.json")):
         try:
             index.load(INDEX_PATH)
         except Exception:
             pass  # start fresh if corrupt
 
-    # Mock LLM — replace with Qwen25Adapter for production
-    llm = MockLLMAdapter(
-        response_fn=lambda msgs: {
-            "content": _mock_answer(msgs),
-            "model": "mock-llm",
-            "usage": {"prompt_tokens": 0, "completion_tokens": 0},
-        }
-    )
+    # Use Qwen25Adapter for production
+    from ..serving.qwen_adapter import Qwen25Adapter
+    llm = Qwen25Adapter(model_id="Qwen/Qwen2.5-1.5B-Instruct")
 
     audit_logger = AuditLogger(DB_PATH)
 
@@ -97,7 +92,7 @@ async def lifespan(app: FastAPI):
         index=index,
         db_path=DB_PATH,
         audit_logger=audit_logger,
-        model_version="mock-llm-v1",
+        model_version="Qwen/Qwen2.5-1.5B-Instruct",
         index_version=_load_index_version(INDEX_PATH),
     )
 
@@ -135,7 +130,7 @@ def _mock_answer(messages: list) -> str:
 
 def _load_index_version(index_path: str) -> str:
     import json
-    meta_path = index_path + ".meta.json"
+    meta_path = os.path.join(index_path, "meta.json")
     if os.path.exists(meta_path):
         try:
             with open(meta_path) as f:
@@ -322,7 +317,7 @@ async def index_document(
         index.save(INDEX_PATH)
         # Write version to meta
         import json
-        meta_path = INDEX_PATH + ".meta.json"
+        meta_path = os.path.join(INDEX_PATH, "meta.json")
         meta = {}
         if os.path.exists(meta_path):
             try:

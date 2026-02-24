@@ -1,0 +1,56 @@
+[
+  {
+    "doc_id": "DOC-AIR-WIKI",
+    "doc_rev": "v1",
+    "title": "Air Superiority Fighter",
+    "field": "air",
+    "security_label": "PUBLIC",
+    "url": "https://en.wikipedia.org/wiki/Air_superiority_fighter",
+    "filename": "air_superiority.txt"
+  },
+  {
+    "doc_id": "DOC-WEAPON-WIKI",
+    "doc_rev": "v1",
+    "title": "Artillery",
+    "field": "weapon",
+    "security_label": "PUBLIC",
+    "url": "https://en.wikipedia.org/wiki/Artillery",
+    "filename": "artillery.txt"
+  },
+  {
+    "doc_id": "DOC-GROUND-WIKI",
+    "doc_rev": "v1",
+    "title": "Combined Arms",
+    "field": "ground",
+    "security_label": "PUBLIC",
+    "url": "https://en.wikipedia.org/wiki/Combined_arms",
+    "filename": "combined_arms.txt"
+  },
+  {
+    "doc_id": "DOC-SENSOR-001",
+    "doc_rev": "v3",
+    "title": "AEDP-7 Implementation Guide for NATO GMTI",
+    "field": "sensor",
+    "security_label": "PUBLIC",
+    "url": "https://www.mitre.org/sites/default/files/publications/AEDP-7-Edition3.pdf",
+    "filename": "aedp-7.pdf"
+  },
+  {
+    "doc_id": "DOC-COMM-WIKI",
+    "doc_rev": "v1",
+    "title": "Military Communications",
+    "field": "comm",
+    "security_label": "PUBLIC",
+    "url": "https://en.wikipedia.org/wiki/Military_communications",
+    "filename": "military_comms.txt"
+  },
+  {
+    "doc_id": "DOC-KOREA-AIR",
+    "doc_rev": "v1",
+    "title": "KAI KF-21 Boramae",
+    "field": "air",
+    "security_label": "PUBLIC",
+    "url": "https://en.wikipedia.org/wiki/KAI_KF-21_Boramae",
+    "filename": "kf21.txt"
+  }
+]
