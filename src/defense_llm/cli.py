@@ -101,8 +101,14 @@ def db_init(db_path: str):
     type=click.Choice(["PUBLIC", "INTERNAL", "RESTRICTED", "SECRET"], case_sensitive=True),
     help="보안 등급",
 )
-@click.option("--max-tokens", default=256, show_default=True, help="청크당 최대 토큰 수")
-@click.option("--overlap", default=32, show_default=True, help="청크 간 중복 토큰 수")
+@click.option("--max-tokens", default=512, show_default=True, help="청크당 최대 토큰 수")
+@click.option("--overlap", default=64, show_default=True, help="청크 간 중복 토큰 수")
+@click.option("--doc-type", default="unknown", help="문서 유형 (예: spec, glossary)")
+@click.option("--system", default="", help="관련 체계")
+@click.option("--subsystem", default="", help="관련 하위 체계")
+@click.option("--date", default="", help="문서 날짜")
+@click.option("--language", default="en", help="문서 언어")
+@click.option("--source-uri", default="", help="문서 원본 URI")
 @_DB_OPTION
 @_INDEX_OPTION
 def index_document(
@@ -114,6 +120,12 @@ def index_document(
     security_label: str,
     max_tokens: int,
     overlap: int,
+    doc_type: str,
+    system: str,
+    subsystem: str,
+    date: str,
+    language: str,
+    source_uri: str,
     db_path: str,
     index_path: str,
 ):
@@ -166,6 +178,13 @@ def index_document(
         doc_id, doc_rev, text,
         security_label=security_label,
         doc_field=field,
+        doc_type=doc_type,
+        title=resolved_title,
+        system=system,
+        subsystem=subsystem,
+        date=date,
+        language=language,
+        source_uri=source_uri,
         max_tokens=max_tokens,
         overlap=overlap,
     )
@@ -179,6 +198,10 @@ def index_document(
         idx = DocumentIndex()
 
     idx.add_chunks(result["chunks"])
+    
+    import datetime
+    ts = datetime.datetime.utcnow().strftime("%Y%m%d-%H%M")
+    idx.index_version = f"idx-{ts}"
     idx.save(index_path)
     click.secho(f"  ✓ 인덱싱 완료 → {index_path} (전체 청크: {idx.chunk_count()})", fg="green")
 
@@ -283,6 +306,7 @@ def query_cmd(
         audit_logger=audit,
         model_version=model_version,
         index_version=_index_version(index_path),
+        index_path=index_path,
     )
 
     user_context = {
@@ -386,7 +410,11 @@ def eval_cmd(
     init_db(db_path)
 
     with open(samples_path, encoding="utf-8") as f:
-        samples = json.load(f)
+        if samples_path.endswith(".yaml") or samples_path.endswith(".yml"):
+            import yaml
+            samples = yaml.safe_load(f)
+        else:
+            samples = json.load(f)
 
     idx = DocumentIndex.load(index_path) if (
         os.path.isdir(index_path) and os.path.isfile(os.path.join(index_path, "meta.json"))
@@ -405,6 +433,7 @@ def eval_cmd(
     executor = Executor(
         llm_adapter=llm, index=idx, db_path=db_path, audit_logger=audit,
         model_version=model_version, index_version=_index_version(index_path),
+        index_path=index_path,
     )
 
     _LEVEL = ["PUBLIC", "INTERNAL", "RESTRICTED", "SECRET"]

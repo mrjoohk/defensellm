@@ -1,0 +1,35 @@
+# Countermeasure
+
+A countermeasure is a measure or action taken to counter or offset another one. As a general concept, it implies precision and is any technological or tactical solution or system designed to prevent an undesirable outcome in the process. The first known use of the term according to the Merriam-Webster dictionary was in 1923.
+Countermeasures can refer to the following disciplinary spectrum:
+
+Medicine
+Materials engineering
+Electro-magnetic engineering
+Policing
+Information technology
+International Law
+Diplomatic security
+Pollution prevention
+Aviation
+Defense countermeasures are often divided into "active" and "passive".
+
+
+== Active ==
+"Active" countermeasures mean the system user or the defender takes an active position because the incoming incident is known so the system takes active approaches to deal with such possible damage. Such an approach may include setting up a security method for the incident or actively trying to stop or intersect such damage.
+
+
+== Passive ==
+"Passive" countermeasures mean the system is not aware of the incoming incident or potential security issues. To mitigate the result of any security issues, the system sets up a set of passive approach which only activates when the system encounters security problems. Usually, "Passive" countermeasures include: 
+
+Security Technology
+This includes information on security or defensive technology, usually a way to protect the system. For example, security software or firewall could also be thought of as an approach to defensive technology. These methods detect potential security issues and report back to the system or protect the system when the system is under a certain threat.
+
+Damage Control
+This means the system has damage control about the possible outcome of the security problem. For example, the system might have a backup in a remote area so even if the current system is damaged, the system could switch to the remote backup and works seamlessly. 
+
+Fortification
+This means the system sets up a security approach to separate the core of the system. This approach is commonly used in a modern server network, where the server user has to go through a jump server to access the core server. The jump server works as a fortification to separate the core server and the outside, which the core server sometimes is not connected to the internet and only connects to the local network, so the user needs to access the jump server to access the core server
+
+
+== References ==

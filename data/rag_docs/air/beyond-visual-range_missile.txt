@@ -1,0 +1,30 @@
+# Beyond-visual-range missile
+
+A beyond-visual-range missile (BVR missile) or  beyond-visual-range air-to-air missile (BVRAAM) is an air-to-air missile that is capable of engaging at ranges around  40 km (22 nmi) or beyond. This range has been achieved using dual pulse rocket motors or booster rocket motor and ramjet sustainer motor. Medium-range, long-range, and very-long-range air-to-air missiles fall under the category of beyond-visual-range missiles. Older BVR missiles generally used the semi-active radar homing, and modern BVR missiles use the active radar homing guidance.
+In addition to the range capability, the missile must also be capable of tracking its target at this range or of acquiring the target in flight. Systems in which a mid-course correction is transmitted to the missile have been used.
+
+
+== History ==
+
+Early air-to-air missiles used semi-active radar homing guidance, that is the missile used the radiation produced by the launching aircraft to guide it to the target. The latest generation of BVR missiles use a combination of semi-active and active radar.
+The first such missiles were relatively simple beam riding designs.  The Sparrow 1 mounted on the US Navy's Skyknight became the first operational BVR missile in 1954. These primitive BVR missiles were soon replaced by missiles using semi-active radar homing (SARH). This is where the launching aircraft's radar is "locked" onto the target in a single target track (STT) mode, directing radar energy at the target that the missile seeker can "see" as it reflects off the target. The radar antenna must "illuminate" the target until impact. Missiles like the Raytheon AIM-7 Sparrow and Vympel R-27 (NATO designation AA-10 'Alamo') home in on the reflected radiation, much as a laser-guided bomb homes in on the reflected laser radiation. Some of the longest-range missiles in use today still use this technology.
+An AIM-7 variant called Sparrow II was the first attempt at producing a semi-active radar homing missile, however the first air-to-air missile to introduce a terminal active seeker operationally was the AIM-54 Phoenix carried by the F-14 Tomcat, which entered service in 1972. This relieved the launch platform of the need to illuminate the target until impact, putting it at risk. The Phoenix and its associated Tomcat radar, the AWG-9 was capable of multiple track and launch capability, which was unique to the Tomcat/Phoenix until the advent of AMRAAM in 1991.
+Newer fire-and-forget type missiles like the Raytheon AIM-120 AMRAAM and the Russian R-77 (NATO reporting name AA-12 "Adder") instead use an inertial navigation system (INS) combined with initial target information from the launching aircraft and updates from a one or two-way data link in order to launch beyond visual range, and then switch to a terminal homing mode, typically active radar guidance. These types of missiles have the advantage of not requiring the launching aircraft to illuminate the target with radar energy for the entire flight of the missile, and in fact do not require a radar lock to launch at all, only target tracking information. This gives the target less warning that a missile has been launched and also allows the launching aircraft to turn away once the missile is in its terminal homing phase or engage other aircraft. The very longest-range missiles like the Hughes (now Raytheon) AIM-54 Phoenix missile and Vympel manufactured R-33 (NATO designation AA-9 "Amos") use this technique also.
+Some variants of the Vympel R-27 use SARH for the initial guidance and then passive infra-red guidance for the final stage. This type of missile requires active guidance for a longer part of the flight than fire-and-forget missiles but will still guide to the target even if radar lock is broken in the crucial final seconds of the engagement and may be harder to spoof with chaff due to the dual-type guidance.
+
+
+== Efficiency ==
+
+The efficiency of BVR air-to-air missiles has been criticized. A 2005 paper by USAF officer Patrick Higby showed that BVR missiles fell short of expected performance, despite incurring great cost. Because such missiles required large radars, they made aircraft heavier and increased drag, increasing aircraft procurement and operating costs. Fighters with BVR tended to be less agile than previous ones. Fighter pilots have been reluctant to use BVR missiles at BVR range because of difficulty in distinguishing friends and foes. As a result, most BVR missiles are fired at visual range. Western airforces only scored 4 BVR kills out of 528 kills made during 1965–1982; most kills during that period were made with guns or WVR (within visual range) missiles (AIM-9 Sidewinder).
+The increased success rate of BVR combat during 1991 Gulf War may have significantly depended on other factors, such as assistance of AWACS, NCTR system of F-15Cs, as well as enemy incompetence. None of the Iraqi pilots took any evasive measures, either because of poor training or their radar warning receivers malfunctioned. One major issue with BVR is still unreliable IFF technology (Identification friend or foe). However, new generation engines such as ramjet, along with the latest sensors such as active radar, increase the hit probability of the latest BVR missiles, such as Meteor, and also increase the range.
+
+In 2015, United States Naval Air Forces commander Vice Admiral Mike Shoemaker cited the sensor fusion of the fifth-generation jet fighter Lockheed Martin F-35 Lightning II as the way to "bring that long-range ID capability and then share that information" with other platforms.
+
+
+== List of BVR missiles ==
+
+
+== Gallery ==
+
+
+== References ==

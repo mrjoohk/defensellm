@@ -1,0 +1,128 @@
+# Military logistics
+
+Military logistics is the discipline of planning and carrying out the movement, supply, and maintenance of military forces. In its most comprehensive sense, it is those aspects or military operations that deal with:
+
+Design, development, acquisition, storage, distribution, maintenance, evacuation, and disposition of materiel.
+Transport of personnel.
+Acquisition or construction, maintenance, operation and disposition of facilities.
+Acquisition or furnishing of services.
+Medical and health service support.
+Logistics is an enabler of military operations, not an end in itself. Poor logistics can result in defeat, but even the best logistics cannot guarantee victory. Conversely, the best possible logistics is not always required: fit for purpose can suffice.
+
+
+== Etymology ==
+The word "logistics" is derived from the Greek adjective logistikos meaning "skilled in calculating", and its corresponding Latin word logisticus. In turn this comes from the Greek logos, which refers to the principles of thought and action. The Greek terms logistikos and logisteuo (to steward or administer) share the same root as logistês, which referred to both the master of mathematics, and, at least in Athens, to an auditing magistrate to whom other elected magistrates were accountable. The term "logistics" fell into disuse, and disappeared entirely after the 10th century.
+Another Latin root, log-, gave rise around 1380 to logio, meaning to lodge or dwell, and became the French verb loger, meaning "to lodge". Around 1670, the French King Louis XIV  created the position of Maréchal des logis, an officer responsible for planning marches, establishing camp sites, and regulating transport and supply. The term logistique soon came to refer to his duties. It was in this sense that Antoine-Henri Jomini referred to the term in his Summary of the Art of War (1838). In the English translation, logistique became "logistics".
+
+
+== Definitions ==
+The term came to mean not just the planning of activities, but the activities themselves as well. In 1888, Charles C. Rogers created a course on naval logistics at the Naval War College. In Farrow's Military Encyclopedia (1895), Edward S. Farrow, an instructor in tactics at West Point provided this definition:Bardin considers the application of this word by some writers as more ambitious than accurate. It is derived from Latin logista, the administrator or intendant of the Roman armies. It is properly that branch of the military art embracing all the details for moving and supplying armies. It includes the operations of the ordnance, quartermaster's, subsistence, medical, and pay departments. It also embraces the preparation and regulation of magazines, for opening a campaign, and all orders of march and other orders from the general-in-chief relative to moving and supplying armies. 
+The term was popularised during the Second World War. In Logistics in World War II: Final Report of the Army Service Forces, Lieutenant General LeRoy Lutes, the commanding general of the Army Service Forces, gave the term a more expansive definition: The word "logistics" has been given many different shades of meaning. A common definition is: "That branch of military art which embraces the details of the transport, quartering, and supply of troops in military operations." As the word is used in the following pages, its meaning is even broader. It embraces all military activities not included in the terms "strategy" and "tactics." In this sense, logistics includes procurement, storage, and distribution of equipment and supplies; transport of troops and cargo by land, sea, and air; construction and maintenance of facilities; communication by wire, radio, and the mails; care of the sick and wounded; and the induction, classification, assignment, welfare and separation of personnel. 
+NATO uses a more restrictive definition:The science of planning and carrying out the movement and maintenance of forces. In its most comprehensive sense, the aspects of military operations which deal with: 
+In the 1960s, the term "logistics" began to be used in the business world, where it means physical distribution and supply chain management. This is far more restricted than the military definition.
+Logistics is an enabler of military operations, not an end in itself. Poor logistics can result in defeat, but even the best logistics cannot guarantee victory. Conversely, the best possible logistics is not always required: fit for purpose can suffice.
+
+
+== Principles ==
+
+Historian James A. Huston proposed sixteen principles of military logistics:
+
+Equivalence: Strategy, tactics and logistics are inseparable and interdependent facets of military art and science.
+Material precedence: Mobilisation of materiel should precede that of personnel, and the provision of logistical units that of combat units.
+Forward impetus: The impetus of supply should be from the rear, and combat unit commanders should be spared having to deal with logistical details while still being in control of their logistics.
+Mobility: Logistics should facilitate the rapid movement of both combat and logistical units in support of operations.
+Dispersion: Multiple sources of supply and lines of communications reduce the enemy interference and congestion of transportation infrastructure.
+Economy: Logistical resources are limited, so they must be deployed so as to make the best use of them.
+Feasibility: Logistical capabilities are subject to external constraints.
+Flexibility: Strategic and operational plans and priorities change and logistical support must change with them.
+Relativity: Logistics is relative to time and space.
+Continuity: Fundamental changes should not be required to meet an emergency.
+Timeliness Logistical tasks must be accomplished so as to take full advantage of opportunities.
+Responsibility: Someone must be responsible for logistical performance and outcomes.
+Unity of command: Logistics is a function of command and a single authority should be responsible for logistics.
+Information: Accurate and timely information is required for effective logistical planning and support.
+Quality: Logistics is facilitated by strict quality standards.
+Simplicity: Simple solutions are more effective and manageable.
+The United States Joint Chiefs of Staff reduced the number of principles to just seven:
+
+Responsiveness: Providing the required support when and where it is needed.
+Simplicity: fosters unity and efficiency in planning and execution, and reduces the fog of war and the "friction" caused by combat.
+Flexibility: the ability to improvise and adapt to changing situations and requirements.
+Economy: using the minimum amount of resources required to bring about an objective.
+Attainability: the point at which sufficient supplies, support and distribution capabilities exist to initiate operations at an acceptable level of risk.
+Sustainability: the ability to maintain the necessary level and duration of logistics support to achieve objectives.
+Survivability: the capacity to prevail in spite of adverse impacts.
+
+
+== Supply options ==
+There are three basic options for the supply of an army in the field, which can be employed individually or in combination.
+
+
+=== Obtain supplies in the field ===
+
+The most basic requirements of an army were food and water. Foraging involved gathering food and fodder for animals in the field. The availability of these tends to be seasonal, with greater abundance around harvest time in agricultural regions. There is also a dependence on geography, for in desert campaigns there may not be food, water or fodder available locally.
+Looting was a means of obtaining supplies in the field. It is possible to capture supplies from the enemy or enemy population. An alternative is purchasing, whereby an army takes cash and buys its supplies in the field. Cash can also be obtained in the field through local taxation, backed by the threat of violence. The major drawback of using local sources of supply is that they can be exhausted if an army remains in one place for too long, so a force dependent on local supply needs to keep moving.
+The widespread use of resources in the field gives rise to counter-logistics, whereby they are denied to the enemy through devastation of the land and removal or destruction of resources. Pre-emptive purchasing can be used as a form of economic warfare. A besieging force can attempt to starve out a garrison or tempt it to sally through devastation of the surrounding area rather than undertake the more costly operation of assaulting and destroying it, but if it is dependent on local supply then the besieger who might be starved out through their exhaustion.
+
+
+=== Carry supplies with the army ===
+A second method is to bring along what is needed, whether by ships, pack animals, wagons or carried on the backs of the soldiers themselves. Since ancient times, troops had carried rations and personal equipment such as weapons, armour, cooking gear and bedrolls. Animals could be driven to accompany the army and consumed for meat. Roads facilitate the movement of wheeled vehicles, and travel by river or sea permits the carriage of large volumes of supplies. This allowed the army some measure of self-sufficiency, and until the development of faster firing weapons in the 19th century most of the ammunition a soldier needed for an entire campaign could be carried on their person or in wagons accompanying the troops. However, this method led to an extensive baggage train which could slow the army's advance.
+
+
+=== Ship supplies from the rear ===
+
+Obtaining supplies in the field and carrying supplies with the army remained the primary means of supply until the 19th century, but even in the 17th century the much larger armies of the period were highly dependent on food supplies being gathered in magazines and shipped to the front. Starting with the Industrial Revolution, new technological, technical and administrative advances permitted supplies to be transported at speeds and over distances never before possible.
+At the same time, increased demands for ammunition, and the heavier weight of shells and bombs made it more difficult for armies to carry their requirements, and they soon became dependent on regular replenishment of ammunition from depots. Mechanisation, with motor vehicles replacing animals, created a demand for fuel and spare parts, neither of which could be obtained locally. This led to a "logistical revolution" which began in the 20th century and drastically improved the capabilities of modern armies while making them highly dependent on this method.
+
+
+== History ==
+
+The history of military logistics goes back to Neolithic times. The most basic requirements of an army were food and water. Early armies were equipped with weapons used for hunting like spears, knives, axes and bows and arrows, and rarely exceeded 20,000 men due to the practical difficulty of supplying a large number of soldiers. Large armies began to appear in the Iron Age. Animals such as horses, oxen, camels and elephants were used as beasts of burden to carry supplies.
+Food, water and fodder for the animals could usually be found or purchased in the field.
+The Roman Empire built networks of roads, but it was far less expensive to transport a ton of grain from Egypt to Rome by sea than 80 kilometres (50 mi) by road. After the fall of the Western Roman Empire in the fifth century there was the shift from a centrally organised army to a combination of military forces made up of local troops. Feudalism was a distributed military logistics system where magnates of the households drew upon their own resources for men and equipment.
+When operating in enemy territory an army was forced to plunder the local countryside for supplies, which allowed war to be conducted at the enemy's expense. However, with the increase in army sizes from the late sixteenth century onward, this reliance on pillage and plunder became problematic, as decisions regarding where and when an army could move or fight became based not on strategic objectives but on whether a given area was capable of supporting the soldiers' needs. Sieges in particular were affected by this, both for an army attempting to lay siege to a town and one coming to its relief. Unless a commander was able to arrange a form of regular resupply, a fortress or town with a devastated countryside could become immune to either operation.
+Napoleon made logistics a major part of his strategy. He dispersed his corps along a broad front to maximise the area from which supplies could be drawn. Each day forage parties brought in supplies. This differed from earlier operations living off the land in the size of the forces involved, and because the primary motivation was the emperor's desire for mobility. Ammunition could not as a rule be obtained locally, but it was still possible to carry sufficient ammunition for an entire campaign.
+
+The nineteenth century witnessed technological developments that facilitated immense improvements to the storage, handling and transportation of supplies which made it easier to support an army from the rear. Canning simplified storage and distribution of foods, and reduced waste and the incidence of food-related illness. Refrigeration allowed frozen meat and fresh produce to be stored and shipped. Steamships made water transports faster and more reliable. Railways were  a more economical form of transport than animal-drawn carts and wagons, although they were limited to tracks, and therefore could not support an advancing army unless its advance was along existing railway lines. At the same time, the advent of industrial warfare in the form of bolt-action rifles, machine guns and quick-firing artillery sent ammunition consumption soaring during the First World War.
+In the twentieth century the advent of motor vehicles powered by internal combustion engines offered an alternative to animal transport for moving supplies forward of the railhead, although many armies still used animals during the Second World War. The development of air transport provided an alternative to both land and sea transport, but with limited tonnage and at high cost. An airlift over "the Hump" helped supply the Chinese war effort, and after the war the 1948 Berlin Air Lift was successful in supplying half of the city. With the subsequent development of large jets, aircraft became the preferred method of moving personnel over long distances, although it was still more economical to move cargo by sea and land. In forward areas, the helicopter was well-suited to moving troops and supplies, especially over rugged terrain.
+
+
+== Models ==
+
+
+=== Levels ===
+
+Akin to the three levels of war, there can be considered to be three levels of logistics. Although modern communications and information technology may have blurred the distinction between them, the three-level hierarchy is deeply embedded in the organisational structure of military forces. 
+
+Strategic logistics involves logistical activities that are conducted at national and international levels. It includes defining requirements, and arranging for the production and distribution of materiel to operational forces.
+Operational logistics involves logistical activities within the theatre of operations. It includes the reception, storage, and distribution of supplies and personnel, the hospitalisation of casualties, the maintenance and repair of equipment, and the operation of the intra-theatre transportation system. The operational level of war can be defined by the amount of logistical independence a formation has. For this reason logistics is most often discussed at the operational level.
+Tactical logistics involves the logistical activities of units engaged in combat.
+Unlike business logistics, the objective of military logistics is not cost effectiveness of the supply chain, but maximum sustained combat effectiveness. At the tactical level, effectiveness is the overriding consideration, whereas at the strategic level efficiency is the dominant concern.
+
+Operational logistics can be further divided into four phases:
+
+Strategic deployment: Moving forces from their home stations to the theater of operations.
+Reception: Disembarking and staging troops and unloading, storing and forwarding cargo and supplies at the port of disembarkation.
+Sustainment: Proving for the needs of the troops and shaping the campaign.
+Retrograde Redeployment of troops and equipment and disposal of surpluses.
+A related concept is "operational reach", which is defined as:the distance over which military power can be employed decisively. It is a tether. Operational reach varies based on the situation. Combat power, sustainment capabilities, and the geography surrounding and separating friendly and enemy forces all influence it. Army forces extend their operational reach by locating forces, reserves, bases, and support forward; by increasing the range of weapons systems; through supply discipline; and by improving lines of communications. 
+
+
+=== Analytical tools ===
+
+The development of computers facilitated the use of analytic tools. Multiple-criteria decision analysis (MCDA) is a sub-discipline of operations research that explicitly evaluates multiple conflicting criteria in decision making. The location of a supply depot could involve multiple considerations and constraints, such as the access to road, rail and sea transport, and travel times to desired delivery destinations. Sometimes the number of alternatives is small and they can be considered individually, but they can also be too large for this to be possible. The consideration of constraints simplifies the decision making. These constraints could be economic, such as cost, but might also be less easily quantified, such as political, strategic or operational considerations. The United States Office of Management and Budget and the Department of Defense call this methodology the Analysis of Alternatives, and require it for military acquisitions.
+Logistical planning requires forecasting of future consumption and attrition. There are two types of attrition: material attrition and personnel attrition. The former relates to the loss of equipment through combat, accidents and ordinary wear and tear through usage. Reliability theory can be used to forecast the mean time between failures of equipment and parts. This can be used to develop replacement factors, on which manufacturing and stock levels can be based. In the case of items like subsistence and soap, where demand is highly predictable, it is more convenient to use consumption factors instead. Forecasting of casualties in combat is more difficult, as past experience may not be a reliable guide to future losses, but is required for planning by the medical services. Mathematical models of combat have been developed for this purpose. Lanchester's laws are differential equations that describe the time dependence of two armies' strengths as a function of time.
+Mathematical models exist for scheduling of convoys to ensure that vehicles and the goods they carry arrive in time. Vehicle routing models can be used to select routes for timely delivery with minimum exposure to enemy action and without overloading the capacity of transportation networks. Scheduling models can be used to coordinate convoys that share the same routes. There are also models for inventory management that can be used to scheduling and quantity of orders, and stock levels, taking into account factors such as storage capacity, demand rates and delivery lead times.
+
+
+== Notes ==
+
+
+== References ==
+
+
+== Further reading ==
+
+
+== External links ==
+ Media related to Military logistics at Wikimedia Commons

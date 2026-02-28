@@ -1,0 +1,522 @@
+# Proportional navigation
+
+Proportional navigation (also known as PN or Pro-Nav) is a guidance law (analogous to proportional control) used in some form or another by most homing air target missiles. It is based on the fact that two objects are on a collision course when their line of sight (LOS) does not change direction as the range closes. Proportional navigation dictates that the missile should accelerate (such as by steering with its control surfaces) at a rate proportional to the line of sight's rotation rate, and in the same direction. This gradually nullifies the LOS rotation and keeps the missile on a collision course.
+A rather simple hardware implementation of this guidance law can be found in early AIM-9 Sidewinder missiles. These missiles use a rapidly rotating parabolic mirror as a seeker. Simple electronics detect the directional error the seeker has with its target (an IR source), and apply a moment to this gimballed mirror to keep it pointed at the target. Since the mirror is in fact a gyroscope it will keep pointing at the same direction if no external force or moment is applied, regardless of the movements of the missile. The voltage applied to the mirror while keeping it locked on the target is then also used (although amplified) to deflect the control surfaces that steer the missile, thereby making missile velocity vector rotation proportional to line of sight rotation. Although this does not result in a rotation rate that is always exactly proportional to the LOS rate (which would require a constant airspeed), this implementation is effective and simple to implement.
+The basis of proportional navigation is used at sea to avoid collisions between ships, and is referred to as constant bearing, decreasing range: if an object viewed from a ship is getting closer but maintaining bearing, a collision will occur unless action is taken.
+
+
+== Description ==
+In 2D, such as a planar engagement, pure proportional navigation can be represented as:
+
+  
+    
+      
+        
+          a
+          
+            n
+          
+        
+        =
+        N
+        
+          
+            
+              λ
+              ˙
+            
+          
+        
+        V
+      
+    
+    {\displaystyle a_{n}=N{\dot {\lambda }}V}
+  
+
+where the scalar 
+  
+    
+      
+        
+          a
+          
+            n
+          
+        
+      
+    
+    {\displaystyle a_{n}}
+  
+ is the acceleration perpendicular to the missile's instantaneous velocity vector, 
+  
+    
+      
+        N
+      
+    
+    {\displaystyle N}
+  
+ is the proportionality constant generally having an integer value 3-5 (dimensionless), 
+  
+    
+      
+        
+          
+            
+              λ
+              ˙
+            
+          
+        
+      
+    
+    {\displaystyle {\dot {\lambda }}}
+  
+ is the line of sight rotation rate, and 
+  
+    
+      
+        V
+      
+    
+    {\textstyle V}
+  
+ is the closing velocity.
+Since the line of sight is not in general co-linear with the missile velocity vector, the applied acceleration does not necessarily preserve the missiles kinetic energy. In practice, in the absence of engine throttling capability, this type of control may not be possible.
+In 3D, proportional navigation can be achieved using an acceleration 
+  
+    
+      
+        
+          
+            
+              a
+              →
+            
+          
+        
+      
+    
+    {\textstyle {\vec {a}}}
+  
+ normal to the instantaneous relative velocity:
+
+  
+    
+      
+        
+          
+            
+              a
+              →
+            
+          
+        
+        =
+        N
+        
+          
+            
+              
+                V
+                →
+              
+            
+          
+          
+            r
+          
+        
+        ×
+        
+          
+            
+              Ω
+              →
+            
+          
+        
+      
+    
+    {\displaystyle {\vec {a}}=N{\vec {V}}_{r}\times {\vec {\Omega }}}
+  
+
+  
+    
+      
+        
+          
+            
+              Ω
+              →
+            
+          
+        
+        =
+        
+          
+            
+              
+                
+                  
+                    R
+                    →
+                  
+                
+              
+              ×
+              
+                
+                  
+                    
+                      V
+                      →
+                    
+                  
+                
+                
+                  r
+                
+              
+            
+            
+              
+                
+                  
+                    R
+                    →
+                  
+                
+              
+              ⋅
+              
+                
+                  
+                    R
+                    →
+                  
+                
+              
+            
+          
+        
+      
+    
+    {\displaystyle {\vec {\Omega }}={\frac {{\vec {R}}\times {\vec {V}}_{r}}{{\vec {R}}\cdot {\vec {R}}}}}
+  
+
+where 
+  
+    
+      
+        Ω
+      
+    
+    {\displaystyle \Omega }
+  
+ is the rotation vector of the line of sight, 
+  
+    
+      
+        
+          
+            
+              
+                V
+                →
+              
+            
+          
+          
+            r
+          
+        
+        =
+        
+          
+            
+              
+                V
+                →
+              
+            
+          
+          
+            t
+          
+        
+        −
+        
+          
+            
+              
+                V
+                →
+              
+            
+          
+          
+            m
+          
+        
+      
+    
+    {\displaystyle {\vec {V}}_{r}={\vec {V}}_{t}-{\vec {V}}_{m}}
+  
+ is the target velocity relative to the missile, and 
+  
+    
+      
+        
+          
+            
+              R
+              →
+            
+          
+        
+        =
+        
+          
+            
+              
+                R
+                →
+              
+            
+          
+          
+            t
+          
+        
+        −
+        
+          
+            
+              
+                R
+                →
+              
+            
+          
+          
+            m
+          
+        
+      
+    
+    {\displaystyle {\vec {R}}={\vec {R}}_{t}-{\vec {R}}_{m}}
+  
+ is the relative position of the target. This acceleration depends explicitly on the relative velocity vector, which may be difficult to obtain in practice. By contrast, in the expressions that follow, dependence is only on the change of the line of sight and the magnitude of the closing velocity. In true proportional navigation, the acceleration 
+  
+    
+      
+        
+          
+            
+              a
+              →
+            
+          
+        
+      
+    
+    {\textstyle {\vec {a}}}
+  
+ is perpendicular to the line of sight, and is given by:
+
+  
+    
+      
+        
+          
+            
+              a
+              →
+            
+          
+        
+        =
+        −
+        N
+        
+          |
+        
+        
+          
+            
+              
+                V
+                →
+              
+            
+          
+          
+            r
+          
+        
+        
+          |
+        
+        
+          
+            
+              
+                R
+                →
+              
+            
+            
+              
+                |
+              
+              
+                
+                  
+                    R
+                    →
+                  
+                
+              
+              
+                |
+              
+            
+          
+        
+        ×
+        
+          
+            
+              Ω
+              →
+            
+          
+        
+      
+    
+    {\displaystyle {\vec {a}}=-N|{\vec {V}}_{r}|{\frac {\vec {R}}{|{\vec {R}}|}}\times {\vec {\Omega }}}
+  
+
+If energy conserving control is required (as is the case when only using control surfaces), the following acceleration, which is normal to the missile velocity, may be used:
+
+  
+    
+      
+        
+          
+            
+              a
+              →
+            
+          
+        
+        =
+        −
+        N
+        
+          |
+        
+        
+          
+            
+              
+                V
+                →
+              
+            
+          
+          
+            r
+          
+        
+        
+          |
+        
+        
+          
+            
+              
+                
+                  
+                    V
+                    →
+                  
+                
+              
+              
+                m
+              
+            
+            
+              
+                |
+              
+              
+                
+                  
+                    
+                      V
+                      →
+                    
+                  
+                
+                
+                  m
+                
+              
+              
+                |
+              
+            
+          
+        
+        ×
+        
+          
+            
+              Ω
+              →
+            
+          
+        
+      
+    
+    {\displaystyle {\vec {a}}=-N|{\vec {V}}_{r}|{\frac {{\vec {V}}_{m}}{|{\vec {V}}_{m}|}}\times {\vec {\Omega }}}
+  
+
+
+== Variants ==
+No guidance law is optimal in all situations. Optimal missile guidance requires accurately predicting the target's behavior. Since this is generally not possible, proportional navigation has been adapted into a variety of guidance laws to improve its flexibility. The types described above are pure and true proportional navigation. There exist also:
+
+Generalized proportional navigation, where the acceleration 
+  
+    
+      
+        
+          
+            
+              a
+              →
+            
+          
+        
+      
+    
+    {\displaystyle {\vec {a}}}
+  
+ is not necessarily normal to the LOS vector, but maintains a constant angle to it.
+Augmented proportional navigation, which adds a term to compensate for target acceleration (if it can be measured).
+Other guidance laws, especially ones designed using optimal control theory, may outperform proportional navigation under specific assumptions.
+
+
+== In biology ==
+Holcocephala fusca and Coenosia attenuata are two species of predatory flies that use proportional navigation to reach their prey. The former uses N ≈ 3 with a time delay of ≈ 28 ms, which is suitable for its long-range intercepts and minimizes the control effort required. The latter uses N ≈ 1.5 with a time delay of ≈ 18 ms, which is adapted to its short-range hunts and helps reduce overcompensation.
+A guidance law resulting in motion camouflage is used by a number of predator species. By setting up the chase so that the predator either appears stationary relative to the background while growing larger (real-point motion camouflage), or always appears at a fixed bearing (infinite-point motion camouflage), the predator reduces its chance of being detected. Such a guidance law is also mathematically related to proportional navigation and similarly provides an efficiency benefit over pure pursuit guidance. The infinite-point case (or "parallel navigation") can be viewed as pure proportional navigation with a distance-dependent N.
+
+
+== See also ==
+Motion camouflage
+
+
+== References ==

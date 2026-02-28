@@ -1,0 +1,124 @@
+# Bistatic radar
+
+Bistatic radar is a radar system comprising a transmitter and receiver that are separated by a distance comparable to the expected target distance.  Conversely, a conventional radar in which the transmitter and receiver are co-located is called a monostatic radar. 
+A system containing multiple spatially diverse monostatic or bistatic radar components with a shared area of coverage is called multistatic radar. 
+Many long-range air-to-air and surface-to-air missile systems use semi-active radar homing, which is a form of bistatic radar.
+
+
+== Types ==
+
+
+=== Pseudo-monostatic radars ===
+Some radar systems may have separate transmit and receive antennas, but if the angle subtended between transmitter, target and receiver (the bistatic angle) is close to zero, then they would still be regarded as monostatic or pseudo-monostatic.  For example, some very long range HF radar systems may have a transmitter and receiver which are separated by a few tens of kilometres for electrical isolation, but as the expected target range is of the order 1000–3500 km, they are not considered to be truly bistatic and are referred to as pseudo-monostatic.
+
+
+=== Forward scatter radars ===
+
+In some configurations, bistatic radars may be designed to operate in a fence-like configuration, detecting targets which pass between the transmitter and receiver, with the bistatic angle near 180 degrees.  This is a special case of bistatic radar, known as a forward scatter radar, after the mechanism by which the transmitted energy is scattered by the target.  In forward scatter, the scattering can be modeled using Babinet's principle and is a potential countermeasure to stealth aircraft as the radar cross section (RCS) is determined solely by the silhouette of the aircraft seen by the transmitter, and is unaffected by stealth coatings or shapings.  The RCS in this mode is calculated as σ=4πA²/λ², where A is the silhouette area and λ is the radar wavelength.  However, target may vary from place to place location and tracking is very challenging in forward scatter radars, as the information content in measurements of range, bearing and Doppler becomes very low (all these parameters tend to zero, regardless of the location of the target in the fence).
+
+
+=== Multistatic radar ===
+
+A multistatic radar system is one in which there are at least three components - for example, one receiver and two transmitters, or two receivers and one transmitter, or multiple receivers and multiple transmitters.  It is a generalisation of the bistatic radar system, with one or more receivers processing returns from one or more geographically separated transmitter.
+
+
+=== Passive radar ===
+
+A bistatic or multistatic radar that exploits non-radar transmitters of opportunity is termed a passive coherent location system or passive covert radar.
+Any radar which does not send active electro-magnetic pulse is known as passive radar. Passive coherent location also known as PCL is a special type of passive radar, which exploits the transmitters of opportunity especially the commercial signals in the environment.
+
+
+== Advantages and disadvantages ==
+The principal advantages of bistatic and multistatic radar include:
+
+Lower procurement and maintenance costs (if using a third-party transmitter).
+Operation without a frequency clearance (if using a third-party transmitter).
+Covert operation of the receiver.
+Increased resilience to electronic countermeasures, as waveform being used and receiver location are potentially unknown.
+Possible enhanced radar cross section of the target due to geometrical effects.
+Separate receiver is very light and mobile, while transmitter can be very heavy and powerful (surface-to-air missile).
+The principal disadvantages of bistatic and multistatic radar include:
+
+System complexity.
+Costs of providing communication between sites.
+Lack of control over transmitter (if exploiting a third-party transmitter).
+Harder to deploy.
+Reduced low-level coverage due to the need for line-of-sight from several locations.
+
+
+== Geometry ==
+
+
+=== Angle ===
+
+The bistatic angle is the angle subtended between the transmitter, target and receiver in a bistatic radar.  When it is exactly zero the radar is a monostatic radar, when it is close to zero the radar is pseudo-monostatic, and when it is close to 180 degrees the radar is a forward scatter radar.  Elsewhere, the radar is simply described as a bistatic radar. The bistatic angle is an important factor in determining the radar cross section of the target.
+
+
+=== Range ===
+
+Bistatic range refers to the basic measurement of range made by a radar or sonar system with separated transmitter and receiver.  The receiver measures the time difference of arrival of the signal from the transmitter directly, and via reflection from the target.  This defines an ellipse of constant bistatic range, called an iso-range contour, on which the target lies, with foci centred on the transmitter and receiver.  If the target is at range Rrx from the receiver and range Rtx from the transmitter, and the receiver and transmitter are a distance L apart, then the bistatic range is Rrx+Rtx-L.  Motion of the target causes a rate of change of bistatic range, which results in bistatic Doppler shift.
+Generally speaking, constant bistatic range points draw an ellipsoid with the transmitter and receiver positions as the focal points.  The bistatic iso-range contours are where the ground slices the ellipsoid.  When the ground is flat, this intercept forms an ellipse. Note that except when the two platforms have equal altitude, these ellipses are not centered on the specular point.
+
+
+=== Doppler shift ===
+Bistatic Doppler shift is a specific example of the Doppler effect that is observed by a radar or sonar system with a separated transmitter and receiver.  The Doppler shift is due to the component of motion of the object in the direction of the transmitter, plus the component of motion of the object in the direction of the receiver.  Equivalently, it can be considered as proportional to the bistatic range rate.
+In a bistatic radar with wavelength λ, where the distance between transmitter and target is Rtx and distance between receiver and target is Rrx, the received bistatic Doppler frequency shift is calculated as:
+
+  
+    
+      
+        f
+        =
+        −
+        
+          
+            1
+            λ
+          
+        
+        
+          
+            d
+            
+              d
+              t
+            
+          
+        
+        (
+        
+          R
+          
+            t
+            x
+          
+        
+        +
+        
+          R
+          
+            r
+            x
+          
+        
+        )
+      
+    
+    {\displaystyle f=-{\frac {1}{\lambda }}{\frac {d}{dt}}(R_{tx}+R_{rx})}
+  
+
+Note that objects moving along the line connecting the transmitter and receiver will always have 0 Hz Doppler shift, as will objects moving around an ellipse of constant bistatic range.
+
+
+== Imaging ==
+Bistatic imaging is a radar imaging technique using bistatic radar (two radar instruments, with one emitting and one receiving).  The result is a more detailed image than would have been rendered with just one radar instrument. Bistatic imaging can be useful in differentiating between ice and rock on the surface of a remote target, such as the moon, due to the different ways that radar reflects off these objects—with ice, the radar instruments would detect "volume scattering", and with rock, the more traditional surface scattering would be detected.
+
+
+== See also ==
+Bistatic sonar
+CLidar
+GNSS reflectometry
+Bistatic radar cross section
+
+
+== References ==

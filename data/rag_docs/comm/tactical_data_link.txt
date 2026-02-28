@@ -1,0 +1,39 @@
+# Tactical data link
+
+A tactical data link (TDL) uses a data link standard in order to provide communication via radio waves or cable. NATO nations use a variety of TDL standards. All military C3 systems use standardized TDL to transmit, relay and receive tactical data. 
+Multi-TDL network (MTN) refers to the network of similar and dissimilar TDLs integrated through gateways, translators, and correlators to bring the common tactical picture and/or common operational picture together.
+
+
+== Change of terminology ==
+The term tactical digital information link (TADIL) was made obsolete (per DISA guidance) and is now more commonly seen as tactical data link (TDL).
+
+
+== Tactical data link character ==
+TDLs are characterized by their standard message and transmission formats.  This is usually written as <Message Format>/<Transmission Format>.
+
+
+== TDL standards in NATO ==
+In NATO, tactical data link standards are being developed by the Data Link Working Group (DLWG) of the Information Systems Sub-Committee (ISSC) in line with the appropriate STANAG.
+In NATO, there exist tactical data link standards as follows:
+
+Beyond NATO countries, NATO partner countries have also developed some degree of interoperability with these standards since the 2014 Partnership Interoperability Initiative.
+
+
+== See also ==
+BACN
+Global Information Grid
+Inter/Intra Flight Data Link (IFDL)
+JREAP
+MANDRIL
+Multifunction Advanced Data Link
+Network emulation for simulation / emulation of tactical data links
+SIMPLE
+Tactical Common Data Link
+
+
+== References ==
+
+
+== External links ==
+Federation of American Scientists TDL information page Archived 2015-08-08 at the Wayback Machine
+This article was originally based on public domain text from Army Airspace Command and Control in a Combat Zone, Headquarters, Department of the Army, publication FM 3-52 (FM 100-103), August 2002

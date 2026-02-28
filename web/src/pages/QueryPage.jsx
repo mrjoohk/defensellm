@@ -17,9 +17,11 @@ export default function QueryPage({ userContext, health }) {
   const [question, setQuestion] = useState('')
   const [fieldFilters, setFieldFilters] = useState([])
   const [topK, setTopK] = useState(5)
+  const [onlineMode, setOnlineMode] = useState(false)
   const [loading, setLoading] = useState(false)
   const [response, setResponse] = useState(null)
   const [fetchError, setFetchError] = useState(null)
+  const [submittedQuery, setSubmittedQuery] = useState('')
   const textareaRef = useRef(null)
 
   const toggleField = (f) => {
@@ -50,6 +52,7 @@ export default function QueryPage({ userContext, health }) {
     setLoading(true)
     setResponse(null)
     setFetchError(null)
+    setSubmittedQuery(question)
 
     try {
       const res = await fetch('/api/query', {
@@ -61,6 +64,7 @@ export default function QueryPage({ userContext, health }) {
           field_filters: fieldFilters,
           top_k: topK,
           show_citations: true,
+          online_mode: onlineMode,
         }),
       })
       const data = await res.json()
@@ -135,6 +139,16 @@ export default function QueryPage({ userContext, health }) {
               min={1} max={20}
               onChange={e => setTopK(Number(e.target.value))}
             />
+
+            <div className="topbar__divider" />
+            <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: '#aaa' }}>
+              <input
+                type="checkbox"
+                checked={onlineMode}
+                onChange={e => setOnlineMode(e.target.checked)}
+              />
+              Online Fallback
+            </label>
 
             <div className="composer__spacer" />
 
@@ -225,7 +239,7 @@ export default function QueryPage({ userContext, health }) {
       <div className="query-layout__inspector">
         {response ? (
           <>
-            <CitationPanel citations={response.citations || []} />
+            <CitationPanel citations={response.citations || []} query={submittedQuery} answer={response?.data?.answer} />
             <MetaPanel response={response} />
           </>
         ) : (

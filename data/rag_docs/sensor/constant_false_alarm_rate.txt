@@ -1,0 +1,29 @@
+# Constant false alarm rate
+
+Constant false alarm rate (CFAR) detection is a common form of adaptive algorithm used in radar systems to detect target returns against a background of noise, clutter and interference.
+
+
+== Principle ==
+In the radar receiver, the returning echoes are typically received by the antenna, amplified, down-converted to an intermediate frequency, and then passed through detector circuitry that extracts the envelope of the signal, known as the video signal. This video signal is proportional to the power of the received echo. It comprises the desired echo signal as well as the unwanted signals from internal receiver noise and external clutter and interference. The term video refers to the resulting signal being appropriate for display on a cathode ray tube, or "video screen".
+The role of the constant false alarm rate circuitry is to determine the power threshold above which any return can be considered to probably originate from a target as opposed to one of the spurious sources. If this threshold is too low, more real targets will be detected, but at the expense of increased numbers of false alarms. Conversely, fewer targets will be detected if the threshold is too high, but the number of false alarms will also be low. In most radar detectors, the threshold is set to achieve a required probability of false alarm (equivalently, false alarm rate or time between false alarms).
+Suppose the background against which targets are to be detected is constant with time and space. In that case, a fixed threshold level can be chosen that provides a specified probability of false alarm, governed by the probability density function of the noise, which is usually assumed to be Gaussian. The probability of detection is then a function of the signal-to-noise ratio of the target return. However, in most fielded systems, unwanted clutter and interference sources mean that the noise level changes both spatially and temporally. In this case, a changing threshold can be used, where the threshold level is raised and lowered to maintain a constant probability of false alarm. This is known as constant false alarm rate (CFAR) detection.
+
+
+== Cell-averaging CFAR ==
+
+Detection occurs when the cell under test exceeds the threshold. In most simple CFAR detection schemes, the threshold level is calculated by estimating the noise floor level around the cell under test (CUT). This can be found by taking a block of cells around the CUT and calculating the average power level. Cells immediately adjacent to the CUT are normally ignored to avoid corrupting this estimate with power from the CUT itself (and referred to as "guard cells"). A target is declared present in the CUT if it is greater than all its adjacent cells and greater than the local average power level. The estimate of the local power level may sometimes be increased slightly to allow for the limited sample size. This simple approach is called a cell-averaging CFAR (CA-CFAR).
+Other related approaches calculate separate averages for the cells to the left and right of the CUT, and then use the greatest-of or least-of these two power levels to define the local power level. These are referred to as greatest-of CFAR (GO-CFAR) and least-of CFAR (LO-CFAR), respectively, and can improve detection when immediately adjacent to areas of clutter.
+
+
+== Sophisticated CFAR approaches ==
+More sophisticated CFAR algorithms can adaptively select a threshold level by taking a rigorous account of the statistics of the background in which targets are to be detected.  This is particularly common in maritime surveillance (radar) applications, where the background of sea clutter is particularly spikey and not well approximated by additive white Gaussian noise.  This is a difficult detection problem, as it is difficult to differentiate between spikes due to the sea surface returns and spikes due to valid returns from, for example, submarine periscopes.  The K-distribution is a popular distribution for modelling sea clutter characteristics.
+
+
+== See also ==
+Detection theory
+False alarm
+Pulse-Doppler signal processing
+Receiver operating characteristic
+
+
+== References ==

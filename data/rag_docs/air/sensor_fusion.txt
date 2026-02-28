@@ -1,0 +1,589 @@
+# Sensor fusion
+
+Sensor fusion is a process of combining sensor data or data derived from disparate sources so that the resulting information has less uncertainty than would be possible if these sources were used individually. For instance, one could potentially obtain a more accurate location estimate of an indoor object by combining multiple data sources such as video cameras and WiFi localization signals. The term uncertainty reduction in this case can mean more accurate, more complete, or more dependable, or refer to the result of an emerging view, such as stereoscopic vision (calculation of depth information by combining two-dimensional images from two cameras at slightly different viewpoints).
+The data sources for a fusion process are not specified to originate from identical sensors. One can distinguish direct fusion, indirect fusion and fusion of the outputs of the former two. Direct fusion is the fusion of sensor data from a set of heterogeneous or homogeneous sensors, soft sensors, and history values of sensor data, while indirect fusion uses information sources like a priori knowledge about the environment and human input.
+Sensor fusion is also known as (multi-sensor) data fusion and is a subset of information fusion.
+
+
+== Examples of sensors ==
+Accelerometers
+Electronic Support Measures (ESM)
+Flash LIDAR
+Global Positioning System (GPS)
+Infrared / thermal imaging camera
+Magnetic sensors
+MEMS
+Phased array
+Radar
+Radiotelescopes, such as the proposed Square Kilometre Array, the largest sensor ever to be built
+Scanning LIDAR
+Seismic sensors
+Sonar and other acoustic
+Sonobuoys
+TV cameras
+→Additional List of sensors
+
+
+== Algorithms ==
+Sensor fusion is a term that covers a number of methods and algorithms, including:
+
+Kalman filter
+Bayesian networks
+Dempster–Shafer
+Convolutional neural network
+Gaussian processes
+
+
+== Example calculations ==
+Two example sensor fusion calculations are illustrated below.
+Let 
+  
+    
+      
+        
+          
+            x
+          
+          
+            1
+          
+        
+      
+    
+    {\displaystyle {x}_{1}}
+  
+ and 
+  
+    
+      
+        
+          
+            x
+          
+          
+            2
+          
+        
+      
+    
+    {\displaystyle {x}_{2}}
+  
+ denote two estimates from two independent sensor measurements, with noise variances 
+  
+    
+      
+        
+          
+            σ
+            
+              1
+            
+            
+              2
+            
+          
+        
+      
+    
+    {\displaystyle \scriptstyle \sigma _{1}^{2}}
+  
+ and 
+  
+    
+      
+        
+          
+            σ
+            
+              2
+            
+            
+              2
+            
+          
+        
+      
+    
+    {\displaystyle \scriptstyle \sigma _{2}^{2}}
+  
+
+, respectively. One way of obtaining a combined estimate 
+  
+    
+      
+        
+          
+            x
+          
+          
+            3
+          
+        
+      
+    
+    {\displaystyle {x}_{3}}
+  
+ is to apply inverse-variance weighting, which is also employed within the Fraser-Potter fixed-interval smoother, namely
+
+  
+    
+      
+        
+          
+            x
+          
+          
+            3
+          
+        
+        =
+        
+          σ
+          
+            3
+          
+          
+            2
+          
+        
+        (
+        
+          σ
+          
+            1
+          
+          
+            −
+            2
+          
+        
+        
+          
+            x
+          
+          
+            1
+          
+        
+        +
+        
+          σ
+          
+            2
+          
+          
+            −
+            2
+          
+        
+        
+          
+            x
+          
+          
+            2
+          
+        
+        )
+      
+    
+    {\displaystyle {x}_{3}=\sigma _{3}^{2}(\sigma _{1}^{-2}{x}_{1}+\sigma _{2}^{-2}{x}_{2})}
+  
+ ,
+where 
+  
+    
+      
+        
+          
+            σ
+            
+              3
+            
+            
+              2
+            
+          
+          =
+          (
+          
+            
+              σ
+              
+                1
+              
+              
+                −
+                2
+              
+            
+            +
+            
+              
+                σ
+                
+                  2
+                
+                
+                  −
+                  2
+                
+              
+              
+                )
+                
+                  −
+                  1
+                
+              
+            
+          
+        
+      
+    
+    {\displaystyle \scriptstyle \sigma _{3}^{2}=(\scriptstyle \sigma _{1}^{-2}+\scriptstyle \sigma _{2}^{-2})^{-1}}
+  
+ is the variance of the combined estimate. It can be seen that the fused result is simply a linear combination of the two measurements weighted by their respective information. 
+It is worth noting that if 
+  
+    
+      
+        
+          x
+        
+      
+    
+    {\displaystyle {x}}
+  
+ is a random variable. The estimates 
+  
+    
+      
+        
+          
+            x
+          
+          
+            1
+          
+        
+      
+    
+    {\displaystyle {x}_{1}}
+  
+ and 
+  
+    
+      
+        
+          
+            x
+          
+          
+            2
+          
+        
+      
+    
+    {\displaystyle {x}_{2}}
+  
+ will be correlated through common process noise, which will cause the estimate 
+  
+    
+      
+        
+          
+            x
+          
+          
+            3
+          
+        
+      
+    
+    {\displaystyle {x}_{3}}
+  
+ to lose conservativeness. 
+Another (equivalent) method to fuse two measurements is to use the optimal Kalman filter. Suppose that the data is generated by a first-order system and let 
+  
+    
+      
+        
+          
+            
+              P
+            
+          
+          
+            k
+          
+        
+      
+    
+    {\displaystyle {\textbf {P}}_{k}}
+  
+ denote the solution of the filter's Riccati equation. By applying Cramer's rule within the gain calculation it can be found that the filter gain is given by:
+
+  
+    
+      
+        
+          
+            
+              L
+            
+          
+          
+            k
+          
+        
+        =
+        
+          
+            [
+            
+              
+                
+                  
+                    
+                      
+                        
+                          
+                            σ
+                            
+                              2
+                            
+                            
+                              2
+                            
+                          
+                          
+                            
+                              
+                                P
+                              
+                            
+                            
+                              k
+                            
+                          
+                        
+                        
+                          
+                            σ
+                            
+                              2
+                            
+                            
+                              2
+                            
+                          
+                          
+                            
+                              
+                                P
+                              
+                            
+                            
+                              k
+                            
+                          
+                          +
+                          
+                            
+                              σ
+                              
+                                1
+                              
+                              
+                                2
+                              
+                            
+                            
+                              
+                                
+                                  P
+                                
+                              
+                              
+                                k
+                              
+                            
+                            +
+                            
+                              
+                                σ
+                                
+                                  1
+                                
+                                
+                                  2
+                                
+                              
+                              
+                                
+                                  σ
+                                  
+                                    2
+                                  
+                                  
+                                    2
+                                  
+                                
+                              
+                            
+                          
+                        
+                      
+                    
+                  
+                
+                
+                  
+                    
+                      
+                        
+                          
+                            σ
+                            
+                              1
+                            
+                            
+                              2
+                            
+                          
+                          
+                            
+                              
+                                P
+                              
+                            
+                            
+                              k
+                            
+                          
+                        
+                        
+                          
+                            σ
+                            
+                              2
+                            
+                            
+                              2
+                            
+                          
+                          
+                            
+                              
+                                P
+                              
+                            
+                            
+                              k
+                            
+                          
+                          +
+                          
+                            
+                              σ
+                              
+                                1
+                              
+                              
+                                2
+                              
+                            
+                            
+                              
+                                
+                                  P
+                                
+                              
+                              
+                                k
+                              
+                            
+                            +
+                            
+                              
+                                σ
+                                
+                                  1
+                                
+                                
+                                  2
+                                
+                              
+                              
+                                
+                                  σ
+                                  
+                                    2
+                                  
+                                  
+                                    2
+                                  
+                                
+                              
+                            
+                          
+                        
+                      
+                    
+                  
+                
+              
+            
+            ]
+          
+        
+        .
+      
+    
+    {\displaystyle {\textbf {L}}_{k}={\begin{bmatrix}{\tfrac {\scriptstyle \sigma _{2}^{2}{\textbf {P}}_{k}}{\scriptstyle \sigma _{2}^{2}{\textbf {P}}_{k}+\scriptstyle \sigma _{1}^{2}{\textbf {P}}_{k}+\scriptstyle \sigma _{1}^{2}\scriptstyle \sigma _{2}^{2}}}&{\tfrac {\scriptstyle \sigma _{1}^{2}{\textbf {P}}_{k}}{\scriptstyle \sigma _{2}^{2}{\textbf {P}}_{k}+\scriptstyle \sigma _{1}^{2}{\textbf {P}}_{k}+\scriptstyle \sigma _{1}^{2}\scriptstyle \sigma _{2}^{2}}}\end{bmatrix}}.}
+  
+
+By inspection, when the first measurement is noise free, the filter ignores the second measurement and vice versa. That is, the combined estimate is weighted by the quality of the measurements.
+
+
+== Centralized versus decentralized ==
+In sensor fusion, centralized versus decentralized refers to where the fusion of the data occurs. In centralized fusion, the clients simply forward all of the data to a central location, and some entity at the central location is responsible for correlating and fusing the data. In decentralized, the clients take full responsibility for fusing the data. "In this case, every sensor or platform can be viewed as an intelligent asset having some degree of autonomy in decision-making."
+Multiple combinations of centralized and decentralized systems exist.
+Another classification of sensor configuration refers to the coordination of information flow between sensors. These mechanisms provide a way to resolve conflicts or disagreements and to allow the development of dynamic sensing strategies. 
+Sensors are in redundant (or competitive) configuration if each node delivers independent measures of the same properties. This configuration can be used in error correction when comparing information from multiple nodes. Redundant strategies are often used with high level fusions in voting procedures.
+Complementary configuration occurs when multiple information sources supply different information about the same features. This strategy is used for fusing information at raw data level within decision-making algorithms. Complementary features are typically applied in motion recognition tasks with neural network, hidden Markov model, support vector machine, clustering methods and other techniques. 
+Cooperative sensor fusion uses the information extracted by multiple independent sensors to provide information that would not be available from single sensors. For example, sensors connected to body segments are used for the detection of the angle between them. Cooperative sensor strategy gives information impossible to obtain from single nodes. Cooperative information fusion can be used in motion recognition, gait analysis, motion analysis,,.
+
+
+== Levels ==
+There are several categories or levels of sensor fusion that are commonly used.
+
+Level 0 – Data alignment
+Level 1 – Entity assessment (e.g. signal/feature/object).
+Tracking and object detection/recognition/identification
+Level 2 – Situation assessment
+Level 3 – Impact assessment
+Level 4 – Process refinement (i.e. sensor management)
+Level 5 – User refinement
+Sensor fusion level can also be defined basing on the kind of information used to feed the fusion algorithm. More precisely, sensor fusion can be performed fusing raw data coming from different sources, extrapolated features or even decision made by single nodes.
+
+Data level - data level (or early) fusion aims to fuse raw data from multiple sources and represent the fusion technique at the lowest level of abstraction. It is the most common sensor fusion technique in many fields of application. Data level fusion algorithms usually aim to combine multiple homogeneous sources of sensory data to achieve more accurate and synthetic readings. When portable devices are employed data compression represent an important factor, since collecting raw information from multiple sources generates huge information spaces that could define an issue in terms of memory or communication bandwidth for portable systems. Data level information fusion tends to generate big input spaces, that slow down the decision-making procedure. Also, data level fusion often cannot handle incomplete measurements. If one sensor modality becomes useless due to malfunctions, breakdown or other reasons the whole systems could occur in ambiguous outcomes.
+Feature level - features represent information computed on board by each sensing node. These features are then sent to a fusion node to feed the fusion algorithm. This procedure generates smaller information spaces with respect to the data level fusion, and this is better in terms of computational load. Obviously, it is important to properly select features on which to define classification procedures: choosing the most efficient features set should be a main aspect in method design. Using features selection algorithms that properly detect correlated features and features subsets improves the recognition accuracy but large training sets are usually required to find the most significant feature subset.
+Decision level - decision level (or late) fusion is the procedure of selecting an hypothesis from a set of hypotheses generated by individual (usually weaker) decisions of multiple nodes. It is the highest level of abstraction and uses the information that has been already elaborated through preliminary data- or feature level processing. The main goal in decision fusion is to use meta-level classifier while data from nodes are preprocessed by extracting features from them. Typically decision level sensor fusion is used in classification a recognition activities and the two most common approaches are majority voting and Naive-Bayes.  Advantages coming from decision level fusion include communication bandwidth and improved decision accuracy. It also allows the combination of heterogeneous sensors.
+
+
+== Applications ==
+One application of sensor fusion is GPS/INS, where Global Positioning System and inertial navigation system data is fused using various different methods, e.g. the extended Kalman filter.  This is useful, for example, in determining the attitude of an aircraft using low-cost sensors. Another example is using the data fusion approach to determine the traffic state (low traffic, traffic jam, medium flow) using road side collected acoustic, image and sensor data. In the field of autonomous driving, sensor fusion is used to combine the redundant information from complementary sensors in order to obtain a more accurate and reliable representation of the environment.
+Although technically not a dedicated sensor fusion method, modern convolutional neural network based methods can simultaneously process  many channels of sensor data (such as hyperspectral imaging with hundreds of bands ) and fuse relevant information to produce classification results.
+
+
+== See also ==
+
+
+== References ==
+
+
+== External links ==
+Discriminant Correlation Analysis (DCA)
+International Society of Information Fusion

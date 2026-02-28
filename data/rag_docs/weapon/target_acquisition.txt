@@ -1,0 +1,21 @@
+# Target acquisition
+
+Target acquisition is the detection and identification of the location of a target in sufficient detail to permit the effective employment of lethal and non-lethal means. The term is used for a broad area of applications. 
+A "target" here is an entity or object considered for possible engagement or other action (see Targeting). Targets include a wide array of resources that an enemy commander can use to conduct operations including mobile and stationary units, forces, equipment, capabilities, facilities, persons and functions. It may comprise target acquisition, Joint Targeting or Information Operations. 
+Technically target acquisition may just denote the process of a weapon system to decide which object to lock on to, as opposed to surveillance on one and target tracking on the other side; for example in an anti-aircraft system.
+
+
+== History ==
+Target acquisition under the doctrines of the Cold War and post–Cold War were focused on identifying the capabilities, assets and identities of large troop formations, air defense systems, artillery, rockets, missiles and identifying other High Pay-off Targets (HPTs) and High Value Targets (HVTs). HPTs, which if successfully engaged and neutralized, significantly contribute to the success of the "friendly commander's" course of action. HVT is a target that an "enemy commander" requires for completion of a mission. They both seem to accomplish the same, but are different when conducting the targeting analysis process.
+Since the September 11 attacks, target acquisition has become a highly technical, robust and complex process because of the priority target types, including the targeting of individuals. Whereas a satellite can locate a missile launcher or a formation of 16 tanks by its shape, heat signature or size, it cannot identify and locate 1 of 7 billion individuals without having a person on the ground to recognize, report and engage that individual. This also requires an enhancement of Human Intelligence (HUMINT) sources or the enhancement of biometric technology for the purpose of positive identification of individuals in the targeting process. The Joint Targeting process is better suited for targeting individuals. The latest U.S. doctrine is the JP 3-60, Joint Doctrine for Targeting.
+
+
+== See also ==
+Military intelligence – Information about military opponents
+Counter-battery fire – Battlefield tactic employed to defeat the enemy's indirect fire elements
+Intelligence, surveillance, target acquisition, and reconnaissance – Military doctrinal concept
+Reconnaissance – Military observation of enemy activities
+Missile lock-on – Feature of a type of military offensive technologyPages displaying short descriptions of redirect targets
+
+
+== References ==

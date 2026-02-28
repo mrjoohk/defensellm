@@ -1,0 +1,1069 @@
+# Phased array
+
+In antenna theory, a phased array usually means an electronically scanned array, a computer-controlled array of antennas which creates a beam of radio waves that can be electronically steered to point in different directions without moving the antennas.
+In a phased array, the power from the transmitter is fed to the radiating elements through devices called phase shifters, controlled by a computer system, which can alter the phase or signal delay electronically, thus steering the beam of radio waves to a different direction.  Since the size of an antenna array must extend many wavelengths to achieve the high gain needed for narrow beamwidth, phased arrays are mainly practical at the high frequency end of the radio spectrum, in the UHF and microwave bands, in which the operating wavelengths are conveniently small.
+Phased arrays were originally invented for use in military radar systems, to detect fast moving planes and missiles, but are now widely used and have spread to civilian applications such as 5G MIMO for cell phones. The phased array principle is also used in acoustics in such applications as phased array ultrasonics, and in optics.
+The term "phased array" is also used to a lesser extent for unsteered array antennas in which the radiation pattern of the antenna array is fixed. For example, AM broadcast radio antennas consisting of multiple mast radiators are also called "phased arrays".
+
+
+== Description ==
+
+A phased array is an electronically scanned array, a computer-controlled array of antennas which creates a beam of radio waves that can be electronically steered to point in different directions without moving the antennas.
+The general theory of an electromagnetic phased array also finds applications in ultrasonic and medical imaging application (phased array ultrasonics) and in optics (optical phased array).
+In a simple array antenna, the radio frequency current from the transmitter is fed to multiple individual antenna elements with the proper phase relationship so that the radio waves from the separate elements combine (superpose) to form beams. This can be configured to increase power radiated in desired directions and suppress radiation in undesired directions.
+In a phased array, the power from the transmitter is fed to the radiating elements through devices called phase shifters, controlled by a computer system.  The computer can alter the phase or signal delay of each antenna element electronically, resulting in a beam of radio waves that can be dynamically "steered" to propagate in arbitrary directions.
+Phased arrays were originally conceived for use in military radar systems, to steer a beam of radio waves quickly across the sky to detect planes and missiles. These systems are now widely used and have spread to civilian applications such as 5G MIMO for cell phones. The phased array principle is also used in acoustics, and phased arrays of acoustic transducers are used in medical ultrasound imaging scanners (phased array ultrasonics), oil and gas prospecting (reflection seismology), and military sonar systems.
+The term "phased array" is also used to a lesser extent for non steerable array antennas in which the phase of the feed power and thus the radiation pattern of the antenna array is fixed. For example, AM broadcast radio antennas consisting of multiple mast radiators fed so as to create a specific radiation pattern are also called "phased arrays".
+
+
+== Types ==
+Phased arrays take multiple forms. However, the four most common are the passive electronically scanned array (PESA), active electronically scanned array (AESA), hybrid beam forming phased array, and digital beam forming (DBF) array.
+A passive phased array or passive electronically scanned array (PESA) is a phased array in which the antenna elements are connected to a single transmitter and/or receiver, as shown in the first animation at top. PESAs are the most common type of phased array. Generally speaking, a PESA uses one receiver/exciter for the entire array.
+An active phased array or active electronically scanned array (AESA) is a phased array in which each antenna element has an analog transmitter/receiver (T/R) module which creates the phase shifting required to electronically steer the antenna beam.  Active arrays are a more advanced, second-generation phased-array technology that are used in military applications; unlike PESAs they can radiate several beams of radio waves at multiple frequencies in different directions simultaneously. However, the number of simultaneous beams is limited by practical reasons of electronic packaging of the beam formers to approximately three simultaneous beams for an AESA. Each beam former has a receiver/exciter connected to it.
+A digital beam forming (DBF) phased array has a digital receiver/exciter at each element in the array. The signal at each element is digitized by the receiver/exciter. This means that antenna beams can be formed digitally in a field programmable gate array (FPGA) or the array computer. This approach allows for multiple simultaneous antenna beams to be formed.
+A hybrid beam forming phased array can be thought of as a combination of an AESA and a digital beam forming phased array. It uses subarrays that are active phased arrays (for instance, a subarray may be 64, 128 or 256 elements and the number of elements depends upon system requirements). The subarrays are combined to form the full array. Each subarray has its own digital receiver/exciter. This approach allows clusters of simultaneous beams to be created.
+A conformal antenna is a phased array in which the individual antennas, instead of being arranged in a flat plane, are mounted on a curved surface.  The phase shifters compensate for the different path lengths of the waves due to the antenna elements' varying position on the surface, allowing the array to radiate a plane wave.  Conformal antennas are used in aircraft and missiles, to integrate the antenna into the curving surface of the aircraft to reduce aerodynamic drag.
+
+
+=== Time and frequency domains ===
+
+There are two main types of beamformers. These are time domain beamformers and frequency domain beamformers. From a theoretical point of view, both are in principle the same operation, with just a Fourier transform allowing conversion from one to the other type.
+A graduated attenuation window is sometimes applied across the face of the array to improve side-lobe suppression performance, in addition to the phase shift.
+Time domain beamformer  works by introducing time delays. The basic operation is called "delay and sum". It delays the incoming signal from each array element by a certain amount of time, and then adds them together. A Butler matrix allows several beams to be formed simultaneously, or one beam to be scanned through an arc. The most common kind of time domain beam former is serpentine waveguide. Active phased array designs use individual delay lines that are switched on and off. Yttrium iron garnet phase shifters vary the phase delay using the strength of a magnetic field.
+There are two different types of frequency domain beamformers.
+The first type separates the different frequency components that are present in the received signal into multiple frequency bins (using either a Discrete Fourier transform (DFT) or a filterbank). When different delay and sum beamformers are applied to each frequency bin, the result is that the main lobe simultaneously points in multiple different directions at each of the different frequencies. This can be an advantage for communication links, and is used with the SPS-48 radar.
+The other type of frequency domain beamformer makes use of Spatial Frequency. Discrete samples are taken from each of the individual array elements. The samples are processed using a DFT. The DFT introduces multiple different discrete phase shifts during processing. The outputs of the DFT are individual channels that correspond with evenly spaced beams formed simultaneously. A 1-dimensional DFT produces a fan of different beams. A 2-dimensional DFT produces beams with a pineapple configuration.
+These techniques are used to create two kinds of phased array.
+
+Dynamic –  an array of variable phase shifters are used to move the beam
+Fixed –  the beam position is stationary with respect to the array face and the whole antenna is moved
+
+There are two further sub-categories that modify the kind of dynamic array or fixed array.
+
+Active –  amplifiers or processors are in each phase shifter element
+Passive –  large central amplifier with attenuating phase shifters
+
+
+=== Dynamic phased array ===
+Each array element incorporates an adjustable phase shifter. These are collectively used to move the beam with respect to the array face.
+Dynamic phased arrays require no physical movement to aim the beam. The beam is moved electronically. This can produce antenna motion fast enough to use a small pencil beam to simultaneously track multiple targets while searching for new targets using just one radar set, a capability known as track while search.
+As an example, an antenna with a 2-degree beam with a pulse rate of 1 kHz will require approximately 8 seconds to cover an entire hemisphere consisting of 8,000 pointing positions. This configuration provides 12 opportunities to detect a 1,000 m/s (2,200 mph; 3,600 km/h) vehicle over a range of 100 km (62 mi), which is suitable for military applications.
+The position of mechanically steered antennas can be predicted, which can be used to create electronic countermeasures that interfere with radar operation. The flexibility resulting from phased array operation allows beams to be aimed at random locations, which eliminates this vulnerability. This is also desirable for military applications.
+
+
+=== Fixed phased array ===
+
+Fixed phased array antennas are typically used to create an antenna with a more desirable form factor than the conventional parabolic reflector or cassegrain reflector. Fixed phased arrays incorporate fixed phase shifters. For example, most commercial FM Radio and TV antenna towers use a collinear antenna array, which is a fixed phased array of dipole elements.
+In radar applications, this kind of phased array is physically moved during the track and scan process. There are two configurations.
+
+Multiple frequencies with a delay-line
+Multiple adjacent beams
+The SPS-48 radar uses multiple transmit frequencies with a serpentine delay line along the left side of the array to produce vertical fan of stacked beams. Each frequency experiences a different phase shift as it propagates down the serpentine delay line, which forms different beams. A filter bank is used to split apart the individual receive beams. The antenna is mechanically rotated.
+Semi-active radar homing uses monopulse radar that relies on a fixed phased array to produce multiple adjacent beams that measure angle errors. This form factor is suitable for gimbal mounting in missile seekers.
+
+
+=== Active phased array ===
+Active electronically-scanned arrays (AESA) elements incorporate transmit amplification with phase shift in each antenna element (or group of elements). Each element also includes receive pre-amplification. The phase shifter setting is the same for transmit and receive.
+Active phased arrays do not require phase reset after the end of the transmit pulse, which is compatible with Doppler radar and pulse-Doppler radar.
+
+
+=== Passive phased array ===
+Passive phased arrays typically use large amplifiers that produce all of the microwave transmit signal for the antenna. Phase shifters typically consist of waveguide elements controlled by magnetic field, voltage gradient, or equivalent technology.
+The phase shift process used with passive phased arrays typically puts the receive beam and transmit beam into diagonally opposite quadrants. The sign of the phase shift must be inverted after the transmit pulse is finished and before the receive period begins to place the receive beam into the same location as the transmit beam. That requires a phase impulse that degrades sub-clutter visibility performance on Doppler radar and Pulse-Doppler radar. As an example, Yttrium iron garnet phase shifters must be changed after transmit pulse quench and before receiver processing starts to align transmit and receive beams. That impulse introduces FM noise that degrades clutter performance.
+Passive phased array design is used in the AEGIS Combat System for direction-of-arrival estimation.
+
+
+== History ==
+
+Phased array transmission was originally shown in 1905 by Nobel laureate Karl Ferdinand Braun who demonstrated enhanced transmission of radio waves in one direction. During World War II, Nobel laureate Luis Alvarez used phased array transmission in a rapidly steerable radar system for "ground-controlled approach", a system to aid in the landing of aircraft. At the same time, the German GEMA company (German for Gesellschaft für elektroakustische und mechanische Apparate) built the Mammut 1. It was later adapted for radio astronomy leading to Nobel Prizes for Physics for Antony Hewish and Martin Ryle after several large phased arrays were developed at the University of Cambridge Interplanetary Scintillation Array. This design is also used for radar, and is generalized in interferometric radio antennas.
+In 1966, most phased-array radars use ferrite phase shifters or traveling-wave tubes to dynamically adjust the phase.
+The AN/SPS-33 -- installed on the nuclear-powered ships Long Beach and Enterprise around 1961 -- was claimed to be the only operational 3-D phased array in the world in 1966.
+The AN/SPG-59 was designed to generate multiple tracking beams from the transmitting array and simultaneously program independent receiving arrays.
+The first civilian 3D phased array was built in 1960 at the National Aviation Facilities Experimental Center; but was abandoned in 1961.
+In 2004, Caltech researchers demonstrated the first integrated silicon-based phased array receiver at 24 GHz with 8 elements. This was followed by their demonstration of a CMOS 24 GHz phased array transmitter in 2005 and a fully integrated 77 GHz phased array transceiver with integrated antennas in 2006 by the Caltech team. In 2007, DARPA researchers announced a 16-element phased-array radar antenna which was also integrated with all the necessary circuits on a single silicon chip and operated at 30–50 GHz.
+The relative amplitudes of—and constructive and destructive interference effects among—the signals radiated by the individual antennas determine the effective radiation pattern of the array. A phased array may be used to point a fixed radiation pattern, or to scan rapidly in azimuth or elevation. Simultaneous electrical scanning in both azimuth and elevation was first demonstrated in a phased array antenna at Hughes Aircraft Company, California in 1957.
+
+
+== Formulation ==
+
+
+=== Array factor ===
+The total directivity of a phased array will be a result of the gain of the individual array elements, and the directivity due their positioning in an array. This latter component is closely tied (but not equal to) to the array factor. In a (rectangular) planar phased array, of dimensions 
+  
+    
+      
+        M
+        ×
+        N
+      
+    
+    {\displaystyle M\times N}
+  
+, with inter-element spacing 
+  
+    
+      
+        
+          d
+          
+            x
+          
+        
+      
+    
+    {\displaystyle d_{x}}
+  
+ and 
+  
+    
+      
+        
+          d
+          
+            y
+          
+        
+      
+    
+    {\displaystyle d_{y}}
+  
+, respectively, the array factor can be calculated accordingly:
+  
+    
+      
+        A
+        F
+        =
+        
+          ∑
+          
+            n
+            =
+            1
+          
+          
+            N
+          
+        
+        
+          I
+          
+            n
+            1
+          
+        
+        
+          [
+          
+            
+              ∑
+              
+                m
+                =
+                1
+              
+              
+                M
+              
+            
+            
+              I
+              
+                m
+                1
+              
+            
+            
+              
+                e
+              
+              
+                j
+                
+                  (
+                  
+                    m
+                    −
+                    1
+                  
+                  )
+                
+                
+                  (
+                  
+                    k
+                    
+                      d
+                      
+                        x
+                      
+                    
+                    sin
+                    ⁡
+                    θ
+                    cos
+                    ⁡
+                    ϕ
+                    +
+                    
+                      β
+                      
+                        x
+                      
+                    
+                  
+                  )
+                
+              
+            
+          
+          ]
+        
+        
+          
+            e
+          
+          
+            j
+            
+              (
+              
+                n
+                −
+                1
+              
+              )
+            
+            
+              (
+              
+                k
+                
+                  d
+                  
+                    y
+                  
+                
+                sin
+                ⁡
+                θ
+                sin
+                ⁡
+                ϕ
+                +
+                
+                  β
+                  
+                    y
+                  
+                
+              
+              )
+            
+          
+        
+      
+    
+    {\displaystyle AF=\sum _{n=1}^{N}I_{n1}\left[\sum _{m=1}^{M}I_{m1}\mathrm {e} ^{j\left(m-1\right)\left(kd_{x}\sin \theta \cos \phi +\beta _{x}\right)}\right]\mathrm {e} ^{j\left(n-1\right)\left(kd_{y}\sin \theta \sin \phi +\beta _{y}\right)}}
+  
+
+Here, 
+  
+    
+      
+        θ
+      
+    
+    {\displaystyle \theta }
+  
+ and 
+  
+    
+      
+        ϕ
+      
+    
+    {\displaystyle \phi }
+  
+ are the directions which we are taking the array factor in, in the coordinate frame depicted to the right. The factors 
+  
+    
+      
+        
+          β
+          
+            x
+          
+        
+      
+    
+    {\displaystyle \beta _{x}}
+  
+ and 
+  
+    
+      
+        
+          β
+          
+            y
+          
+        
+      
+    
+    {\displaystyle \beta _{y}}
+  
+ are the progressive phase shift that is used to steer the beam electronically. The factors 
+  
+    
+      
+        
+          I
+          
+            n
+            1
+          
+        
+      
+    
+    {\displaystyle I_{n1}}
+  
+ and 
+  
+    
+      
+        
+          I
+          
+            m
+            1
+          
+        
+      
+    
+    {\displaystyle I_{m1}}
+  
+ are the excitation coefficients of the individual elements.
+Beam steering is indicated in the same coordinate frame, however the direction of steering is indicated with 
+  
+    
+      
+        
+          θ
+          
+            0
+          
+        
+      
+    
+    {\displaystyle \theta _{0}}
+  
+ and 
+  
+    
+      
+        
+          ϕ
+          
+            0
+          
+        
+      
+    
+    {\displaystyle \phi _{0}}
+  
+, which is used in calculation of progressive phase:
+
+  
+    
+      
+        
+          β
+          
+            x
+          
+        
+        =
+        −
+        k
+        
+          d
+          
+            x
+          
+        
+        sin
+        ⁡
+        
+          θ
+          
+            0
+          
+        
+        cos
+        ⁡
+        
+          ϕ
+          
+            0
+          
+        
+      
+    
+    {\displaystyle \beta _{x}=-kd_{x}\sin \theta _{0}\cos \phi _{0}}
+  
+
+  
+    
+      
+        
+          β
+          
+            y
+          
+        
+        =
+        −
+        k
+        
+          d
+          
+            y
+          
+        
+        sin
+        ⁡
+        
+          θ
+          
+            0
+          
+        
+        sin
+        ⁡
+        
+          ϕ
+          
+            0
+          
+        
+      
+    
+    {\displaystyle \beta _{y}=-kd_{y}\sin \theta _{0}\sin \phi _{0}}
+  
+
+In all above equations, the value 
+  
+    
+      
+        k
+      
+    
+    {\displaystyle k}
+  
+ describes the wavenumber of the frequency used in transmission.
+These equations can be solved to predict the nulls, main lobe, and grating lobes of the array. Referring to the exponents in the array factor equation, we can say that major and grating lobes will occur at integer 
+  
+    
+      
+        m
+        ,
+        n
+        =
+        0
+        ,
+        1
+        ,
+        2
+        ,
+        …
+      
+    
+    {\displaystyle m,n=0,1,2,\dots }
+  
+  solutions to the following equations:
+
+  
+    
+      
+        k
+        
+          d
+          
+            x
+          
+        
+        sin
+        ⁡
+        θ
+        cos
+        ⁡
+        ϕ
+        +
+        
+          β
+          
+            x
+          
+        
+        =
+        ±
+        2
+        m
+        π
+      
+    
+    {\displaystyle kd_{x}\sin \theta \cos \phi +\beta _{x}=\pm 2m\pi }
+  
+
+  
+    
+      
+        k
+        
+          d
+          
+            y
+          
+        
+        sin
+        ⁡
+        θ
+        sin
+        ⁡
+        ϕ
+        +
+        
+          β
+          
+            y
+          
+        
+        =
+        ±
+        2
+        n
+        π
+      
+    
+    {\displaystyle kd_{y}\sin \theta \sin \phi +\beta _{y}=\pm 2n\pi }
+  
+
+
+=== Worked example ===
+It is common in engineering to provide phased array 
+  
+    
+      
+        A
+        F
+      
+    
+    {\displaystyle AF}
+  
+ values in decibels through 
+  
+    
+      
+        A
+        
+          F
+          
+            d
+            B
+          
+        
+        =
+        10
+        
+          log
+          
+            10
+          
+        
+        ⁡
+        A
+        F
+      
+    
+    {\displaystyle AF_{dB}=10\log _{10}AF}
+  
+. Recalling the complex exponential in the array factor equation above, often, what is really meant by array factor is the magnitude of the summed phasor produced at the end of array factor calculation. With this, we can produce the following equation:
+  
+    
+      
+        A
+        
+          F
+          
+            d
+            B
+          
+        
+        =
+        10
+        
+          log
+          
+            10
+          
+        
+        ⁡
+        
+          ‖
+          
+            
+              ∑
+              
+                n
+                =
+                1
+              
+              
+                N
+              
+            
+            
+              I
+              
+                1
+                n
+              
+            
+            
+              [
+              
+                
+                  ∑
+                  
+                    m
+                    =
+                    1
+                  
+                  
+                    M
+                  
+                
+                
+                  I
+                  
+                    m
+                    1
+                  
+                
+                
+                  
+                    e
+                  
+                  
+                    j
+                    
+                      (
+                      
+                        m
+                        −
+                        1
+                      
+                      )
+                    
+                    
+                      (
+                      
+                        k
+                        
+                          d
+                          
+                            x
+                          
+                        
+                        sin
+                        ⁡
+                        θ
+                        cos
+                        ⁡
+                        ϕ
+                        +
+                        
+                          β
+                          
+                            x
+                          
+                        
+                      
+                      )
+                    
+                  
+                
+              
+              ]
+            
+            
+              
+                e
+              
+              
+                j
+                
+                  (
+                  
+                    n
+                    −
+                    1
+                  
+                  )
+                
+                
+                  (
+                  
+                    k
+                    
+                      d
+                      
+                        y
+                      
+                    
+                    sin
+                    ⁡
+                    θ
+                    sin
+                    ⁡
+                    ϕ
+                    +
+                    
+                      β
+                      
+                        y
+                      
+                    
+                  
+                  )
+                
+              
+            
+          
+          ‖
+        
+      
+    
+    {\displaystyle AF_{dB}=10\log _{10}\left\|\sum _{n=1}^{N}I_{1n}\left[\sum _{m=1}^{M}I_{m1}\mathrm {e} ^{j\left(m-1\right)\left(kd_{x}\sin \theta \cos \phi +\beta _{x}\right)}\right]\mathrm {e} ^{j\left(n-1\right)\left(kd_{y}\sin \theta \sin \phi +\beta _{y}\right)}\right\|}
+  
+For the ease of visualization, we will analyze array factor given an input azimuth and elevation, which we will map to the array frame 
+  
+    
+      
+        θ
+      
+    
+    {\displaystyle \theta }
+  
+ and 
+  
+    
+      
+        ϕ
+      
+    
+    {\displaystyle \phi }
+  
+ through the following conversion:
+
+  
+    
+      
+        θ
+        =
+        arccos
+        ⁡
+        
+          (
+          
+            cos
+            ⁡
+            
+              (
+              
+                θ
+                
+                  a
+                  z
+                
+              
+              )
+            
+            sin
+            ⁡
+            
+              (
+              
+                θ
+                
+                  e
+                  l
+                
+              
+              )
+            
+          
+          )
+        
+      
+    
+    {\displaystyle \theta =\arccos \left(\cos \left(\theta _{az}\right)\sin \left(\theta _{el}\right)\right)}
+  
+
+  
+    
+      
+        ϕ
+        =
+        arctan
+        ⁡
+        2
+        
+          (
+          
+            sin
+            ⁡
+            
+              (
+              
+                θ
+                
+                  e
+                  l
+                
+              
+              )
+            
+            ,
+            sin
+            ⁡
+            
+              (
+              
+                
+                  θ
+                  
+                    a
+                    z
+                  
+                
+                cos
+                ⁡
+                
+                  (
+                  
+                    θ
+                    
+                      e
+                      l
+                    
+                  
+                  )
+                
+              
+              )
+            
+          
+          )
+        
+      
+    
+    {\displaystyle \phi =\arctan 2\left(\sin \left(\theta _{el}\right),\sin \left(\theta _{az}\cos \left(\theta _{el}\right)\right)\right)}
+  
+
+This represents a coordinate frame whose 
+  
+    
+      
+        
+          x
+        
+      
+    
+    {\displaystyle \mathbf {x} }
+  
+ axis is aligned with the array 
+  
+    
+      
+        
+          z
+        
+      
+    
+    {\displaystyle \mathbf {z} }
+  
+ axis, and whose 
+  
+    
+      
+        
+          y
+        
+      
+    
+    {\displaystyle \mathbf {y} }
+  
+ axis is aligned with the array 
+  
+    
+      
+        
+          x
+        
+      
+    
+    {\displaystyle \mathbf {x} }
+  
+ axis.
+If we consider a 
+  
+    
+      
+        16
+        ×
+        16
+      
+    
+    {\displaystyle 16\times 16}
+  
+ phased array, this process provides the following values for 
+  
+    
+      
+        A
+        
+          F
+          
+            d
+            B
+          
+        
+      
+    
+    {\displaystyle AF_{dB}}
+  
+, when steering to bore-sight (
+  
+    
+      
+        
+          θ
+          
+            0
+          
+        
+        =
+        
+          0
+          
+            ∘
+          
+        
+      
+    
+    {\displaystyle \theta _{0}=0^{\circ }}
+  
+,
+  
+    
+      
+        
+          ϕ
+          
+            0
+          
+        
+        =
+        
+          0
+          
+            ∘
+          
+        
+      
+    
+    {\displaystyle \phi _{0}=0^{\circ }}
+  
+):
+
+These values have been clipped to have a minimum 
+  
+    
+      
+        A
+        F
+      
+    
+    {\displaystyle AF}
+  
+ of -50 dB, however, in reality, null points in the array factor pattern will have values significantly smaller than this.
+
+
+== Applications ==
+
+
+=== Radar ===
+Phased arrays were invented for radar tracking of ballistic missiles, and because of their fast tracking abilities phased array radars are widely used in military applications.  For example, because of the rapidity with which the beam can be steered, phased array radars allow a warship to use one radar system for surface detection and tracking (finding ships), air detection and tracking (finding aircraft and missiles) and missile uplink capabilities. Before using these systems, each surface-to-air missile in flight required a dedicated fire-control radar, which meant that radar-guided weapons could only engage a small number of simultaneous targets. Phased array systems can be used to control missiles during the mid-course phase of the missile's flight. During the terminal portion of the flight, continuous-wave fire control directors provide the final guidance to the target. Because the antenna pattern is electronically steered, phased array systems can direct radar beams fast enough to maintain a fire control quality track on many targets simultaneously while also controlling several in-flight missiles.
+
+The AN/SPY-1 phased array radar, part of the Aegis Combat System deployed on modern U.S. cruisers and destroyers, "is able to perform search, track and missile guidance functions simultaneously with a capability of over 100 targets." Likewise, the Thales Herakles phased array multi-function radar used in service with France and Singapore has a track capacity of 200 targets and is able to achieve automatic target detection, confirmation and track initiation in a single scan, while simultaneously providing mid-course guidance updates to the MBDA Aster missiles launched from the ship. The German Navy and the Royal Dutch Navy have developed the Active Phased Array Radar System (APAR). The MIM-104 Patriot and other ground-based antiaircraft systems use phased array radar for similar benefits.
+
+
+=== Sonar ===
+Phased arrays are used in naval sonar, in active (transmit and receive) and passive (receive only) and hull-mounted and towed array sonar.
+One of first acoustic phased arrays was the German Gruppenhorchgerät device.
+In acoustics, microphone arrays and line arrays of loudspeakers are also used.
+
+
+=== Space probe communication ===
+The MESSENGER spacecraft was a space probe mission to the planet Mercury (2011–2015). This was the first deep-space mission to use a phased-array antenna for communications. The radiating elements are circularly-polarized, slotted waveguides. The antenna, which uses the X band, used 26 radiative elements and can gracefully degrade.
+
+
+=== Weather research usage ===
+
+The National Severe Storms Laboratory has been using a SPY-1A phased array antenna, provided by the US Navy, for weather research at its Norman, Oklahoma facility since April 23, 2003. It is hoped that research will lead to a better understanding of thunderstorms and tornadoes, eventually leading to increased warning times and enhanced prediction of tornadoes. Current project participants include the National Severe Storms Laboratory and National Weather Service Radar Operations Center, Lockheed Martin, United States Navy, University of Oklahoma School of Meteorology, School of Electrical and Computer Engineering, and Atmospheric Radar Research Center, Oklahoma State Regents for Higher Education, the Federal Aviation Administration, and Basic Commerce and Industries. The project includes research and development, future technology transfer and potential deployment of the system throughout the United States. It is expected to take 10 to 15 years to complete and initial construction was approximately $25 million. A team from Japan's RIKEN Advanced Institute for Computational Science (AICS) has begun experimental work on using phased-array radar with a new algorithm for instant weather forecasts.
+
+
+=== Optics ===
+
+Within the visible and infrared spectrum of electromagnetic waves it is possible to construct optical phased arrays (OPAs) which allow for dynamic beam forming and beam steering without mechanically moving parts. They are used in wavelength multiplexers and filters for telecommunication purposes,  as well as in Lidar, Free-space optical communication, and holography. OPAs were also shown to enable lensless projectors,  lensless cameras, and chip-scale optical tweezers.
+Due to the short wavelengths OPAs are typically realised in nanofabricated photonic integrated circuit platforms utilising materials such as silicon on insulator, germanium on silicon, silicon nitride or polymers.
+Synthetic array heterodyne detection is an efficient method for multiplexing an entire phased array onto a single element photodetector.
+
+
+=== Satellite broadband internet transceivers ===
+Starlink is a low Earth orbit satellite constellation that is available in over a hundred countries. It provides broadband internet connectivity to consumers; the user terminals of the system use phased array antennas.
+
+
+=== Radio-frequency identification (RFID) ===
+By 2014, phased array antennas were integrated into RFID systems to increase the area of coverage of a single system by 100% to 76,200 m2 (820,000 sq ft) while still using traditional passive UHF tags.
+
+
+=== Human-machine interfaces (HMI) ===
+A phased array of acoustic transducers, denominated airborne ultrasound tactile display (AUTD), was developed in 2008 at the University of Tokyo's Shinoda Lab to induce tactile feedback. This system was demonstrated to enable a user to interactively manipulate virtual holographic objects.
+
+
+=== Radio astronomy ===
+Phased Array Feeds (PAF) have recently been used at the focus of radio telescopes to provide many beams, giving the radio telescope a very wide field of view. Three examples are the ASKAP telescope in Australia, the Apertif upgrade to the Westerbork Synthesis Radio Telescope in the Netherlands, and the Florida Space Institute in the United States .
+
+
+=== Broadcasting ===
+In broadcast engineering, the term 'phased array' has a meaning different from its normal meaning, it means an ordinary array antenna, an array of multiple mast radiators designed to radiate a directional radiation pattern, as opposed to a single mast which radiates an omnidirectional pattern. Broadcast phased arrays have fixed radiation patterns and are not 'steered' during operation as are other phased arrays.
+Phased arrays are used by many AM broadcast radio stations to enhance signal strength and therefore coverage in the city of license, while minimizing interference to other areas. Due to the differences between daytime and nighttime ionospheric propagation at mediumwave frequencies, it is common for AM broadcast stations to change between day (groundwave) and night (skywave) radiation patterns by switching the phase and power levels supplied to the individual antenna elements (mast radiators) daily at sunrise and sunset. For shortwave broadcasts many stations use arrays of horizontal dipoles. A common arrangement uses 16 dipoles in a 4×4 array. Usually this is in front of a wire grid reflector. The phasing is often switchable to allow beam steering in azimuth and sometimes elevation.
+
+
+== See also ==
+
+
+== References ==
+
+
+== External links ==
+
+Radar Research and Development - Phased Array Radar—National Severe Storms Laboratory
+Shipboard Phased Array Radars Archived 2017-11-18 at the Wayback Machine
+NASA Report: MMICs For Multiple Scanning Beam Antennas for Space Applications
+Principle of Phased Array
+'Phased Array' microphone system of Tony Faulkner
+Principles of Phased Array systems - Tutorial 1

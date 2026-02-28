@@ -1,0 +1,77 @@
+# Hardpoint
+
+A hardpoint is an attachment location on a structural frame designed to transfer force and carry an external or internal load. The term is usually used to refer to the mounting points (more formally known as a weapon station or station) on the airframe of military aircraft that carry weapons (e.g. gun pods and rocket pods), ordnances (bombs and missiles) and support equipment (e.g. flares and countermeasures, targeting pods or drop tanks), and also include hardpoints (also known as pylons) on the wings or fuselage of a military transport aircraft, commercial airliner or private jet where external turbofan jet engines are often mounted.
+
+
+== Aircraft ==
+
+In aeronautics, the term station is used to refer to a point of carriage on the frame of an aircraft. A station is usually rated to carry a certain amount of payload. It is a design number which already has taken the rated g-forces of the frame into account. Therefore, point loads on the structure from externally or internally mounted stores, engines, equipment, passengers, and payload are simply the weight of the item and any pylons, seats, mounting brackets, etc. multiplied by the maximum load factor which the aircraft will sustain when these items are carried.
+In civilian aviation a station is usually used to carry an external engine or a fuel tank. As engines are usually a fixed installation, operators usually refer to them with the designation of the engine. Therefore, the term is mostly being used for load points meant for non-fixed installation.
+In the military, a station can also be called weapons station. Unlike civilian aircraft, NATO aircraft frame strength is required to remain without detrimental deformations at 115 percent of the limit or specified loads, and without structural failure at ultimate loads. Most stations on a military aircraft serve to carry pods or weapons. A minor number of stations can also serve to carry external fuel tanks. These stations are called wet, a general aeronautic term referring to usage of fuel like wet thrust. The term wet is also carried over to the adapters, such as a pylon.
+Wing stations require pylons to carry objects. Stations on the fuselage may not necessarily require a pylon, such as the fuselage stations on the McDonnell Douglas F-15 Eagle, while other aircraft need pylons for certain stations in order to provide clearance for the landing gear retraction sequence (like in F-14 Tomcat) or to provide necessary item space (like in Mikoyan MiG-27). While wing stations are usually of underwing design, some aircraft use hardpoints mounted on the top. For example, SEPECAT Jaguar has had some versions fitted with overwing hardpoints for air-to-air missiles directly above the innermost wing pylons, instead of putting them on the wingtips.
+Swing-wing aircraft that mount pylons on the moving portion of the wing (such as the General Dynamics F-111 and the Panavia Tornado) must include a mechanism for swiveling the pylon as the wing sweeps fore or aft, in order to keep the pylon and store facing directly forwards at all times. The F-111's outermost pair of hardpoints do not swivel, and can only be used while the wing is fully extended. This restricts the aircraft to subsonic flight only while these pylons are fitted, usually fitted with fuel tanks during ferry flights. The pylons are automatically jettisoned if the wing sweep moves past 26 degrees, which would mean that the aircraft is accelerating towards transonic speeds.
+Stations may be numbered for reference or not at all (F-4 Phantom II). The numbering is not necessarily consistent and may originate from elsewhere like station 559 on the B-52. There is not necessarily an order in which numbers are assigned. The order can be for example from left to right (F/A-18 Hornet) or vice versa (F-15 Eagle), or mirrored and from outboard to inboard. The often unique centerline (CL) station is no exception.
+
+
+== Pylon ==
+A pylon serves to connect the frame of an aircraft to an item or object that is being carried; hence, it is an adaptor. The use of a pylon is necessary to clear the carriage item of control surfaces as well as prevent undesired disturbance of the flow of air toward the wing. Pylons are usually designed to be aerodynamic to reduce air resistance (drag). There are many different forms, sizes and designs of pylons distinctly termed accordingly like a wedge adaptor or stub wing pylon.
+Stealth aircraft like the F-22 or F-35 can use jettisonable pylons to retain stealth and reduce drag.
+While most pylons are part of a modular system which is compatible with numerous stores, certain weapons and aircraft can require special pylons or adapters to carry a specific load. For example, in the Vietnam War, the "Wild Weasel" defense suppression version of the F-105 Thunderchief, the F-105G, could carry the usual AGM-45 "Shrike" anti-radiation missile on a standard pylon and launcher, but the newly developed AGM-78 Standard ARM required a specially designed and unique "LAU-78/a" launcher which was unique to that missile.
+
+
+== Military ==
+
+NATO suspension equipment (pylons and other means of carriage) and stores are standardized in MIL-STD-8591. A military pylon provides carriage, deployment, and the ability to jettison external stores – weapons, pods, fuel tanks or other ordnance. Pylons have a modular bay to mount other adaptors and carry a wider variety of stores. These adaptors can be bomb racks, launchers or other types of support structures each with their own provisions for mounting all other assemblies.
+
+
+=== Racks ===
+
+Racks carry, arm, and release stores. Racks are either part of, or can be inserted into, the modular bay of a support structure such as a pylon. A rack can mount a store or another piece of suspension equipment, for example, numerous bombs being mounted onto a single pylon, such as was done on F-105 Thunderchief missions over Vietnam, or the large external pylons on the B-52 Stratofortress, which can carry 12 unguided bombs in four triple ejector racks mounted to a single pylon. Alternatively, using the same pylon, but different racks and adapters, 9 air-launched cruise missiles can be carried. Using modular racks and universal adapters makes it much easier to configure the desired load.
+The store is mounted by locking the store's lugs with L-shaped suspension hooks in the rack. Depending on the mass of the store there can be a single lug or a number of lugs on the store separated by a certain distance. The distances are standardized. For NATO there is the 14-inch (360 mm) suspension for a lighter or 30-inch (760 mm) suspension for heavier stores. Depending on specific stores from 1,000 pounds (450 kg) upward, three or four lugs can be used within the defined suspension range. For Russian stores there is the standard 110-millimetre (4.3 in) suspension for helicopters or the 250-millimetre (9.8 in) suspension. To keep stores from rocking sideways as the aircraft maneuvers, sway braces are provided to steady the stores. Sway braces are bolted to the rack frame. These may be automatically or manually adjusted.
+A rack can release a store via gravity or by ejection. Ejection uses an impulse cartridge, a pyrotechnic device which provides jettison capability by igniting and supplying an ejection force to safely propel a store away from the rack and aircraft. Some racks contain an auxiliary cartridge in the event that the primary cartridges fail to fire. The rack will also have accessories such as a zero retention force arming unit, a solenoid to pull arming wires from fuzes, ports for data, video or electrical fuzing. The MIL-STD-1760 aircraft/store electrical interconnection system defines a standardized electrical interface between a military aircraft and its carriage stores.
+The term "rack" is also being used to refer to some support structures. In popular culture, "racks" usually refer to bomb racks or racks mounting bombs which covers everything from a support structure to its associated racks. A Multiple Ejector Rack (MER) usually refers to a support structure which enables the carriage of six stores. A Triple Ejector Rack (TER) refers to a support structure which enables the carriage of three stores.
+
+
+=== Guided missile launchers ===
+Guided missile launchers provide the mechanical and electrical means of suspending and air-launching a guided missile from an aircraft. The housing assembly is the main structural
+member of the launcher. It is an extruded, machined aluminum member that provides structural rigidity to the launcher and includes provisions for mounting all other assemblies. It also includes provisions for mounting the launcher to the aircraft.
+Some launchers (LAU-7/A)[1] have a nitrogen receiver assembly which stores the high-pressure nitrogen used to cool a missile's infrared detector in the guidance system. All receivers contain a charging valve (for refilling), relief valve, and a pressure indicator mounted in the aft end of the cylinder. Power is applied to the missile guidance control system through the umbilical plug. An actuator-operated safety device prevents inadvertent firing of launcher cartridges.
+Missiles use hangers to mount to a rack which, in cross section, resemble either a T-bar called an internal T-shaped hanger or resemble a horseshoe called an external U-shaped shoe. Ambiguously, hangers are also often referred to as lugs or hooks.
+The majority of launchers can also be referred to as rail launchers because of the use of external rail flanges, a guide for the missile suspension hangers during firing.
+Aircraft such as the F-4 Phantom II, the F/A-18, and the Panavia Tornado ADV have semi-recessed fuselage stations to reduce drag. These stations have internally mounted launchers (LAU-116/A) that use ejection for launching. The rapidly expanding gases, created by impulse cartridges, actuate ejector pistons and release the missile from the launcher. The missile is propelled to a safe distance before it ignites its rocket motor. Stealth aircraft such as the F-22 use extensible launchers that are pneumatically actuated and are either rail (LAU-141/A)[2] or ejector (LAU-142/A)[3] types. Stealth aircraft such as the Chengdu J-20 use retractable launchers which moves out on rails allowing the weapons bay to be closed while still hanging outside.
+
+
+=== Rotary launcher ===
+A rotary launcher is a rotating suspension equipment mounted inside the bomb bay of a bomber. Rotary launchers have stations of their own and offer the ability to select certain stores within the bomb bay for release.
+The disadvantage of a rotary launcher is a slow release of stores. The rotary launcher of the B-1 for example requires seven seconds until the next store is rotated into release position.
+
+
+=== Bomb rack ===
+In contrast to the rotary launcher, a conventional bomb rack of the B-52 would have mounted stores in vertical columns making individual store selection and release impossible without releasing all stores ahead in the column line. The advantage of a conventional bomb rack is a prompt release of all stores in short order. Bombers like the B-52, the B-1 or the B-2 use custom designed bomb rack support structures with their own designation e.g. Common Bomb Rack (CBR), Common Bomb Module (CBM), or Smart Bomb Rack Assembly (SBRA).
+
+
+=== Store release control ===
+Aside from the release options of a rack a pilot can select release mode for releasing one or multiple stores. Stores can be jettisoned selectively in single mode or ripple mode or salvo mode. The term ripple applies to the single- or ripple and single- continuous release mode from one or from mirror stations. Salvo release mode applies to a combination of several stations together e.g. adjacent stations. For multiple store release an interval timer can be set to release stores in fixed time steps. For an external store emergency release, there is for example an emergency jettison button in the F-4 Phantom II, a feature found on all naval aircraft in case an engine or catapult fails during launch; in such cases, a pilot can press the "panic button", and jettison all stores, reducing weight and hopefully allowing the aircraft to avoid hitting the sea, and to climb away to decide on further action. Land-based aircraft often have a similar feature, for similar reasons, although the situation is generally not quite as critical as a failure during a catapult launch.
+
+
+=== Example station designation ===
+
+The Boeing F/A-18A/B/C/D family has nine weapons stations:
+
+1 & 9, at the wingtips, have a single rail launcher for an AIM-9 type store.
+2, 3, 7, & 8, located under the left and right wings, have mounting points for SUU-63A or SUU-63A/A pylons.  The pylons in turn support a BRU-32/A ejector rack, to which various stores or launchers are attached. These stations may have a bomb loaded directly upon them, or have a multiple-ejector rack with several stores, or various rail-type launchers for air-to-air and air-to-ground missiles:
+A LAU-115 rail-type launcher for an AIM-7;[4]
+A LAU-115 with two LAU-7 or LAU-127 launchers, one bolted to either side, for two AIM-9 or AIM-120s;[5]
+A LAU-117 for an AGM-65 Maverick;[6]
+A LAU-118 for an AGM-88 HARM [7]
+4 & 6, which are located on the sides of the fuselage, are LAU-116 ejector-type launchers for AIM-7 and AIM-120 missiles. Station 4 can also support a Forward-Looking Infrared (FLIR) pod for detecting and marking targets.
+5, which is on the centerline underneath the fuselage, mounts a smaller SUU-62/A pylon and a BRU-32 rack, and many of the same stores as the wing pylons. The exception is anything rocket-powered, to avoid endangering the nose landing gear.
+3, 5, & 7, are 'wet' feed fuel to and from external fuel tanks.
+
+
+== See also ==
+Bomb bay
+Aircraft Armament Equipment
+
+
+== References ==

@@ -64,8 +64,13 @@ class EvalRunner:
     def _run_sample(self, sample: dict) -> dict:
         sample_id = sample.get("id", "unknown")
         question = sample.get("question", "")
-        expected_keywords = sample.get("expected_answer_keywords", [])
-        expected_doc_ids = sample.get("expected_citation_doc_ids", [])
+        
+        # Playbook Schema mapping
+        expected_answer = sample.get("expected_answer", {})
+        expected_keywords = expected_answer.get("must_include", [])
+        
+        req_evidence = sample.get("required_evidence", [])
+        expected_doc_ids = [k.get("doc_id") for k in req_evidence if "doc_id" in k]
 
         try:
             response = self._system_fn(question, self._user_context)

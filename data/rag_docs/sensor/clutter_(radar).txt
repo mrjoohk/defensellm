@@ -1,0 +1,45 @@
+# Clutter (radar)
+
+Clutter is the unwanted return (echoes) in electronic systems, particularly in reference to radars. Such echoes are typically returned from ground, sea, rain, animals/insects, chaff and atmospheric turbulences, and can cause serious performance issues with radar systems. What one person considers to be unwanted clutter, another may consider to be a wanted target. However, targets usually refer to point scatterers and clutter to extended scatterers (covering many range, angle, and Doppler cells). The clutter may fill a volume (such as rain) or be confined to a surface (like land). A knowledge of the volume or surface area illuminated is required to estimated the echo per unit volume, η, or echo per unit surface area, σ° (the radar backscatter coefficient).
+
+
+== Causes ==
+Clutter may be caused by man-made objects such as buildings and — intentionally — by radar countermeasures such as chaff. Other causes include natural objects such as terrain features, sea, precipitation, hail spike, dust storms, birds, turbulence in the atmospheric circulation, and meteor trails. Radar clutter can also be caused by other atmospheric phenomena, such as disturbances in the ionosphere caused by geomagnetic storms or other space weather events. This phenomenon is especially apparent near the geomagnetic poles, where the action of the solar wind on the earth’s magnetosphere produces convection patterns in the ionospheric plasma. Radar clutter can degrade the ability of over-the-horizon radar to detect targets. Clutter may also originate from multipath echoes from valid targets caused by ground reflection, atmospheric ducting or ionospheric reflection/refraction (e.g., anomalous propagation). This clutter type is especially bothersome since it appears to move and behave like common targets of interest, such as aircraft or weather balloons.
+
+
+== Clutter-limited or noise-limited radar ==
+Electromagnetic signals processed by a radar receiver consist of three main components: useful signal (e.g., echoes from aircraft), clutter, and noise. The total signal competing with the target return is thus clutter plus noise. In practice there is often either no clutter or clutter dominates and the noise can be ignored. In the first case, the radar is said to be noise-limited, while in the second it is clutter-limited.
+
+
+== Volume clutter ==
+
+Rain, hail, snow and chaff are examples of volume clutter. For example, suppose an airborne target, at range 
+  
+    
+      
+        R
+      
+    
+    {\displaystyle R}
+  
+, is within a rainstorm.
+A problem with volume clutter, e.g. rain, is that the volume illuminated may not be completely filled, in which case the fraction filled must be known, and the scatterers may not be uniformly distributed. Consider a beam 10° in elevation. At a range of 10 km the beam could cover from ground level to a height of 1750 metres. There could be rain at ground level but the top of the beam could be above cloud level. In the part of the beam containing rain the rainfall rate will not be constant. One would need to know how the rain was distributed to make any accurate assessment of the clutter and the signal to clutter ratio. All that can be expected from the equation is an estimate to the nearest 5 or  10 dB.
+
+
+== Surface clutter ==
+The surface clutter return depends upon the nature of the surface, its roughness, the grazing angle (angle the beam makes with the surface), the frequency and the polarisation. The reflected signal is the phasor sum of a large number of individual returns from a variety of sources, some of them capable of movement (leaves, rain drops, ripples) and some of them stationary (pylons, buildings, tree trunks). Individual samples of clutter vary from one resolution cell to another (spatial variation) and vary with time for a given cell (temporal variation).
+
+
+=== Beam filling ===
+
+For a target close to the Earth's surface such that the earth and target are in the same range resolution cell one of two conditions are possible.  The most common case is when the beam intersects the surface at such an angle that the area illuminated at any one time is only a fraction of the surface intersected by the beam as illustrated in Figure 2.
+The general significant problem is that the backscatter coefficient cannot in general be calculated and must be measured. The problem is the validity of measurements taken in one location under one set of conditions being used for a different location under different conditions. Various empirical formulae and graphs exist which enable an estimate to be made but the results need to be used with caution.
+
+
+== Clutter folding ==
+
+Clutter folding is a term used in describing "clutter" seen by radar systems. Clutter folding becomes a problem when the range extent of the clutter (seen by the radar) exceeds the pulse repetition frequency interval of the radar, and it no longer provides adequate clutter suppression, and the clutter "folds" back in range. The solution to this problem is usually to add fill pulses to each coherent dwell of the radar, increasing the range over which clutter suppression is applied by the system.
+The tradeoff for doing this is that adding fill pulses will degrade the performance, due to wasted transmitter power and a longer dwell time.
+
+
+== References ==

@@ -161,6 +161,7 @@ class DocumentIndex:
         self._dense = DenseVectorIndex()
         self._legacy = SimpleVectorIndex()          # fallback when no embedder
         self._meta: Dict[str, dict] = {}
+        self.index_version = "idx-00000000-0000"
 
     # ------------------------------------------------------------------
     # Indexing
@@ -183,23 +184,73 @@ class DocumentIndex:
             self._meta[chunk.chunk_id] = {
                 "chunk_id": chunk.chunk_id,
                 "doc_id": chunk.doc_id,
-                "doc_rev": chunk.doc_rev,
-                "page": chunk.page,
-                "section_id": chunk.section_id,
+                "version": getattr(chunk, "version", "v1.0"),
+                "page_range": getattr(chunk, "page_range", "unknown"),
+                "section_id": getattr(chunk, "section_id", "unknown"),
                 "text": chunk.text,
-                "security_label": chunk.security_label,
-                "doc_field": chunk.doc_field,
+                "security_label": getattr(chunk, "security_label", "INTERNAL"),
+                "doc_field": getattr(chunk, "doc_field", "air"),
+                "doc_type": getattr(chunk, "doc_type", "unknown"),
+                "title": getattr(chunk, "title", ""),
+                "system": getattr(chunk, "system", ""),
+                "subsystem": getattr(chunk, "subsystem", ""),
+                "date": getattr(chunk, "date", ""),
+                "language": getattr(chunk, "language", "en"),
+                "source_uri": getattr(chunk, "source_uri", ""),
+                "section_path": getattr(chunk, "section_path", ""),
             }
             if self._embedder is None:
                 self._legacy.add(chunk.chunk_id, tokens)
 
-        self._bm25.add_documents(chunk_ids, tokenized)
-
         if self._embedder is not None:
+            # P0: Compute embeddings first for near-deduplication
             vecs = self._embedder.encode(texts)   # (N, D) float32 L2-norm
-            self._dense.add_vectors(chunk_ids, vecs)
+            
+            # Near-dedup: similarity > 0.95 within same field/doc_type
+            # We filter chunks before inserting them into BM25/Dense
+            filtered_indices = []
+            for i, chunk in enumerate(chunks):
+                is_duplicate = False
+                # Fast check using dense search logic if index already has vectors
+                if self._dense._matrix is not None and len(self._dense._chunk_ids) > 0:
+                    scores = self._dense._matrix @ vecs[i] # (N,)
+                    # Check top hits
+                    # Find indices where score > 0.95
+                    high_sim_indices = np.where(scores > 0.95)[0]
+                    for idx in high_sim_indices:
+                        existing_cid = self._dense._chunk_ids[idx]
+                        existing_meta = self._meta.get(existing_cid)
+                        if existing_meta:
+                            # Must match field and doc_type to be considered near dup
+                            if (existing_meta.get("doc_field") == chunk.doc_field and 
+                                existing_meta.get("doc_type") == chunk.doc_type):
+                                is_duplicate = True
+                                break
+                
+                if not is_duplicate:
+                    filtered_indices.append(i)
 
-        return len(chunks)
+            # Apply filter
+            if len(filtered_indices) < len(chunks):
+                # We found some duplicates
+                chunk_ids = [chunk_ids[i] for i in filtered_indices]
+                tokenized = [tokenized[i] for i in filtered_indices]
+                vecs = vecs[filtered_indices]
+                # Note: self._meta retains the duplicates' metadata but they won't be in BM25 or Dense search
+                # Realistically we should delete them from self._meta as well:
+                dropped_cids = {chunks[i].chunk_id for i in range(len(chunks)) if i not in filtered_indices}
+                for cid in dropped_cids:
+                    if cid in self._meta:
+                        del self._meta[cid]
+
+            self._dense.add_vectors(chunk_ids, vecs)
+            self._bm25.add_documents(chunk_ids, tokenized)
+            return len(filtered_indices)
+        else:
+            self._bm25.add_documents(chunk_ids, tokenized)
+            for cid, tokens in zip(chunk_ids, tokenized):
+                self._legacy.add(cid, tokens)
+            return len(chunks)
 
     # ------------------------------------------------------------------
     # Search
@@ -282,7 +333,10 @@ class DocumentIndex:
             pickle.dump(self._legacy, f)
 
         with open(os.path.join(index_dir, "meta.json"), "w", encoding="utf-8") as f:
-            json.dump(self._meta, f, ensure_ascii=False)
+            out_meta = self._meta.copy()
+            if hasattr(self, "index_version"):
+                out_meta["index_version"] = self.index_version
+            json.dump(out_meta, f, ensure_ascii=False)
 
     @classmethod
     def load(cls, index_dir: str, embedder=None) -> "DocumentIndex":
@@ -313,6 +367,8 @@ class DocumentIndex:
             idx._legacy = pickle.load(f)
 
         with open(os.path.join(index_dir, "meta.json"), encoding="utf-8") as f:
-            idx._meta = json.load(f)
+            meta = json.load(f)
+            idx.index_version = meta.pop("index_version", "idx-00000000-0000")
+            idx._meta = meta
 
         return idx

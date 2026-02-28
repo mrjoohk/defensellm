@@ -7,13 +7,13 @@ from typing import List
 
 E_VALIDATION = "E_VALIDATION"
 
-_REQUIRED_CHUNK_FIELDS = {"doc_id", "doc_rev", "text"}
+_REQUIRED_CHUNK_FIELDS = {"doc_id", "version", "text"}
 
 
 def package_citations(chunks: List[dict]) -> List[dict]:
     """Package search result chunks into citation records (UF-022).
 
-    Each citation includes doc_id, doc_rev, page (or section_id), snippet, snippet_hash.
+    Each citation includes doc_id, version, page_range (or section_id), snippet, snippet_hash.
 
     Args:
         chunks: List of search result dicts from hybrid_search.
@@ -37,8 +37,8 @@ def package_citations(chunks: List[dict]) -> List[dict]:
 
         citations.append({
             "doc_id": chunk["doc_id"],
-            "doc_rev": chunk["doc_rev"],
-            "page": chunk.get("page", 1),
+            "doc_rev": chunk["version"],
+            "page": chunk.get("page_range", "unknown"),
             "section_id": chunk.get("section_id"),
             "title": chunk.get("title"),
             "snippet": snippet,

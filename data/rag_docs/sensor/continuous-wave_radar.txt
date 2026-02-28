@@ -1,0 +1,1859 @@
+# Continuous-wave radar
+
+Continuous-wave radar (CW radar) is a type of radar system in which radio energy of a known stable frequency is transmitted continuously and then received from any reflecting objects. Individual objects can be detected using the Doppler effect, which causes the received signal to have a different frequency from the transmitted signal, allowing it to be detected by filtering out the transmitted frequency.
+Doppler analysis of radar returns can allow the filtering out of slow or non-moving objects, thus offering immunity to interference from large stationary objects and slow-moving clutter. This makes it particularly useful for looking for objects against a background reflector, for instance, allowing a high-flying aircraft to look for aircraft flying at low altitudes against the background of the surface. Because the very strong reflection off the surface can be filtered out, the much smaller reflection from a target can still be seen.
+CW radar systems are used at both ends of the range spectrum.
+
+Inexpensive radio-altimeters, proximity sensors and sports accessories that operate from a few dozen feet to several kilometres
+Costly early-warning CW angle track (CWAT) radar operating beyond 100 km for use with surface-to-air missile systems
+
+
+== Operation ==
+The main advantage of CW radar is that energy is not pulsed so these are much simpler to manufacture and operate. They have no minimum or maximum range, although the broadcast power level imposes a practical limit on range. Continuous-wave radar maximize total power on a target because the transmitter is broadcasting continuously.
+The military uses continuous-wave radar to guide semi-active radar homing (SARH) air-to-air missiles, such as the U.S. AIM-7 Sparrow and the Standard missile family. The launch aircraft illuminates the target with a CW radar signal, and the missile homes in on the reflected radio waves. Since the missile is moving at high velocities relative to the aircraft, there is a strong Doppler shift. Most modern air combat radars, even pulse Doppler sets, have a CW function for missile guidance purposes.
+Maximum distance in a continuous-wave radar is determined by the overall bandwidth and transmitter power. This bandwidth is determined by two factors.
+
+Transmit energy density (watts per Hertz)
+Receiver filter size (bandwidth divided by the total number of filters)
+Doubling transmit power increases distance performance by about 20%. Reducing the total FM transmit noise by half has the same effect.
+Frequency domain receivers used for continuous-wave Doppler radar receivers are very different from conventional radar receivers. The receiver consists of a bank of filters, usually more than 100. The number of filters determines the maximum distance performance.
+Doubling the number of receiver filters increases distance performance by about 20%. Maximum distance performance is achieved when receiver filter size is equal to the maximum FM noise riding on the transmit signal. Reducing receiver filter size below average amount of FM transmit noise will not improve range performance.
+A CW radar is said to be matched when the receiver filter size matches the RMS bandwidth of the FM noise on the transmit signal.
+
+
+== Types ==
+There are two types of continuous-wave radar: unmodulated continuous-wave and modulated continuous-wave.
+
+
+=== Unmodulated continuous-wave ===
+
+This kind of radar can cost less than $10 (2021). Return frequencies are shifted away from the transmitted frequency based on the Doppler effect when objects are moving. There is no way to evaluate distance. This type of radar is typically used with competition sports, like golf, tennis, baseball, NASCAR racing, and some smart-home appliances including light-bulbs and motion sensors.
+The Doppler frequency change depends on the speed of light in the air (c’ ≈ c/1.0003 is slightly slower than in vacuum) and the speed of the target v:
+
+  
+    
+      
+        
+          f
+          
+            r
+          
+        
+        =
+        
+          f
+          
+            t
+          
+        
+        
+          (
+          
+            
+              
+                1
+                +
+                v
+                
+                  /
+                
+                
+                  c
+                  ′
+                
+              
+              
+                1
+                −
+                v
+                
+                  /
+                
+                
+                  c
+                  ′
+                
+              
+            
+          
+          )
+        
+      
+    
+    {\displaystyle f_{r}=f_{t}\left({\frac {1+v/c'}{1-v/c'}}\right)}
+  
+
+The Doppler frequency is thus:
+
+  
+    
+      
+        
+          f
+          
+            d
+          
+        
+        =
+        
+          f
+          
+            r
+          
+        
+        −
+        
+          f
+          
+            t
+          
+        
+        =
+        2
+        v
+        
+          
+            
+              f
+              
+                t
+              
+            
+            
+              
+                c
+                ′
+              
+              −
+              v
+            
+          
+        
+      
+    
+    {\displaystyle f_{d}=f_{r}-f_{t}=2v{\frac {f_{t}}{c'-v}}}
+  
+
+Since the usual variation of targets' speed of a radar is much smaller than 
+  
+    
+      
+        
+          c
+          ′
+        
+        ,
+        (
+        v
+        ≪
+        
+          c
+          ′
+        
+        )
+      
+    
+    {\displaystyle c',(v\ll c')}
+  
+, it is possible to simplify with 
+  
+    
+      
+        
+          c
+          ′
+        
+        −
+        v
+        ≈
+        
+          c
+          ′
+        
+      
+    
+    {\displaystyle c'-v\approx c'}
+  
+ :
+
+  
+    
+      
+        
+          f
+          
+            d
+          
+        
+        ≈
+        2
+        v
+        
+          
+            
+              f
+              
+                t
+              
+            
+            
+              c
+              ′
+            
+          
+        
+      
+    
+    {\displaystyle f_{d}\approx 2v{\frac {f_{t}}{c'}}}
+  
+
+Continuous-wave radar without frequency modulation (FM) only detects moving targets, as stationary targets (along the line of sight) will not cause a Doppler shift. Reflected signals from stationary and slow-moving objects are masked by the transmit signal, which overwhelms reflections from slow-moving objects during normal operation.
+
+
+=== Modulated continuous-wave ===
+Frequency-modulated continuous-wave radar (FM-CW) – also called continuous-wave frequency-modulated (CWFM) radar
+ – is short-range measuring radar capable of determining distance. This increases reliability by providing distance measurement along with speed measurement, which is essential when there is more than one source of reflection arriving at the radar antenna. This kind of radar is often used as "radar altimeter" to measure the exact height during the landing procedure of aircraft. It is also used as early-warning radar, wave radar, and proximity sensors. Doppler shift is not always required for detection when FM is used. While early implementations, such as the APN-1 Radar Altimeter of the 1940s, were designed for short ranges, Over The Horizon Radars (OTHR) such as the Jindalee Operational Radar Network (JORN) are designed to survey intercontinental distances of some thousands of kilometres.
+In this system the transmitted signal of a known stable frequency continuous wave varies up and down in frequency over a fixed period of time by a modulating signal. Frequency difference between the receive signal and the transmit signal increases with delay, and hence with distance. This smears out, or blurs, the Doppler signal. Echoes from a target are then mixed with the transmitted signal to produce a beat signal which will give the distance of the target after demodulation.
+A variety of modulations are possible, the transmitter frequency can slew up and down as follows:
+
+Sine wave, like air raid siren
+Sawtooth wave, like the chirp from a bird
+Triangle wave, like police siren in the United States
+Square wave, like police siren in the United Kingdom
+Range demodulation is limited to a quarter wavelength of the transmit modulation. Instrumented range for 100 Hz FM would be 500 km. That limit depends upon the type of modulation and demodulation. The following generally applies.
+
+  
+    
+      
+        
+          Instrumented Range
+        
+        =
+        
+          F
+          
+            r
+          
+        
+        −
+        
+          F
+          
+            t
+          
+        
+        =
+        
+          
+            Speed of Light
+            
+              (
+              4
+              ×
+              
+                Modulation Frequency
+              
+              )
+            
+          
+        
+      
+    
+    {\displaystyle {\text{Instrumented Range}}=F_{r}-F_{t}={\frac {\text{Speed of Light}}{(4\times {\text{Modulation Frequency}})}}}
+  
+
+The radar will report incorrect distance for reflections from distances beyond the instrumented range, such as from the moon. FMCW range measurements are only reliable to about 60% of the instrumented range, or about 300 km for 100 Hz FM.
+
+
+==== Sawtooth frequency modulation ====
+
+Sawtooth modulation is the most used in FM-CW radars where range is desired for objects that lack rotating parts. Range information is mixed with the Doppler velocity using this technique. Modulation can be turned off on alternate scans to identify velocity using unmodulated carrier frequency shift. This allows range and velocity to be found with one radar set. Triangle wave modulation can be used to achieve the same goal.
+As shown in the figure, the received waveform (green) is simply a delayed replica of the transmitted waveform (red). The transmitted frequency is used to down-convert the receive signal to baseband, and the amount of frequency shift between the transmit signal and the reflected signal increases with time delay (distance). The time delay is thus a measure of the range; a small frequency spread is produced by nearby reflections, a larger frequency spread corresponds with more time delay and a longer range.
+With the advent of modern electronics, digital signal processing is used for most detection processing. The beat signals are passed through an analog-to-digital converter, and digital processing is performed on the result. 
+The transmit signal 
+  
+    
+      
+        x
+        (
+        t
+        )
+      
+    
+    {\displaystyle x(t)}
+  
+ of a saw-tooth FM-CW radar consists of one or multiple ramps (see figure). A single ramp starts with a frequency 
+  
+    
+      
+        
+          f
+          
+            0
+          
+        
+      
+    
+    {\displaystyle f_{0}}
+  
+ and increases linearly with slope 
+  
+    
+      
+        α
+      
+    
+    {\displaystyle \alpha }
+  
+.
+
+  
+    
+      
+        f
+        (
+        t
+        )
+        =
+        
+          f
+          
+            0
+          
+        
+        +
+        α
+        t
+        ,
+      
+    
+    {\displaystyle f(t)=f_{0}+\alpha t,}
+  
+
+The ramp ends after a duration 
+  
+    
+      
+        T
+      
+    
+    {\displaystyle T}
+  
+ and has covered a bandwidth 
+  
+    
+      
+        B
+        =
+        α
+        T
+      
+    
+    {\displaystyle B=\alpha T}
+  
+.
+During the time of a single ramp, the transmit signal is a scaled cosine.
+
+  
+    
+      
+        x
+        (
+        t
+        )
+        =
+        
+          a
+          
+            
+              t
+              x
+            
+          
+        
+        cos
+        ⁡
+        
+          (
+          
+            ϕ
+            (
+            t
+            )
+          
+          )
+        
+        =
+        
+          a
+          
+            
+              t
+              x
+            
+          
+        
+        ⋅
+        cos
+        ⁡
+        
+          (
+          
+            2
+            π
+            
+              [
+              
+                
+                  f
+                  
+                    0
+                  
+                
+                +
+                
+                  
+                    α
+                    2
+                  
+                
+                t
+              
+              ]
+            
+            t
+          
+          )
+        
+      
+    
+    {\displaystyle x(t)=a_{\mathrm {tx} }\cos \left(\phi (t)\right)=a_{\mathrm {tx} }\cdot \cos \left(2\pi \left[f_{0}+{\frac {\alpha }{2}}t\right]t\right)}
+  
+
+The instantaneous frequency is 
+
+  
+    
+      
+        
+          
+            1
+            
+              2
+              π
+            
+          
+        
+        ⋅
+        
+          
+            
+              
+                d
+              
+              ϕ
+              (
+              t
+              )
+            
+            
+              
+                d
+              
+              t
+            
+          
+        
+        =
+        f
+        (
+        t
+        )
+      
+    
+    {\displaystyle {\frac {1}{2\pi }}\cdot {\frac {\mathrm {d} \phi (t)}{\mathrm {d} t}}=f(t)}
+  
+
+The radar receives the signal 
+  
+    
+      
+        y
+        (
+        t
+        )
+      
+    
+    {\displaystyle y(t)}
+  
+ which is a sum of 
+  
+    
+      
+        K
+      
+    
+    {\displaystyle K}
+  
+ damped and delayed versions of the signal 
+  
+    
+      
+        x
+        (
+        t
+        )
+      
+    
+    {\displaystyle x(t)}
+  
+.
+
+  
+    
+      
+        y
+        (
+        t
+        )
+        =
+        
+          ∑
+          
+            k
+            =
+            0
+          
+          
+            K
+            −
+            1
+          
+        
+        
+          b
+          
+            k
+          
+        
+        x
+        (
+        t
+        −
+        
+          τ
+          
+            k
+          
+        
+        )
+      
+    
+    {\displaystyle y(t)=\sum _{k=0}^{K-1}b_{k}x(t-\tau _{k})}
+  
+
+The delays 
+  
+    
+      
+        
+          τ
+          
+            k
+          
+        
+      
+    
+    {\displaystyle \tau _{k}}
+  
+ denote the time a signal travels form the radar to an object and back to the radar. This time depends on the initial distance between the radar 
+  
+    
+      
+        r
+      
+    
+    {\displaystyle r}
+  
+ and the object at time 
+  
+    
+      
+        t
+        =
+        0
+      
+    
+    {\displaystyle t=0}
+  
+, on the relative velocity 
+  
+    
+      
+        v
+      
+    
+    {\displaystyle v}
+  
+, and on the speed of light in the medium (with 
+  
+    
+      
+        
+          c
+          ′
+        
+        =
+        c
+        
+          /
+        
+        n
+      
+    
+    {\displaystyle c'=c/n}
+  
+ and 
+  
+    
+      
+        n
+        =
+        1
+      
+    
+    {\displaystyle n=1}
+  
+ in vacuum and 
+  
+    
+      
+        n
+        =
+        1.0003
+      
+    
+    {\displaystyle n=1.0003}
+  
+ for air)
+
+  
+    
+      
+        
+          τ
+          
+            k
+          
+        
+        =
+        
+          
+            
+              2
+              r
+            
+            
+              c
+              ′
+            
+          
+        
+        −
+        
+          
+            
+              2
+              v
+            
+            
+              c
+              ′
+            
+          
+        
+        t
+      
+    
+    {\displaystyle \tau _{k}={\frac {2r}{c'}}-{\frac {2v}{c'}}t}
+  
+
+The radar mixes (multiplies) the received signal 
+  
+    
+      
+        y
+        (
+        t
+        )
+      
+    
+    {\displaystyle y(t)}
+  
+ with the transmitted signal 
+  
+    
+      
+        x
+        (
+        t
+        )
+      
+    
+    {\displaystyle x(t)}
+  
+ and applies a low-pass filter. The resulting ″deramped″ signal can be approximated as a sum of cosines.
+
+  
+    
+      
+        
+          y
+          
+            
+              d
+              e
+              r
+              a
+              m
+              p
+              e
+              d
+            
+          
+        
+        (
+        t
+        )
+        ≈
+        
+          ∑
+          
+            k
+            =
+            0
+          
+          
+            K
+            −
+            1
+          
+        
+        
+          a
+          
+            
+              t
+              x
+            
+          
+        
+        
+          b
+          
+            k
+          
+        
+        cos
+        ⁡
+        
+          (
+          
+            2
+            π
+            
+              f
+              
+                
+                  b
+                
+                ,
+                k
+              
+            
+            t
+            +
+            
+              φ
+              
+                k
+              
+            
+          
+          )
+        
+      
+    
+    {\displaystyle y_{\mathrm {deramped} }(t)\approx \sum _{k=0}^{K-1}a_{\mathrm {tx} }b_{k}\cos \left(2\pi f_{\mathrm {b} ,k}t+\varphi _{k}\right)}
+  
+
+Each of these cosines corresponds to a path that the signal travelled from the radar to an object and back to the radar. The frequencies 
+  
+    
+      
+        
+          f
+          
+            
+              b
+            
+            ,
+            k
+          
+        
+      
+    
+    {\displaystyle f_{\mathrm {b} ,k}}
+  
+ are called beat frequencies.
+
+  
+    
+      
+        
+          f
+          
+            
+              b
+            
+            ,
+            k
+          
+        
+        =
+        
+          
+            
+              2
+              α
+              
+                r
+                
+                  k
+                
+              
+            
+            
+              c
+              ′
+            
+          
+        
+        −
+        
+          
+            
+              2
+              
+                v
+                
+                  k
+                
+              
+              
+                f
+                
+                  
+                    c
+                  
+                
+              
+            
+            
+              c
+              ′
+            
+          
+        
+        ,
+      
+    
+    {\displaystyle f_{\mathrm {b} ,k}={\frac {2\alpha r_{k}}{c'}}-{\frac {2v_{k}f_{\mathrm {c} }}{c'}},}
+  
+
+The beat frequencies depend on the distance (range) 
+  
+    
+      
+        
+          r
+          
+            k
+          
+        
+      
+    
+    {\displaystyle r_{k}}
+  
+ between radar and object 
+  
+    
+      
+        k
+      
+    
+    {\displaystyle k}
+  
+, on the speed of light, on the slope 
+  
+    
+      
+        α
+      
+    
+    {\displaystyle \alpha }
+  
+, the relative velocity 
+  
+    
+      
+        
+          v
+          
+            k
+          
+        
+      
+    
+    {\displaystyle v_{k}}
+  
+ of object 
+  
+    
+      
+        k
+      
+    
+    {\displaystyle k}
+  
+ with respect to the radar, and on the carrier frequency 
+  
+    
+      
+        
+          f
+          
+            
+              c
+            
+          
+        
+        =
+        
+          f
+          
+            0
+          
+        
+        +
+        B
+        
+          /
+        
+        2
+      
+    
+    {\displaystyle f_{\mathrm {c} }=f_{0}+B/2}
+  
+.
+Since the beat frequency contains the distance 
+  
+    
+      
+        
+          r
+          
+            k
+          
+        
+      
+    
+    {\displaystyle r_{k}}
+  
+ to the object and the velocity 
+  
+    
+      
+        
+          v
+          
+            k
+          
+        
+      
+    
+    {\displaystyle v_{k}}
+  
+ of the object, it is in general not possible to separate both quantities from a single transmitted saw-tooth only. 
+If the velocity is zero or if 
+  
+    
+      
+        v
+        
+          f
+          
+            
+              c
+            
+          
+        
+      
+    
+    {\displaystyle vf_{\mathrm {c} }}
+  
+ is negligible compared to 
+  
+    
+      
+        α
+        
+          r
+          
+            k
+          
+        
+      
+    
+    {\displaystyle \alpha r_{k}}
+  
+, the distance can be computed via 
+
+  
+    
+      
+        
+          r
+          
+            k
+          
+        
+        =
+        
+          
+            
+              
+                c
+                ′
+              
+              
+                f
+                
+                  
+                    b
+                  
+                  ,
+                  k
+                
+              
+            
+            
+              2
+              α
+            
+          
+        
+        .
+      
+    
+    {\displaystyle r_{k}={\frac {c'f_{\mathrm {b} ,k}}{2\alpha }}.}
+  
+
+As described above, the deramped signal is a superposition of cosines. This results in an inherent ambiguity in the distance estimation (now assuming non-moving objects). According to the Nyquist–Shannon sampling theorem, the maximum frequency that can be recovered after sampling is half the sampling frequency 
+  
+    
+      
+        
+          f
+          
+            
+              S
+            
+          
+        
+      
+    
+    {\displaystyle f_{\mathrm {S} }}
+  
+. Hence, the maximum beat frequency that can be observed after sampling is 
+  
+    
+      
+        
+          f
+          
+            
+              b
+            
+            ,
+            
+              m
+              a
+              x
+            
+          
+        
+        =
+        
+          f
+          
+            
+              S
+            
+          
+        
+        
+          /
+        
+        2
+      
+    
+    {\displaystyle f_{\mathrm {b} ,\mathrm {max} }=f_{\mathrm {S} }/2}
+  
+. This translates into maximum range 
+  
+    
+      
+        
+          r
+          
+            
+              m
+              a
+              x
+            
+          
+        
+      
+    
+    {\displaystyle r_{\mathrm {max} }}
+  
+. This ambiguity is called the maximum unambiguous range.
+
+  
+    
+      
+        
+          r
+          
+            
+              m
+              a
+              x
+            
+          
+        
+        =
+        
+          
+            
+              
+                f
+                
+                  
+                    S
+                  
+                
+              
+              
+                c
+                ′
+              
+            
+            
+              4
+              α
+            
+          
+        
+        =
+        
+          
+            
+              
+                f
+                
+                  
+                    S
+                  
+                
+              
+              
+                c
+                ′
+              
+              T
+            
+            
+              4
+              B
+            
+          
+        
+      
+    
+    {\displaystyle r_{\mathrm {max} }={\frac {f_{\mathrm {S} }c'}{4\alpha }}={\frac {f_{\mathrm {S} }c'T}{4B}}}
+  
+
+The maximum unambiguous range depends on the sampling frequency 
+  
+    
+      
+        
+          f
+          
+            
+              S
+            
+          
+        
+      
+    
+    {\displaystyle f_{\mathrm {S} }}
+  
+, on the speed of light 
+  
+    
+      
+        
+          c
+          ′
+        
+      
+    
+    {\displaystyle c'}
+  
+, and on the frequency slope 
+  
+    
+      
+        α
+      
+    
+    {\displaystyle \alpha }
+  
+ (or equivalently on the length 
+  
+    
+      
+        T
+      
+    
+    {\displaystyle T}
+  
+ of the saw-tooth and the covered bandwidth 
+  
+    
+      
+        B
+      
+    
+    {\displaystyle B}
+  
+).
+Without any additional information, an FM-CW radar with saw-tooth frequency modulation cannot distinguish between a distance 
+  
+    
+      
+        r
+      
+    
+    {\displaystyle r}
+  
+ and a distance 
+  
+    
+      
+        
+          r
+          ′
+        
+        =
+        r
+        +
+        n
+        
+          r
+          
+            
+              m
+              a
+              x
+            
+          
+        
+      
+    
+    {\displaystyle r'=r+nr_{\mathrm {max} }}
+  
+, for any integer 
+  
+    
+      
+        n
+      
+    
+    {\displaystyle n}
+  
+. Both distances would result in the same beat frequency. Usually, it is just assumed that only ranges 
+  
+    
+      
+        r
+        =
+        0
+        …
+        
+          r
+          
+            
+              m
+              a
+              x
+            
+          
+        
+      
+    
+    {\displaystyle r=0\ldots r_{\mathrm {max} }}
+  
+ are present.
+For practical reasons, receive samples are not processed for a brief period after the modulation ramp begins because incoming reflections will have modulation from the previous modulation cycle. This imposes a range limit and limits performance.
+
+  
+    
+      
+        
+          Range Limit
+        
+        =
+        0.5
+         
+        
+          c
+          ′
+        
+         
+        
+          t
+          
+            r
+            a
+            d
+            a
+            r
+          
+        
+      
+    
+    {\displaystyle {\text{Range Limit}}=0.5\ c'\ t_{radar}}
+  
+,
+
+
+==== Sinusoidal frequency modulation ====
+
+Sinusoidal FM is used when both range and velocity are required simultaneously for complex objects with multiple moving parts like turbine fan blades, helicopter blades, or propellers. This processing reduces the effect of complex spectra modulation produced by rotating parts that introduce errors into range measurement process.
+This technique also has the advantage that the receiver never needs to stop processing incoming signals because the modulation waveform is continuous with no impulse modulation.
+Sinusoidal FM is eliminated by the receiver for close in reflections because the transmit frequency will be the same as the frequency being reflected back into the receiver. The spectrum for more distant objects will contain more modulation. The amount of spectrum spreading caused by modulation riding on the receive signal is proportional to the distance to the reflecting object.
+The time domain formula for FM is:
+
+  
+    
+      
+        y
+        (
+        t
+        )
+        =
+        cos
+        ⁡
+        
+          {
+          
+            2
+            π
+            [
+            
+              f
+              
+                c
+              
+            
+            +
+            
+              B
+            
+            cos
+            ⁡
+            
+              (
+              
+                2
+                π
+                
+                  f
+                  
+                    m
+                  
+                
+                t
+              
+              )
+            
+            ]
+            t
+          
+          }
+        
+        
+      
+    
+    {\displaystyle y(t)=\cos \left\{2\pi [f_{c}+\mathrm {B} \cos \left(2\pi f_{m}t\right)]t\right\}\,}
+  
+
+where 
+  
+    
+      
+        
+          B
+        
+        =
+        
+          
+            
+              f
+              
+                Δ
+              
+            
+            
+              f
+              
+                m
+              
+            
+          
+        
+      
+    
+    {\displaystyle \mathrm {B} ={\frac {f_{\Delta }}{f_{m}}}}
+  
+ (modulation index)
+A time delay is introduced in transit between the radar and the reflector.
+
+  
+    
+      
+        y
+        (
+        t
+        )
+        =
+        cos
+        ⁡
+        
+          {
+          
+            2
+            π
+            [
+            
+              f
+              
+                c
+              
+            
+            +
+            
+              B
+            
+            cos
+            ⁡
+            
+              (
+              
+                2
+                π
+                
+                  f
+                  
+                    m
+                  
+                
+                (
+                t
+                +
+                δ
+                t
+                )
+              
+              )
+            
+            ]
+            (
+            t
+            +
+            δ
+            t
+            )
+          
+          }
+        
+        
+      
+    
+    {\displaystyle y(t)=\cos \left\{2\pi [f_{c}+\mathrm {B} \cos \left(2\pi f_{m}(t+\delta t)\right)](t+\delta t)\right\}\,}
+  
+
+where 
+  
+    
+      
+        δ
+        t
+        =
+      
+    
+    {\displaystyle \delta t=}
+  
+ time delay
+The detection process down converts the receive signal using the transmit signal. This eliminates the carrier.
+
+  
+    
+      
+        y
+        (
+        t
+        )
+        =
+        cos
+        ⁡
+        
+          {
+          
+            2
+            π
+            [
+            
+              f
+              
+                c
+              
+            
+            +
+            
+              B
+            
+            cos
+            ⁡
+            
+              (
+              
+                2
+                π
+                
+                  f
+                  
+                    m
+                  
+                
+                (
+                t
+                +
+                δ
+                t
+                )
+              
+              )
+            
+            ]
+            (
+            t
+            +
+            δ
+            t
+            )
+          
+          }
+        
+        
+        cos
+        ⁡
+        
+          {
+          
+            2
+            π
+            [
+            
+              f
+              
+                c
+              
+            
+            +
+            
+              B
+            
+            cos
+            ⁡
+            
+              (
+              
+                2
+                π
+                
+                  f
+                  
+                    m
+                  
+                
+                t
+              
+              )
+            
+            ]
+            t
+          
+          }
+        
+        
+      
+    
+    {\displaystyle y(t)=\cos \left\{2\pi [f_{c}+\mathrm {B} \cos \left(2\pi f_{m}(t+\delta t)\right)](t+\delta t)\right\}\;\cos \left\{2\pi [f_{c}+\mathrm {B} \cos \left(2\pi f_{m}t\right)]t\right\}\,}
+  
+
+  
+    
+      
+        y
+        (
+        t
+        )
+        ≈
+        cos
+        ⁡
+        
+          {
+          
+            −
+            4
+            t
+            π
+            
+              B
+            
+            sin
+            ⁡
+            (
+            2
+            π
+            
+              f
+              
+                m
+              
+            
+            (
+            2
+            t
+            +
+            δ
+            t
+            )
+            sin
+            ⁡
+            (
+            π
+            
+              f
+              
+                m
+              
+            
+            δ
+            t
+            )
+            +
+            2
+            δ
+            t
+            π
+            
+              B
+            
+            cos
+            ⁡
+            (
+            2
+            π
+            
+              f
+              
+                m
+              
+            
+            (
+            t
+            +
+            δ
+            t
+            )
+            )
+          
+          }
+        
+        
+      
+    
+    {\displaystyle y(t)\approx \cos \left\{-4t\pi \mathrm {B} \sin(2\pi f_{m}(2t+\delta t)\sin(\pi f_{m}\delta t)+2\delta t\pi \mathrm {B} \cos(2\pi f_{m}(t+\delta t))\right\}\,}
+  
+
+The Carson bandwidth rule can be seen in this equation, and that is a close approximation to identify the amount of spread placed on the receive spectrum:
+
+  
+    
+      
+        
+          Modulation Spectrum Spread
+        
+        ≈
+        2
+        (
+        
+          B
+        
+        +
+        1
+        )
+        
+          f
+          
+            m
+          
+        
+        sin
+        ⁡
+        (
+        δ
+        t
+        )
+      
+    
+    {\displaystyle {\text{Modulation Spectrum Spread}}\approx 2(\mathrm {B} +1)f_{m}\sin(\delta t)}
+  
+
+  
+    
+      
+        
+          Range
+        
+        =
+        0.5
+        C
+        
+          /
+        
+        δ
+        t
+      
+    
+    {\displaystyle {\text{Range}}=0.5C/\delta t}
+  
+
+Receiver demodulation is used with FMCW similar to the receiver demodulation strategy used with pulse compression. This takes place before Doppler CFAR detection processing. A large modulation index is needed for practical reasons.
+Practical systems introduce reverse FM on the receive signal using digital signal processing before the fast Fourier transform process is used to produce the spectrum. This is repeated with several different demodulation values. Range is found by identifying the receive spectrum where width is minimum.
+Practical systems also process receive samples for several cycles of the FM in order to reduce the influence of sampling artifacts.
+
+
+== Configurations ==
+
+There are two different antenna configurations used with continuous-wave radar: monostatic radar, and bistatic radar.
+
+
+=== Monostatic ===
+The radar receive antenna is located nearby the radar transmit antenna in monostatic radar.
+Feed-through null is typically required to eliminate bleed-through between the transmitter and receiver to increase sensitivity in practical systems. This is typically used with continuous-wave angle tracking (CWAT) radar receivers that are interoperable with surface-to-air missile systems.
+Interrupted continuous-wave can be used to eliminate bleed-through between the transmit and receive antenna. This kind of system typically takes one sample between each pair of transmit pulses, and the sample rate is typically 30 kHz or more. This technique is used with the least expensive kinds of radar, such as those used for traffic monitoring and sports.
+FM-CW radars can be built with one antenna using either a circulator, or circular polarization.
+
+
+=== Bistatic ===
+The radar receive antenna is located far from the radar transmit antenna in bistatic radar. The transmitter is fairly expensive, while the receiver is fairly inexpensive and disposable.
+This is typically used with semi-active radar homing including most surface-to-air missile systems. The transmit radar is typically located near the missile launcher. The receiver is located in the missile.
+The transmit antenna illuminates the target in much the same way as a search light. The transmit antenna also issues an omnidirectional sample.
+The receiver uses two antennas – one antenna aimed at the target and one antenna aimed at the transmit antenna. The receive antenna that is aimed at the transmit antenna is used to develop the feed-through null, which allows the target receiver to operate reliably in or near the main beam of the antenna.
+The bistatic FM-CW receiver and transmitter pair may also take the form of an over-the-air deramping (OTAD) system. An OTAD transmitter broadcasts an FM-CW signal on two different frequency channels; one for synchronisation of the receiver with the transmitter, the other for illuminating the measurement scene. Using directive antennas, the OTAD receiver collects both signals simultaneously and mixes the synchronisation signal with the downconverted echo signal from the measurement scene in a process known as over-the-air deramping. The frequency of deramped signal is proportional to the bistatic range to the target less the baseline distance between the OTAD transmitter and the OTAD receiver.
+Most modern systems FM-CW radars use one transmitter antenna and multiple receiver antennas. Because the transmitter is on continuously at effectively the same frequency as the receiver, special care must be exercised to avoid overloading the receiver stages.
+
+
+=== Monopulse ===
+
+Monopulse antennas produce angular measurements without pulses or other modulation. This technique is used in semi-active radar homing.
+
+
+=== Leakage ===
+The transmit signal will leak into the receiver on practical systems. Significant leakage will come from nearby environmental reflections even if antenna components are perfect. As much as 120 dB of leakage rejection is required to achieve acceptable performance.
+Three approaches can be used to produce a practical system that will function correctly.
+
+Null
+Filter
+Interruption
+Null and filter approaches must be used with bistatic radar, like semi-active radar homing, for practical reasons because side-lobes from the illumination radar will illuminate the environment in addition to the main-lobe illumination on the target. Similar constraints apply to ground-based CW radar. This adds cost.
+Interruption applies to cheap hand held mono-static radar systems (police radar and sporting goods). This is impractical for bistatic systems because of the cost and complexity associated with coordinating time with nanosecond precision in two different locations.
+The design constraint that drives this requirement is the dynamic range limitation of practical receiver components that include band pass filters that take time to settle out.
+Null, also known as a signal cancellation
+The null approach takes two signals:
+
+A sample of the transmit signal leaking into the receiver
+A sample of the actual transmit signal
+The actual transmit signal is rotated 180 degrees, attenuated, and fed into the receiver. The phase shift and attenuation are set using feedback obtained from the receiver to cancel most of the leakage. Typical improvement is on the order of 30 dB to 70 dB.
+
+
+==== Filter ====
+The filter approach relies on using a very narrow band reject filter that will eliminate low velocity signals from nearby reflectors. The band reject area spans 10 mile per hour to 100 mile per hour depending upon the anticipated environment. Typical improvement is on the order of 30 dB to 70 dB.
+
+
+==== Interruption, FMICW ====
+While interrupted carrier systems are not considered to be CW systems, performance characteristics are sufficiently similar to group interrupted CW systems with pure CW radar because the pulse rate is high enough that range measurements cannot be done without frequency modulation (FM).
+This technique turns the transmitter off for a period before receiver sampling begins. Receiver interference declines by about 8.7 dB per time constant. Leakage reduction of 120 dB requires 14 recover bandwidth time constants between when the transmitter is turned off and receiver sampling begins.
+The interruption concept is widely used, especially in long-range radar applications where the receiver sensitivity is very important. It is commonly known as "frequency modulated interrupted continuous wave", or FMICW.
+
+
+== Advantages ==
+Because of simplicity, CW radar are inexpensive to manufacture, relatively free from failure, cheap to maintain, and fully automated. Some are small enough to carry in a pocket. More sophisticated CW radar systems can reliably achieve accurate detections exceeding 100 km distance while providing missile illumination.
+The FMCW ramp can be compressed providing extra signal to noise gains such one does not need the extra power that pulse radar using a no FM modulation would. This combined with the fact that it is coherent means that Fourier integration can be used rather than azimuth integration providing superior signal to noise and a Doppler measurement.
+Doppler processing allows signal integration between successive receiver samples. This means that the number of samples can be increased to extend the detection range without increasing transmit power. That technique can be used to produce inexpensive stealthy low-power radar.
+CW performance is similar to Pulse-Doppler radar performance for this reason.
+
+
+== Limitations ==
+Unmodulated continuous wave radar cannot measure distance. Signal amplitude provides the only way to determine which object corresponds with which speed measurement when there is more than one moving object near the receiver, but amplitude information is not useful without range measurement to evaluate target size. Moving objects include birds flying near objects in front of the antenna. Reflections from small objects directly in front of the receiver can be overwhelmed by reflections entering antenna side-lobes from large object located to the side, above, or behind the radar, such as trees with wind blowing through the leaves, tall grass, sea surface, freight trains, busses, trucks, and aircraft.
+Small radar systems that lack range modulation are only reliable when used with one object in a sterile environment free from vegetation, aircraft, birds, weather phenomenon, and other nearby vehicles.
+With 20 dB antenna side-lobes, a truck or tree with 1,000 square feet of reflecting surface behind the antenna can produce a signal as strong as a car with 10 square feet of reflecting in front of a small hand held antenna. An area survey is required to determine if hand held devices will operate reliably because unobserved roadway traffic and trees behind the operator can interfere with observations made in front of the operator.
+This is a typical problem with radar speed guns used by law enforcement officers, NASCAR events, and sports, like baseball, golf, and tennis. Interference from a second radar, automobile ignition, other moving objects, moving fan blades on the intended target, and other radio frequency sources will corrupt measurements. These systems are limited by wavelength, which is 0.02 meter at Ku band, so the beam spread exceeds 45 degrees if the antenna is smaller than 12 inches (0.3 meter). Significant antenna side-lobes extend in all directions unless the antenna is larger than the vehicle on which the radar is mounted.
+Side-lobe suppression and FM range modulation are required for reliable operation. There is no way to know the direction of the arriving signal without side-lobe suppression, which requires two or more antennae, each with its own individual receiver. There is no way to know distance without FM range modulation.
+Speed, direction, and distance are all required to pick out an individual object.
+These limitations are due to the well known limitations of basic physics that cannot be overcome by design.
+
+
+== See also ==
+Doppler radar – Type of radar equipment
+Pulse-Doppler radar – Type of radar system
+
+
+== Bibliography ==
+Luck, David G. C. Frequency Modulated Radar, published by McGraw-Hill, New York City, 1949, 466 pages.
+Stimson, George W. Introduction to Airborne Radar, 2nd ed., SciTech Publishing, 584 pages.
+Jesse Zheng (2005). Optical Frequency-Modulated Continuous-Wave (FMCW) Interferometry. Springer. ISBN 978-0387230092.
+
+
+== References ==
+
+
+== External links ==
+Fairly modern invention mechanization

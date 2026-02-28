@@ -1,6 +1,48 @@
 import { useState } from 'react'
 
-function CitationRow({ citation, index }) {
+// Utility to highlight snippets based on the query string
+function highlightText(text, queryStr) {
+  if (!text || !queryStr) return text;
+
+  const stopWords = new Set(['is', 'it', 'in', 'on', 'at', 'to', 'of', 'and', 'or', 'for', 'the', 'a', 'an', '이', '그', '저', '은', '는', '이', '가', '을', '를', '에', '에게']);
+
+  // Extract keywords (filter out very short words, punctuation, and stopwords)
+  const tokens = queryStr
+    .split(/[\s,.'"?()]+/)
+    .map(t => t.trim())
+    .filter(t => t.length > 2 || (t.length > 1 && !stopWords.has(t.toLowerCase())))
+    .sort((a, b) => b.length - a.length); // match longer words first
+
+  if (tokens.length === 0) return text;
+
+  // Build a safe regex string
+  const escapeRegExp = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const regexStr = tokens.map(escapeRegExp).join('|');
+  const regex = new RegExp(`(${regexStr})`, 'gi');
+
+  const parts = text.split(regex);
+  const result = [];
+
+  for (let i = 0; i < parts.length; i++) {
+    const part = parts[i];
+    if (!part) continue;
+
+    // Check if part is a match
+    const isMatch = tokens.some(t => t.toLowerCase() === part.toLowerCase());
+    if (isMatch) {
+      result.push(
+        <mark key={i} style={{ backgroundColor: 'rgba(57, 208, 208, 0.3)', color: 'inherit', padding: '0 2px', borderRadius: '2px' }}>
+          {part}
+        </mark>
+      );
+    } else {
+      result.push(part);
+    }
+  }
+  return result;
+}
+
+function CitationRow({ citation, index, query }) {
   const [expanded, setExpanded] = useState(false)
 
   const copy = (text) => navigator.clipboard?.writeText(text)
@@ -21,14 +63,14 @@ function CitationRow({ citation, index }) {
       {citation.snippet && (
         <>
           {expanded ? (
-            <div className="citation-row__snippet">{citation.snippet}</div>
+            <div className="citation-row__snippet">{highlightText(citation.snippet, query)}</div>
           ) : (
             <div
               className="citation-row__snippet"
               style={{ cursor: 'pointer', WebkitLineClamp: 3, overflow: 'hidden', display: '-webkit-box', WebkitBoxOrient: 'vertical' }}
               onClick={() => setExpanded(true)}
             >
-              {citation.snippet}
+              {highlightText(citation.snippet, query)}
             </div>
           )}
         </>
@@ -60,7 +102,7 @@ function CitationRow({ citation, index }) {
   )
 }
 
-export default function CitationPanel({ citations = [] }) {
+export default function CitationPanel({ citations = [], query }) {
   const [open, setOpen] = useState(true)
 
   if (!citations.length) {
@@ -88,7 +130,7 @@ export default function CitationPanel({ citations = [] }) {
       {open && (
         <div className="inspector-section__body">
           {citations.map((c, i) => (
-            <CitationRow key={i} citation={c} index={i} />
+            <CitationRow key={i} citation={c} index={i} query={query} />
           ))}
         </div>
       )}

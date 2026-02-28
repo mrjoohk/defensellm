@@ -18,6 +18,7 @@ _TOOL_SCHEMAS: Dict[str, dict] = {
             "top_k": {"type": int},
             "field_filter": {"type": list},
             "security_label_filter": {"type": list},
+            "online_mode": {"type": bool},
         },
     },
     "query_structured_db": {

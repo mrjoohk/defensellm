@@ -94,6 +94,7 @@ async def lifespan(app: FastAPI):
         audit_logger=audit_logger,
         model_version="Qwen/Qwen2.5-1.5B-Instruct",
         index_version=_load_index_version(INDEX_PATH),
+        index_path=INDEX_PATH,
     )
 
     _state.update(
@@ -176,6 +177,7 @@ class QueryRequest(BaseModel):
     field_filters: List[str] = Field(default_factory=list)
     top_k: int = Field(default=5, ge=1, le=20)
     show_citations: bool = True
+    online_mode: bool = False
 
 
 class IndexResponse(BaseModel):
@@ -245,6 +247,7 @@ def query(req: QueryRequest):
     for step in plan:
         if step["tool"] == "search_docs":
             step["params"]["top_k"] = req.top_k
+            step["params"]["online_mode"] = req.online_mode
 
     response = executor.execute(plan, user_context)
     if not req.show_citations:
@@ -271,25 +274,6 @@ async def index_document(
 
     content = await file.read()
     file_hash = compute_file_hash(content)
-
-    # Register document metadata
-    try:
-        register_document(
-            DB_PATH,
-            {
-                "doc_id": doc_id,
-                "doc_rev": doc_rev,
-                "title": title,
-                "field": field,
-                "security_label": security_label,
-                "file_hash": file_hash,
-            },
-        )
-    except ValueError as e:
-        err_str = str(e)
-        if "E_CONFLICT" in err_str:
-            raise HTTPException(status_code=409, detail=err_str)
-        raise HTTPException(status_code=422, detail=err_str)
 
     # Decode text or extract from PDF
     filename = file.filename or ""
@@ -344,6 +328,25 @@ async def index_document(
     )
 
     if chunks:
+        # Register document metadata ONLY once chunks are verified and about to be added
+        try:
+            register_document(
+                DB_PATH,
+                {
+                    "doc_id": doc_id,
+                    "doc_rev": doc_rev,
+                    "title": title,
+                    "field": field,
+                    "security_label": security_label,
+                    "file_hash": file_hash,
+                },
+            )
+        except ValueError as e:
+            err_str = str(e)
+            if "E_CONFLICT" in err_str:
+                raise HTTPException(status_code=409, detail=err_str)
+            raise HTTPException(status_code=422, detail=err_str)
+            
         index.add_chunks(chunks)
         # Save with versioned name
         import datetime
@@ -363,6 +366,10 @@ async def index_document(
         meta["index_version"] = version
         with open(meta_path, "w") as f:
             json.dump(meta, f)
+            
+        executor = _state.get("executor")
+        if executor:
+            executor._index_version = version
     else:
         version = _load_index_version(INDEX_PATH)
 

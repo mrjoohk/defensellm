@@ -1,0 +1,6 @@
+# Pulse repetition frequency
+
+# Pulse repetition frequency
+
+This is a fallback document for Pulse repetition frequency due to missing Wikipedia content.
+It serves as a placeholder for sensor domain knowledge.

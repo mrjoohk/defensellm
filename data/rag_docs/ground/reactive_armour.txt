@@ -1,0 +1,71 @@
+# Reactive armour
+
+Reactive armour is a type of vehicle armour used for protecting vehicles, especially modern tanks, against anti-vehicle armour-piercing munitions.  
+Reactive armour is most effective against shaped charges and hardened kinetic energy penetrators. When a shaped charge strikes the upper plate of the armour, it detonates the inner explosive, releasing blunt damage that the tank can absorb. 
+The most common type is explosive reactive armour (ERA), but variants include self-limiting explosive reactive armour (SLERA), non-energetic reactive armour (NERA), non-explosive reactive armour (NxRA), and electric armour. NERA and NxRA modules can withstand multiple hits, unlike ERA and SLERA. 
+Reactive armour can be defeated with multiple hits in the same place, often achieved with tandem-charge weapons, which fire two or more shaped charges in rapid succession.
+
+
+== History ==
+
+
+=== World War II ===
+Australia is the first recorded nation to have conceptualized and developed methods to disrupt and spread the jet of a hollow charge shell to reduce its penetrating power. In a June 1944 report from the Explosives Manufacturing Practices Laboratory of the Defence Explosive Factory Maribyrnong, an operational requirement was laid out for the defence against Japanese 75 mm hollow charge shells used against Allied tanks in the Pacific. 
+The destructive effect of the shaped charge was identified as caused by a jet moving at high velocities, consisting of particles from the liner. The two methods developed were to destroy the jet by forcing it to act through a layer of explosives, disrupting the jet, and to make it act through a layer of oxidiser, destroying the jet by burning it with oxidising agents. 
+The earliest trials were done with small charges able to defeat 2 inches of steel plate which were readily defeated by a layer of explosive (Baratol, R.D.X., Cordite, etc.) or a vigorous oxidising medium. Subsequent trials with British No.68 and American M9A1 grenades were carried out. Only a limited number of trials were conducted, causing varied results.
+A mixture of Sodium and Potassium Nitrates explosives was seen as the most practical option due to their casting properties. The mixture acted as an oxidiser which could explode when dispersed and heated. The Explosives Manufacturing Practices Laboratory settled on a combination of chemical armor and explosive reactive armor concepts to counter the hollow charge threat.
+
+
+=== Cold War ===
+The idea of counterexplosion (kontrvzryv in Russian) in armour was proposed in the USSR by the Scientific Research Institute of Steel (NII Stali) in 1949 by academician Bogdan Vjacheslavovich Voitsekhovsky. The first pre-production models were produced during the 1960s. However, insufficient theoretical analysis during one of the tests resulted in all of the prototype elements being detonated. For a number of reasons, including the aforementioned accident and a belief that Soviet tanks had sufficient armour, the research was ended. No more research was conducted until 1974, when the Ministry of the Defensive Industry announced a contest to find the best tank protection.
+Picatinny Arsenal, an American military research facility, experimented with testing linear cutting charges against anti-tank ammunition in the 1950s. The researchers concluded that the charges may be effective with an adequate sensing and triggering mechanism but noted "tactical limitations"; the report was declassified in 1980.
+A West German researcher, Manfred Held, carried out similar work with the IDF in 1967–1969. Reactive armour created on the basis of the joint research was first installed on Israeli tanks during the 1982 Lebanon war and was judged very effective.
+
+
+== Explosive reactive armour ==
+
+An element of explosive reactive armour (ERA) is made of either a sheet or slab of high explosive sandwiched between two metal plates, or multiple "banana shaped" rods filled with high explosive which are referred to as shaped charges. On attack by a penetrating weapon, the explosive detonates, forcibly driving the metal plates apart to damage the penetrator. The shaped charges, in contrast, each detonate individually, launching one spike-shaped plate each, meant to deflect, detonate or cut the incoming projectile.
+The disruption is attributed to two mechanisms. First, the moving plates change the effective velocity and angle of impact of the shaped charge jet, reducing the angle of incidence and increasing the effective jet velocity versus the plate element. Second, since the plates are angled compared to the usual impact direction of shaped charge warheads, as the plates move outwards the impact point on the plate moves over time, requiring the jet to cut through fresh plates of material. This second effect greatly increases the effective plate thickness during the impact.
+
+To be effective against kinetic energy projectiles, ERA must use much thicker and heavier plates and a correspondingly thicker explosive layer. Such heavy ERA, such as the Soviet-developed Kontakt-5, can break apart a penetrating rod that is longer than the ERA is deep, again reducing penetration capability. Such ERA is ineffective against modern armor-piercing fin-stabilized discarding sabot (APFSDS) projectiles, however, due to their depleted uranium construction.
+An important aspect of ERA is the brisance, or detonation speed of its explosive element. A more brisant explosive and greater plate velocity will result in more plate material being fed into the path of the oncoming jet, greatly increasing the plate's effective thickness. This effect is especially pronounced in the rear plate receding away from the jet, which triples in effective thickness with double the velocity.
+
+ERA also counters explosively forged projectiles, as produced by a shaped charge. The counter-explosion must disrupt the incoming projectile so that its momentum is distributed in all directions rather than toward the target, greatly reducing its effectiveness.
+Explosive reactive armour has been valued by the Soviet Union and its now-independent component states since the 1980s, and almost every tank in the eastern-European military inventory today has either been manufactured to use ERA or had ERA tiles added to it, including even the T-55 and T-62 tanks built forty to fifty years ago, but still used today by reserve units. The U.S. Army uses reactive armour on its Abrams tanks as part of the TUSK (Tank Urban Survivability Kit) package and on Bradley vehicles and the Israelis use it frequently on their American built M60 tanks.
+ERA tiles are used as add-on (or appliqué) armour to the portions of an armoured fighting vehicle that are most likely to be hit, typically the front (glacis) of the hull and the front and sides of the turret. Their use requires that a vehicle be fairly heavily armoured to protect itself and its crew from the exploding ERA.
+A further complication to the use of ERA is the inherent danger to anyone near the tank when a plate detonates, though a high-explosive anti-tank (HEAT) warhead explosion would already cause great danger to anyone near the tank. Although ERA plates are intended only to bulge following detonation, the combined energy of the ERA explosive, coupled with the kinetic or explosive energy of the projectile, will frequently cause the plate to explode, creating shrapnel that risks injuring or killing bystanders. Thus, infantry must operate some distance from vehicles protected by ERA in combined arms operations.
+
+
+=== Sensitivity ===
+ERA is insensitive to impact by kinetic projectiles up to 30 mm in caliber. A 20 mm APIT autocannon round penetrates a Serbian ERA sample but fails to detonate it. However, computer simulations indicate that a small caliber (30 mm) HEAT projectile will detonate an ERA, as would larger shape charges and APFSDS penetrators.
+
+
+== Non-explosive and non-energetic reactive armour ==
+
+NERA and NxRA operate similarly to explosive reactive armour, but without the explosive liner.  Two metal plates sandwich an inert liner, such as rubber. When struck by a shaped charge's metal jet, some of the impact energy is dissipated into the inert liner layer, and the resulting high pressure causes a localized bending or bulging of the plates in the area of the impact. As the plates bulge, the point of jet impact shifts with the plate bulging, increasing the effective thickness of the armour. This is almost the same as the second mechanism that explosive reactive armour uses, but it uses energy from the shaped charge jet rather than from explosives.
+Since the inner liner is non-explosive, the bulging is less energetic than on explosive reactive armour, and thus offers less protection than a similarly-sized ERA. However, NERA and NxRA are lighter, safe to handle, and safer for nearby infantry; can theoretically be placed on any part of the vehicle; and can be packaged in multiple spaced layers if needed. A key advantage of this kind of armour is that it cannot be defeated by tandem warhead shaped charges, which employ a small forward warhead to detonate ERA before the main warhead fires.
+
+
+== Electric armour ==
+
+Electric armour or electromagnetic armour is a proposed reactive armour technology. It is made up of two or more conductive plates separated by an air gap or by an insulating material, creating a high-power capacitor. In operation, a high-voltage power source charges the armour. When an incoming body penetrates the plates, it closes the circuit to discharge the capacitor, dumping energy into the penetrator, which may vaporize it or even turn it into a plasma, diffusing the attack. It is not public knowledge whether this is supposed to function against both kinetic energy penetrators and shaped charge jets, or only the latter. As of 2005, this technology had not yet been introduced on any known operational platform.
+
+
+== See also ==
+Composite armour
+Gurney equations
+
+
+== References ==
+
+
+== General references ==
+Manfred Held: "Brassey's Essential Guide to Explosive Reactive Armour and Shaped Charges", Brassey 1999, ISBN 1-85753-225-2
+Graswald, Markus; Gutser, Raphael; Breiner, Jakob; Grabner, Florian; Lehmann, Timo; Oelerich, Andrea (14 April 2019). "Defeating Modern Armor and Protection Systems". 2019 15th Hypervelocity Impact Symposium. American Society of Mechanical Engineers. doi:10.1115/HVIS2019-050. ISBN 978-0-7918-8355-6. S2CID 240881543.
+
+
+== External links ==
+
+Defense Update: Reactive Armour Suits
+Defense Update: Advanced Protection for Modern Armoured Vehicles
+Defence Science and Technology Laboratory: Electric Armour - The threat of RPGs

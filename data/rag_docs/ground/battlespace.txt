@@ -1,0 +1,100 @@
+# Battlespace
+
+Battlespace or battle-space is a term used to signify a military theatre of operations, in which multiple domains are contested at the same time. Domains where military competition take place include the air, land, sea, outer space, cyberspace and the information environment.  The battlespace concept integrates the environment (to include weather and terrain), timeframe and other factors that must be understood to successfully apply combat power, protect the force, or complete the mission. Other relevant factors include enemy and friendly armed forces, the civilian population, infrastructure, socio-political factors and the electromagnetic spectrum within the operational areas and areas of interest.
+
+
+== Concept ==
+
+
+=== From "battlefield" to "battlespace" ===
+For many years, the understanding of the military operational environment has transformed from primarily a time and space-driven linear understanding (a "battlefield") to a multi-dimensional system of systems understanding (a battlespace). This system of systems understanding implies that managing the battlespace has become more complex, primarily because of the increased importance of the cognitive domain, a direct result of the information age. Today, militaries are expected to understand the effects of their actions on the operational environment as a whole, and not just in the military domain of their operational environment.
+
+
+=== From "Old" to "New" Battlespace ===
+The evolution of competition and conflict during the industrial age has led to a corresponding transformation in the ability to engage in warfare in the information age. The concept of thinking and fighting in the industrial age can be described as the "Old Battlespace," characterized by clearly defined and discernible battlefield lines in the tangible domains of land, sea, and air. 
+However, as economies and technologies have advanced, the methods by which countries and militaries compete and conduct warfare have also changed. In the information age, the tangible domains of land, sea, and air remain constant, but the emergence and prominence of cyber operations, outer space activities, civil society engagement, and social media usage have elevated the significance of intangible realms in both kinetic and non-kinetic forms of warfare. 
+This shift to a "New Battlespace" implies that traditional barriers, such as vast distances, oceans, and legal constraints, no longer present insurmountable obstacles. Consequently, emerging domains allow for the weaponization of nearly anything, turning the entire globe into a competitive arena for state and non-state actors. In this context, everyone becomes a participant in global contestation, whether willingly or not, as anything and everything can be utilized as a weapon. 
+These changes do not indicate a fundamental alteration in the nature of war between the Old and New Battlespaces; rather, they underscore the continuously evolving character of war due to changes in economies, technologies, and military strategies. "New Battlespace" poses complex challenges for strategists and policymakers. 
+The internet, deep interdependencies, and hyper-connectivity present difficulties for armies that are structured around an industrial age mindset, particularly when it comes to defending one's homeland. Addressing these challenges requires a nuanced understanding of the evolving battlespace and the ability to adapt military structures and strategies to effectively compete and defend against adversaries in the information age.
+
+
+=== Battlespace agility ===
+Battlespace agility, in the context of war-fighting, encompasses the ability of a military organization to rapidly convert knowledge into actionable strategies that yield desired outcomes within the battlespace. It emphasizes the need to outperform the opposing forces by executing appropriate actions at the right time and location. However, battlespace agility is not solely focused on speed; it also underscores the importance of executing actions in the most efficient manner possible to achieve the desired impact on the system. Fundamental to this concept is the recognition that battlespace agility relies on the quality of situational awareness and a comprehensive understanding of the battlespace, which in turn drives the renewed emphasis on the value of military intelligence.
+A central aspect of battlespace agility is the capacity of intelligence analysts and operational planners to perceive the battlespace and their targets as interconnected networks. This perspective facilitates a shared and more accurate understanding of the situation, thereby enabling faster decision-making and enhancing the overall effectiveness of targeting efforts. Battlespace agility finds its origins within the broader field of Command & Control (C2) research, specifically the exploration of C2 agility by NATO. However, it specifically addresses agility within the domain of war-fighting, thus aligning with the principles of effects-based thinking, system of systems analysis, and the competing Observe Orient Decide Act (OODA) loops.
+
+
+=== Battlespace awareness ===
+Battlespace awareness (BA) is a principle derived from military philosophy that holds significant value for joint component and force commanders, aiding them in predicting potential courses of action before deploying troops into a designated area of operation (AO). It relies on the utilization of intelligence preparation assets, which play a critical role in supporting commanders to maintain a heightened state of awareness regarding recent, ongoing, and forthcoming events within their battlespace.
+It is based around its knowledge and understanding obtained by the intelligence, surveillance, and reconnaissance (ISR) system.  It is another methodical concept used to gain information about the operational area—the environment, factors, and conditions, including the status of friendly and adversary forces, neutrals and noncombatants, weather and terrain—that enables timely, relevant, comprehensive and accurate assessments.  It has become an effective concept for conventional and unconventional operations in successfully projecting, or protecting, a military force, and/or completing its mission.
+Battlespace awareness is a comprehensive approach rooted in the acquisition and comprehension of knowledge obtained through the intelligence surveillance and reconnaissance (ISR) system. It serves as a systematic concept employed to gather pertinent information regarding the operational area, encompassing various aspects such as the environment, factors, and conditions. These include the status of friendly and adversary forces, as well as neutrals and noncombatants, weather patterns, and the terrain.
+
+
+=== Battlespace digitization ===
+Battlespace digitization is designed to improve military operational effectiveness by integrating weapons platforms, sensor networks, ubiquitous command and control (UC2), intelligence, and network-centric warfare. This military doctrine reflects that in the future, military operations will be merged into joint operations rather than take place in separate battlespaces under the domain of individual armed services.
+
+
+=== Battlespace intelligence preparation ===
+
+
+==== Intelligence preparation ====
+Intelligence preparation of the battlespace (IPB) is an analytical methodology employed to reduce uncertainties concerning the enemy, environment, and terrain for all types of operations. Intelligence preparation of the battlespace builds an extensive database for each potential area in which a unit may be required to operate.
+The database is then analyzed in detail to determine the impact of the enemy, environment and terrain on operations and presents it in graphic form. Intelligence preparation of the battlespace is a continuing and crucial process to successful warfare.
+
+
+==== Joint intelligence preparation ====
+Joint intelligence preparation of the battlespace (JIPB) is the analytical process used by joint intelligence organizations to produce intelligence assessments, estimates and other intelligence products in support of the joint force commander's decision-making process. It is a continuous process that includes defining the total battlespace environment; describing the battlespace's effects; evaluating the adversary; and determining and describing adversary potential courses of action.
+The process is used to analyze the aerial, terrestrial, maritime/littoral, spatial, electromagnetic, cyberspace, and human dimensions of the environment and to determine an opponent's capabilities to operate in each. JPIB products are used by the joint force and component command staffs in preparing their estimates and are also applied during the analysis and selection of friendly courses of action.
+
+
+=== Battlespace measures ===
+
+
+==== Maneuver control ====
+Maneuver  control measures are the basic preliminary step in effective clearance of fire support (e.g. artillery, naval gunfire support, and close air support), marked by imaginary boundary lines used by commanders to designate the geographical area for which a particular unit is tactically responsible.  It is usually established on identifiable terrain to help aid in hasty referencing for better lateral advantage in the science of fire support, normally orchestrated by a  higher echelon of the general staff, mainly the operations staff sections.
+They are normally designated along terrain features easily recognizable on the ground.  An important point on maneuver control graphics: staffs must be knowledgeable regarding the different maneuver control measures and their impact on clearance of fires. For instance, boundaries are both restrictive and permissive; corridors are restrictive, while routes, axis, and directions of attack are neither.
+It should be reminded of the effect on clearance of fires if subordinate maneuver units are not given zones or sectors (i.e. no boundaries established).  Since boundaries serve as both permissive and restrictive measures, the decision not to employ them has profound effects upon timely clearance of fires at the lowest possible level.
+The higher echelon may coordinate all clearance of fires short of the Coordinated Fire Line (CFL), a very time-intensive process.  It allows the unit to maneuver successfully and to swiftly and efficiently engage targets.  It requires coordination and clearance only within that organization.
+They affect fire support in two ways:
+
+Restrictive—Restrictive control that is established in conjunction with a host nation to preclude damage or destruction to a national asset, population center, or religious structure.  Its key role is the protection of an element of tactical importance, such as a fuel storage area.
+Restrictive fire area (RFA) is an area with specific restrictions and in which fires that exceed those restrictions will not be delivered without coordination with the establishing headquarters, or higher echelon; occasionally, it may be established to operate independently.
+No-fire area (NFA) is a designated area which  no fire support may be delivered for fires or effects.  When the establishing headquarters allows fires on a mission-by-mission basis.  When a friendly force is engaged by an enemy located within the NFA and the commander returns fire to defend their forces, the amount of return fire should not exceed that sufficient to protect the force and continue the mission.
+Permissive—Permissive control that gives the maneuver commander the liberty to announce and engage fire support at their will, unless it otherwise is restricted by a higher echelon. In most cases, a commander will deny the use of Fire Support Coordinating Measures (FSCM).
+There are free-fire areas (FFA) which fire support can commence without additional coordination with the establishing headquarters. Normally, it is established on identifiable terrain by division or higher headquarters.
+
+
+=== Battlespace shaping ===
+
+Battlespace shaping is a concept involved in the practice of maneuver warfare that are used for shaping a situation on the battlefield, gaining the military advantage for the commander.  It forecasts the elimination of the enemy's capability by fighting in a coherent manner before deploying determine-sized forces.
+
+
+== See also ==
+List of command and control abbreviations
+Command and control
+Fog of war
+Network-centric warfare
+Psychological warfare
+
+
+== References ==
+
+
+== Further reading ==
+Blackmore, T. (2005). War X: Human Extensions in Battle-space. University of Toronto Press. ISBN 0-8020-8791-4
+Galeotti, M. (2022). The Weaponisation of Everything: A Field Guide to the New Way of War. Yale University Press. ISBN 978-0-300-25344-3
+Matisek, J. and Jayamaha, B. (2022). Old and New Battlespaces: Society, Military Power, and War. Lynne Rienner. ISBN 978-1-62637-996-1
+Mitchell, W. (2013). Battle-space Agility 101. Royal Danish Defense College Publishing House. ISBN 978-87-7147-006-2
+Mitchell, W. (2013). Battle-space Agility 201.Royal Danish Defense College Publishing House. ISBN 978-87-7147-018-5
+Mitchell, W. (2012). Battle-space Intelligence. Royal Danish Defense College Publishing House. ISBN 978-87-987720-6-4
+Mitchell, W. (2012). Battle-space Agility in Helmand. Royal Danish Defense College Publishing House. ISBN 978-87-987720-5-7
+Mitchell, W. (2008). Comprehensive Approach Capacity Building.Royal Danish Defense College Publishing House. ISBN 978-87-91421-52-5
+Owens, W. (2002). Dominant Battle-space Knowledge. University Press of the Pacific. ISBN 1-4102-0413-8
+
+
+== External links ==
+
+Marine Corps Doctrinal Publication (MCDP) 1-0: Marine Corps Operations'
+Achieving Dominant Battlespace Awareness
+Joint Synthetic Battlespace: Cornerstone for Predictive Battlespace Awareness
+Battlespace Digitization - Coping With Uncertainty In The Command Process
+Challenges for Joint Battlespace Digitization (JBD)

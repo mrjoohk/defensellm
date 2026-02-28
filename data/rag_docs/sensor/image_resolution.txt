@@ -1,0 +1,125 @@
+# Image resolution
+
+Image resolution is the level of detail of an image. The term applies to digital images, film images, and other types of images. "Higher resolution" means more image detail.
+Image resolution can be measured in various ways. Resolution quantifies how close lines can be to each other and still be visibly resolved. Resolution units can be tied to physical sizes (e.g. lines per mm, lines per inch), to the overall size of a picture (lines per picture height, also known simply as lines, TV lines, or TVL), or to angular subtense. Instead of single lines, line pairs are often used, composed of a dark line and an adjacent light line; for example, a resolution of 10 lines per millimeter means 5 dark lines alternating with 5 light lines, or 5 line pairs per millimeter (5 LP/mm). Photographic lens are most often quoted in line pairs per millimeter.
+
+
+== Types ==
+
+The resolution of digital cameras can be described in many different ways.
+
+
+=== Pixel count ===
+The term resolution is often considered equivalent to pixel count in digital imaging, though international standards in the digital camera field specify it should instead be called "Number of Total Pixels" in relation to image sensors, and as "Number of Recorded Pixels" for what is fully captured. Hence, CIPA DCG-001 calls for notation such as "Number of Recorded Pixels 1000 × 1500". According to the same standards, the "Number of Effective Pixels" that an image sensor or digital camera has is the count of pixel sensors that contribute to the final image (including pixels not in said image but nevertheless support the image filtering process), as opposed to the number of total pixels, which includes unused or light-shielded pixels around the edges.
+An image of N pixels height by M pixels wide can have any resolution less than N lines per picture height, or N TV lines. But when the pixel counts are referred to as "resolution", the convention is to describe the pixel resolution with the set of two positive integer numbers, where the first number is the number of pixel columns (width) and the second is the number of pixel rows (height), for example as 7680 × 6876. Another popular convention is to cite resolution as the total number of pixels in the image, typically given as number of megapixels, which can be calculated by multiplying pixel columns by pixel rows and dividing by one million. Other conventions include describing pixels per length unit or pixels per area unit, such as pixels per inch or per square inch. None of these pixel resolutions are true resolutions, but they are widely referred to as such; they serve as upper bounds on image resolution.
+Below is an illustration of how the same image might appear at different pixel resolutions, if the pixels were poorly rendered as sharp squares (normally, a smooth image reconstruction from pixels would be preferred, but for illustration of pixels, the sharp squares make the point better).
+
+An image that is 2048 pixels in width and 1536 pixels in height has a total of 2048×1536 = 3,145,728 pixels or 3.1 megapixels.  One could refer to it as 2048 by 1536 or a 3.1-megapixel image. The image would be a very low-quality image (72ppi) if printed at about 28.5 inches wide, but a very good-quality image (300ppi) if printed at about 7 inches wide.
+The number of photodiodes in a color digital camera image sensor is often a multiple of the number of pixels in the image it produces, because information from an array of color image sensors is used to reconstruct the color of a single pixel. The image has to be interpolated or demosaiced to produce all three colors for each output pixel.
+
+
+=== Spatial resolution ===
+
+The terms blurriness and sharpness are used for digital images, but other descriptors are used to reference the hardware capturing and displaying the images.
+Spatial resolution in radiology is the ability of the imaging modality to differentiate two objects. Low spatial resolution techniques will be unable to differentiate between two objects that are relatively close together.
+
+The measure of how closely lines can be resolved in an image is called spatial resolution, and it depends on properties of the system creating the image, not just the pixel resolution in pixels per inch (ppi). For practical purposes, the clarity of the image is decided by its spatial resolution, not the number of pixels in an image. In effect, spatial resolution is the number of independent pixel values per unit length.
+The spatial resolution of consumer displays ranges from 50 to 800 pixel lines per inch.  With scanners, optical resolution is sometimes used to distinguish spatial resolution from the number of pixels per inch.
+In remote sensing, spatial resolution is typically limited by diffraction, as well as by aberrations, imperfect focus, and atmospheric distortion. The ground sample distance (GSD) of an image, the pixel spacing on the Earth's surface, is typically considerably smaller than the resolvable spot size.
+In astronomy, one often measures spatial resolution in data points per arcsecond subtended at the point of observation, because the physical distance between objects in the image depends on their distance away and this varies widely with the object of interest.  On the other hand, in electron microscopy, line or fringe resolution is the minimum separation detectable between adjacent parallel lines (e.g., between planes of atoms), whereas point resolution is instead the minimum separation between adjacent points that can be both detected and interpreted e.g., as adjacent columns of atoms, for instance.  The former often helps one detect periodicity in specimens, whereas the latter (although more difficult to achieve) is key to visualizing how individual atoms interact.
+In Stereoscopic 3D images, spatial resolution could be defined as the spatial information recorded or captured by two viewpoints of a stereo camera (left and right camera).
+
+
+=== Spectral resolution ===
+
+Pixel encoding limits the information stored in a digital image, and the term color profile is used for digital images, but other descriptors are used to reference the hardware capturing and displaying the images.
+Spectral resolution is the ability to resolve spectral features and bands into their separate components. Color images distinguish light of different spectra. Multispectral images can resolve even finer differences of spectrum or wavelength by measuring and storing more than the traditional 3 of common RGB color images.
+
+
+=== Temporal resolution ===
+
+Temporal resolution (TR) is the precision of a measurement with respect to time.
+Movie cameras and high-speed cameras can resolve events at different points in time. The time resolution used for movies is usually 24 to 48 frames per second (frames/s), whereas high-speed cameras may resolve 50 to 300 frames/s, or even more.
+The Heisenberg uncertainty principle describes the fundamental limit on the maximum spatial resolution of information about a particle's coordinates imposed by the measurement or existence of information regarding its momentum to any degree of precision.
+This fundamental limitation can, in turn, be a factor in the maximum imaging resolution at subatomic scales, as can be encountered using scanning electron microscopes.
+
+
+=== Radiometric resolution ===
+
+Radiometric resolution determines how finely a system can represent or distinguish differences of intensity, and is usually expressed as a number of levels or a number of bits, for example, 8 bits or 256 levels, which is typical of computer image files. The higher the radiometric resolution, the more subtle differences of intensity or reflectivity can be represented, at least in theory. In practice, the effective radiometric resolution is typically limited by the noise level, rather than by the number of bits of representation.
+
+
+== Resolution in various media ==
+This is a list of traditional, analogue horizontal resolutions for various media. The list only includes popular formats, not rare formats, and all values are approximate, because the actual quality can vary machine-to-machine or tape-to-tape. For ease-of-comparison, all values are for the NTSC system. (For PAL systems, replace 480 with 576.) Analog formats usually had less chroma resolution.
+Many cameras and displays offset the color components relative to each other or mix up temporal with spatial resolution:
+
+
+=== Narrowscreen 4:3 computer display resolutions ===
+320 × 200: MCGA
+320 × 240: QVGA
+640 × 350: EGA
+640 × 480: VGA
+800 × 600: Super VGA
+1024 × 768: XGA / EVGA
+1600 × 1200: UXGA
+
+
+=== Analog ===
+320 × 200: CRT monitors
+333 × 480: VHS, Video8, Umatic
+350 × 480: Betamax
+420 × 480: Super Betamax, Betacam
+460 × 480: Betacam SP, Umatic SP, NTSC (over-the-air TV)
+580 × 480: Super VHS, Hi8, LaserDisc
+700 × 480: Enhanced Definition Betamax, Analog broadcast limit (NTSC)
+768 × 576: Analog broadcast limit (PAL, SECAM)
+
+
+=== Digital ===
+352 × 240: Video CD
+500 × 480: Digital8
+720 × 480: D-VHS, DVD, miniDV, Digital Betacam (NTSC)
+720 × 480: Widescreen DVD (anamorphic) (NTSC)
+854 × 480: EDTV (Enhanced Definition Television)
+720 × 576: D-VHS, DVD, miniDV, Digital8, Digital Betacam (PAL/SECAM)
+720 × 576 or 1024 × 576: Widescreen DVD (anamorphic) (PAL/SECAM)
+1280 × 720: D-VHS, HD DVD, Blu-ray, HDV (miniDV)
+1440 × 1080: HDV (miniDV)
+1920 × 1080: HDV (miniDV), AVCHD, HD DVD, Blu-ray, HDCAM SR
+1998 × 1080: 2K Flat (1.85:1)
+2048 × 1080: 2K Digital Cinema
+2560 × 1440: QHD (Quad HD) i.e. 4x the pixels in HD 1280x720
+3840 × 2160: 4K UHDTV, Ultra HD Blu-ray
+4096 × 2160: 4K Digital Cinema
+7680 × 4320: 8K UHDTV
+15360 × 8640: 16K Digital Cinema
+30720 × 17280: 32K
+Sequences from newer films are scanned at 2,000, 4,000, or even 8,000 columns, called 2K, 4K, and 8K, for quality visual-effects editing on computers.
+IMAX, including IMAX HD and OMNIMAX: approximately 10,000 × 7,000 (7,000 lines) resolution. It is about 70 MP, which is, as of January 2012, the highest-resolution single-sensor digital cinema camera.
+
+
+=== Film ===
+35 mm film is scanned for release on DVD at 1080 or 2000 lines as of 2005.
+The actual resolution of 35 mm original camera negatives is the subject of much debate. Measured resolutions of negative film have ranged from 25–200 LP/mm, which equates to a range of 325 lines for 2-perf, to (theoretically) over 2300 lines for 4-perf shot on T-Max 100. Kodak states that 35 mm film has the equivalent of 6K resolution horizontally according to a Senior Vice President of IMAX.
+
+
+=== Print ===
+
+
+=== Modern digital camera resolutions ===
+Digital medium format camera – single, not combined one large digital sensor – 80 MP (starting from 2011, current as of 2013) – 10320 × 7752 or 10380 × 7816 (81.1 MP).
+Digital still camera – Canon EOS 5DS – 51 MP (8688 × 5792)
+
+
+== See also ==
+Display resolution
+Dots per inch
+Multi-exposure HDR capture
+High-resolution picture transmission
+Image scaling
+Image scanner
+Kell factor, which typically limits the number of visible lines to 0.7x of the device resolution
+Pixel density
+
+
+== References ==

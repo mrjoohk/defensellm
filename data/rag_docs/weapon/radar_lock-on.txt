@@ -1,0 +1,31 @@
+# Radar lock-on
+
+Lock-on is a feature of many radar systems that allow it to automatically follow a selected target. Lock-on was first designed for the AI Mk. IX radar in the UK, where it was known as lock-follow or auto-follow. Its first operational use was in the US ground-based SCR-584 radar, which demonstrated the ability to easily track almost any airborne target, from aircraft to artillery shells.
+
+
+== History ==
+In the post-WWII era, the term became more widely used in connection to missile guidance concepts. Many modern anti-aircraft missiles use some form of semi-active radar homing, where the missile seeker listens for reflections of the launch platform's main radar. To provide a continuous signal, the radar is locked-onto the target, following it throughout the missile's flight. Ships and surface-to-air missiles often have a dedicated illuminator radar for this purpose.
+In older radar systems, through the 1980s, lock-on was normally assisted by a change in the radar signal characteristics, often by increasing the pulse repetition frequency. This led to the introduction of radar warning receivers that would notice this change and provide a warning to the operator.
+Modern radar systems do not have a lock-on system in the traditional sense; tracking is provided by storing radar signals in computer memory and comparing them from scan to scan using algorithms to determine which signals correspond to single targets. These systems do not change their signals while tracking targets, and thus do not reveal they are locked-on.
+
+
+== Types ==
+With a semi-active radar homing system, the launch platform acquires the target with its search radar.  The missile is then powered up while the launch platform's illuminator radar "lights up" the target for it.  The illuminator is a radar transmitter with a narrow, focused beam that may be separate from the search radar and that can be directed at a target using information from the search radar. When the passive radar of the missile's guidance system is able to "see"/detect the radio waves reflected from the target, missile lock-on is achieved and the weapon is ready to be launched.
+
+
+== Detection by the target ==
+
+The subject of a radar lock-on may become aware of the fact that it is being actively targeted by virtue of the electro-magnetic emissions of the tracking system, notably the illuminator.  This condition will present a heightened threat to the target, as it indicates that a missile may be about to be fired at it.
+
+
+== See also ==
+Fire-control radar
+Missile guidance
+Air-to-air missile
+Surface-to-air missile
+Radar jamming and deception
+Radar warning receiver
+Lock-on after launch
+
+
+== Notes ==

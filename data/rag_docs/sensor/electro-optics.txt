@@ -1,0 +1,21 @@
+# Electro-optics
+
+Electro–optics is a branch of electrical engineering, electronic engineering, materials science, and material physics involving components, electronic devices such as lasers, laser diodes, LEDs, waveguides, etc. which operate by the propagation and interaction of light with various tailored materials. It is closely related to photonics, the branch of optics that involves the application of the generation of photons. It is not only concerned with the "electro–optic effect", since it deals with the interaction between the electromagnetic (optical) and the electrical (electronic) states of materials.
+
+
+== Electro-optical devices ==
+The electro-optic effect is a change in the optical properties of an optically active material in response to changes in an electric field. This interaction usually results in a change in the birefringence, and not simply the refractive index of the medium. In a Kerr cell, the change in birefringence is proportional to the square of the electric field, and the material is usually a liquid.  In a Pockels cell, the  change in birefringence varies linearly with the electric field, and the material is usually a crystal. Non-crystalline, solid electro-optical materials have generated interest because of their low cost of production. These organic, polymer-based materials are also known as organic EO material, plastic EO material, or polymer EO material. They consist of nonlinear optical chromophores in a polymer lattice. The nonlinear optical chromophores can produce Pockels effect.
+
+
+== See also ==
+Photoferroelectric imaging
+
+
+== References ==
+ This article incorporates public domain material from Federal Standard 1037C. General Services Administration. Archived from the original on 2022-01-22. (in support of MIL-STD-188).
+ This article incorporates public domain material from Dictionary of Military and Associated Terms. United States Department of Defense.
+Friedman, Edward (2004). Photonics Rules of Thumb: Optics, Electro-optics, Fiber Optics, and Lasers. McGraw-Hill Professional. ISBN 0-07-138519-3.
+
+
+== External links ==
+Introduction to Electro-Optical Systems in Unmanned Vehicle Applications - Unmanned Systems Technology

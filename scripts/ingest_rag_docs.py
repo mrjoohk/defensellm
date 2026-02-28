@@ -52,6 +52,20 @@ def main():
             "--field", field,
             "--security-label", doc['security_label']
         ]
+
+        # Add optional Playbook metadata
+        if 'doc_type' in doc:
+            cmd.extend(["--doc-type", doc['doc_type']])
+        if 'system' in doc:
+            cmd.extend(["--system", doc['system']])
+        if 'subsystem' in doc:
+            cmd.extend(["--subsystem", doc['subsystem']])
+        if 'date' in doc:
+            cmd.extend(["--date", doc['date']])
+        if 'language' in doc:
+            cmd.extend(["--language", doc['language']])
+        if 'url' in doc:
+            cmd.extend(["--source-uri", doc['url']])
         
         print("Running: " + " ".join(cmd))
         

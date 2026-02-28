@@ -1,0 +1,136 @@
+# Active protection system
+
+An active protection system (APS) is a system designed to actively prevent certain anti-tank weapons from destroying a vehicle.
+Countermeasures that either conceal the vehicle from or disrupt the guidance of an incoming guided missile threat are designated soft-kill active protection measures. Countermeasures that physically strike an incoming threat to damage or destroy it and thereby limit its ability to penetrate armor are designated hard-kill active protection measures.
+
+
+== Soft-kill measures ==
+Soft-kill measures are designed to defeat guided weapons either by concealing the protected vehicle from them (for example, with a smoke screen) or by disrupting their guidance with radiation (for example, with a dazzler). Some systems use laser dazzlers to blind the operator or sensors of semi-automatic command to line of sight (SACLOS) anti-tank guided missiles (ATGMs), such as the JD-3 of the Type 99 tank. Others use powerful infrared emitters to mask the IR tracking flare present on many SACLOS ATGMs, such as the Shtora-1.
+Soft-kill measures can be divided into on-board countermeasures, such as dazzlers, which are fixed to the platform and expendable countermeasures, such as smoke grenades, which are ejected upon use.
+Soft-kill measures may be used preemptively, but are more commonly employed in reaction to detected threats.
+
+
+== Hard-kill measures ==
+Hard-kill measures kinetically attack threatening missiles or other munitions, usually at very close range to the protected vehicle.
+Explosively formed penetrators (EFPs) or high explosive fragmentation countermeasures are typically used. The exact mechanisms of many APS systems have not been published.
+The action of these countermeasures may lead to:
+
+disturbance of the stability of a kinetic energy penetrator which will decrease its penetration ability as the deflection angle increases.
+premature initiation of a shaped charge (e.g., too great stand-off), but most likely improper initiation, thereby impeding optimum jet development of the metallic lining, usually copper, in the shaped charge.  The copper jet provides most of the anti armor capabilities of shaped charge weapons.
+destruction of the airframe of an inbound missile or shell.
+
+There are many examples of hard kill countermeasures.  The Russian Arena system utilizes a Doppler radar to detect incoming threats and fires a munition to eliminate the threat.  The Israeli Trophy system fires a multiple explosively formed penetrator (MEFP) to destroy the threat. An American system known as Quick Kill detects incoming threats using an Active Electronically Scanned Array, which assesses the threat, and deploys a smaller rocket countermeasure.  Another American system, known as Iron Curtain, utilizes two sensors to reduce false alarms and defeat threats inches from their target by firing a kinetic countermeasure designed to minimize collateral damage. The Russian Afganit active protection system of the Armata AFVs features a millimeter-wavelength radar to detect and track incoming anti-tank munitions. It can reportedly intercept armour-piercing fin-stabilized discarding sabot kinetic energy penetrators in addition to high-explosive anti-tank (HEAT) munitions.
+
+
+== Potential performance problems ==
+
+
+=== Clutter ===
+Mountains and neighboring vehicles reflect radio waves, thus creating radar clutter, which adversely affects radar-detection and radar-lock performance.
+
+
+=== Top attack munitions ===
+The trajectories of top attack ATGMs like the FGM-148 Javelin (US) and Trigat (Germany) plunge down onto their targets. Not all active protection systems are designed to fire at the extreme elevations necessary to protect against such munitions. RPGs fired at a steep downward angle from elevated positions can pose a similar threat.
+
+
+== Examples by country of origin ==
+
+
+=== Hard-kill measures ===
+
+ China
+
+GL5
+GL6
+ France
+
+DIAMANT
+SPATEM
+ Germany
+
+StrikeShield
+ Israel
+
+Iron Fist
+Trophy
+ Russia
+
+Afganit
+Arena
+Drozd
+ South Africa /  Sweden
+
+LEDS-150
+ South Korea
+
+KAPS
+ Turkey
+
+Aselsan AKKOR
+ Turkey
+
+Aselsan AKKOR PULAT 
+ Ukraine
+
+Zaslin
+ United States
+
+Iron Curtain
+Quick Kill
+
+
+=== Soft-kill measures ===
+ Germany
+
+MUSS
+ Poland
+
+Obra-3
+ Russia
+
+Shtora-1
+ South Korea
+
+MSSG
+ Syria
+
+Sarab
+ Turkey
+
+Aselsan AKKOR
+ Ukraine
+
+Guard
+ United States
+
+AN/VLQ-6 MCD
+
+
+== See also ==
+Anti-aircraft
+Anti-ballistic missile
+B-52/B-58 Turret
+Close-in weapon system
+Digital Radio Frequency Memory
+Electronic countermeasures
+Flare (countermeasure)
+Infrared countermeasures
+National Missile Defense
+Reactive armor
+Strategic Defense Initiative
+Sentry gun
+
+
+== References ==
+
+DIRCM and AVePS 
+
+
+== External links ==
+Access on Jan 11, 2011. Active Protective Systems: Impregnable Armor or Simply Enhanced Survivability? — An overview of modern tank active protection systems (PDF)
+Active Protective Systems overview - Defense Update
+Soft Kill Active Protective Systems overview - Defense Update
+
+
+== Further reading ==
+Feickert, Andrew (30 August 2016). Army and Marine Corps Active Protection System (APS) Efforts (PDF) (Report). Congressional Budget Office. Retrieved 20 September 2023.

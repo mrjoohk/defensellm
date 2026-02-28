@@ -1,0 +1,96 @@
+# Off-road vehicle
+
+An off-road vehicle (ORV), also known as an off-highway vehicle (OHV), overland vehicle or adventure vehicle, is a type of transportation specifically engineered to navigate unpaved roads and surfaces. These include trails, forest roads, and other low-traction terrains. Off-road vehicles are widely used in various contexts, from recreational activities to practical applications like agriculture and construction. Events such as the annual Dakar Rally, which spans multiple countries and challenges participants with diverse and extreme terrains, have brought significant attention to these vehicles.
+
+
+== History ==
+
+One of the earliest modified off-road vehicles was the Kégresse track, a system for modifying cars developed by Adolphe Kégresse while working for Tsar Nicholas II of Russia between 1906 and 1916. The system employed a caterpillar track with a flexible belt instead of interlocking metal segments, which could be fitted to a conventional vehicle, turning it into a half-track suitable for rough or soft terrain.
+After the Russian Revolution of 1917, Kégresse returned to France and the system was used on Citroën cars between 1921 and 1937 for off-road and military vehicles. Citroën sponsored several overland expeditions with these vehicles, crossing North Africa and Central Asia.
+The Antarctic Snow Cruiser, a large-wheeled vehicle designed between 1937 and 1939 under the direction of Thomas Poulter, was intended for transport in Antarctica. While the project incorporated novel features, it faced operational difficulties in the harsh Antarctic conditions, and was discontinued.
+Jeeps, originally developed as military vehicles during World War II, gained popularity among civilians as utility vehicles. This was also the start of off-roading as a hobby. The wartime Jeeps soon wore out, though, and the Jeep company started to produce civilian derivatives, closely followed by similar vehicles from British Land Rover and Japanese Toyota, Datsun/Nissan, Suzuki, and Mitsubishi. These were all similar: small, compact, four-wheel drive vehicles with, at most, a small hard top to protect the occupants from the elements.
+Early off-road vehicles included the U.S. Jeep Wagoneer and Ford Bronco; the British Range Rover; and the Japanese Toyota Land Cruiser, Nissan Patrol, and Suzuki's LJ series. They featured bodies similar to those of a station wagon but on a light truck-like frame, with four-wheel-drive drivetrains. As off-road vehicles increased in popularity during the 1990s, more companies began producing their own lines of what became known as sport utility vehicles (SUV). Manufacturers started incorporating more features to make off-road vehicles competitive with regular vehicles in the consumer market, which eventually evolved into the modern SUV and the newer crossover vehicle, whose off-roading capabilities were reduced in favor of improved on-road handling and luxury.
+
+
+== Technical details ==
+
+To effectively navigate off the pavement, off-road vehicles require low ground pressure, high ground clearance, and the ability to maintain wheels or track contact on uneven surfaces. Wheeled vehicles achieve this through large or additional tires combined with high and compliant suspension. Tracked vehicles use wide tracks and flexible suspension on the road wheels.
+
+Tracked drivetrains are more expensive to produce and maintain but offer better off-road performance, while wheeled drivetrains are cheaper and allow for higher speeds.
+Tires are crucial for wheeled off-road vehicles, and off-road tire tread types vary based on the terrain. Common types include A/T (All-Terrain) and M/T (mud terrain). A/T tires perform well on sand but are less effective in mud. Sand Blaster and Mud bogging tires are used for challenging terrains like dirt, sand, and water to ensure traction at high angles and speeds (off-road motorsport).
+Most off-road vehicles are equipped with low gearings, allowing the operator to optimize the engine's available power for slow movement through difficult terrain. An internal combustion engine coupled to a standard gearbox often has an output speed that is too high, which is resolved by using a very low ("granny") first gear (as in all-wheel drive Volkswagen Transporter versions) or an additional gearbox in line with the first, known as a reduction drive. Some vehicles, such as the Bv206, also have torque converters to reduce the gearing.
+
+
+== Criticism ==
+
+
+=== Safety ===
+
+Sport utility vehicles have a higher center of gravity, making them more prone to rollover accidents than standard passenger cars. A study in the United States found that SUVs have twice the fatality rate of passenger cars and nearly triple the fatality rate in rollover accidents.
+In the United States, light trucks (including SUVs) account for 36 percent of all registered vehicles and are involved in about half of all fatal two-vehicle crashes with passenger cars. In 80 percent of these crashes, the fatalities are occupants of the passenger cars.
+
+
+=== Environment ===
+In the United States, the number of ORV users has increased sevenfold since 1972, from five million to 36 million in 2000. Government policies that aim to protect wilderness while allowing recreational ORVs have been a subject of debate in the United States and other countries.
+All trail and off-trail activities affect natural vegetation and wildlife, leading to erosion, invasive species, habitat loss, and ultimately, species loss, which reduces an ecosystem's ability to maintain homeostasis. ORVs cause more environmental stress than foot traffic alone, and ORV operators who attempt to challenge natural obstacles can cause significantly more damage than those who stay on legal trails. Illegal off-road vehicle use is a serious land management issue, comparable to illegal garbage dumping and other forms of vandalism. Organizations such as Tread Lightly! and the Sierra Club promote responsible trail ethics.
+ORVs have also been criticized for creating excessive pollution in otherwise pristine areas, as well as noise pollution that can impair hearing and stress wildlife. In 2002, the United States Environmental Protection Agency adopted emissions standards for all-terrain vehicles that, "when fully implemented in 2012, [...they] are expected to prevent the release of more than two million tons of air pollution each year—the equivalent of removing the pollution from more than 32 million cars every year."
+
+
+== Civilian use ==
+Common commercial vehicles used for off-roading include four-wheel-drive pickup trucks and SUVs such as the Ford F-Series, Jeep Wrangler, and Toyota Land Cruiser, among others. Owners often modify the wheels, tires, suspension, and body to improve off-road performance. Decommissioned military vehicles such as the Jeep CJ and the AM General Hummer have also been repurposed for civilian use. Some vehicles, like early Land Rovers, were adapted for military use from civilian versions. Specialized off-road vehicles include Utility terrain vehicles (UTVs), All-terrain vehicles (ATVs), dirt bikes, dune buggies, rock crawlers vehicles, and sandrails.
+
+
+=== All-terrain vehicle ===
+
+
+== Other applications ==
+
+
+=== Military vehicle ===
+The military market for off-road vehicles was once substantial but has diminished since the fall of the Iron Curtain in the 1990s. The U.S. jeeps, developed during World War II, popularized the term "jeep" for any light off-road vehicle. In the U.S., the Jeep's successor from the mid-1980s was the AM General HMMWV series. The Red Army used the GAZ-61 and GAZ-64 during World War II, while the Eastern Bloc used the GAZ-69 and UAZ-469 in similar roles.
+
+
+=== Experimental vehicle ===
+
+
+=== Commercial vehicle ===
+OKA Bus
+Coober Pedy Oodnadatta One Day Mail Run
+Arctic Trucks
+
+
+=== Scientific vehicle ===
+Northwest Passage Drive Expedition
+WindSled
+
+
+=== Expedition vehicle ===
+Vehicles used as primary transport in an expedition, not for profit, scientific research or personal use.
+
+American Expedition Vehicles
+AEV Brute
+AEV Prospector
+EarthCruiser
+
+
+== See also ==
+Amphibious vehicle
+Off-roading
+Suspension articulation
+Sport utility vehicle
+Pickup truck
+Safari vehicle
+Overlanding
+
+
+== References ==
+
+
+=== Notes ===
+
+
+=== Bibliography ===
+
+
+== External links ==
+ Media related to Off-road vehicles at Wikimedia Commons
