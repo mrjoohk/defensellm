@@ -12,8 +12,10 @@ Design decisions:
 
 from __future__ import annotations
 
+import json as _json
+import re
 import threading
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 from .adapter import AbstractLLMAdapter
 
@@ -86,11 +88,65 @@ class Qwen25Adapter(AbstractLLMAdapter):
             except Exception as e:
                 raise RuntimeError(f"{E_INTERNAL}: Failed to load model '{self._model_id}': {e}") from e
 
+    def _parse_tool_calls(self, content: str) -> Optional[List[Dict[str, Any]]]:
+        """Parse Qwen2.5 function-call markers from generated text.
+
+        Supports two formats emitted by Qwen2.5-Instruct:
+          Format A (XML):    <tool_call>{"name": "...", "arguments": {...}}</tool_call>
+          Format B (tokens): ✿FUNCTION✿name✿ARGS✿{...}✿
+
+        Returns a list of OpenAI-format tool call dicts, or None if none found.
+        """
+        tool_calls: List[Dict[str, Any]] = []
+
+        # Format A: XML-style markers (newer Qwen2.5)
+        pattern_a = re.compile(r"<tool_call>\s*(\{.*?\})\s*</tool_call>", re.DOTALL)
+        for i, m in enumerate(pattern_a.finditer(content)):
+            try:
+                data = _json.loads(m.group(1))
+                tool_calls.append(
+                    {
+                        "id": f"call_{i}",
+                        "type": "function",
+                        "function": {
+                            "name": data.get("name", ""),
+                            "arguments": data.get(
+                                "arguments", data.get("parameters", {})
+                            ),
+                        },
+                    }
+                )
+            except (_json.JSONDecodeError, KeyError):
+                continue
+
+        # Format B: special-token markers (older Qwen2.5)
+        if not tool_calls:
+            pattern_b = re.compile(
+                r"✿FUNCTION✿(\w+)✿ARGS✿(\{.*?\})✿", re.DOTALL
+            )
+            for i, m in enumerate(pattern_b.finditer(content)):
+                try:
+                    tool_calls.append(
+                        {
+                            "id": f"call_{i}",
+                            "type": "function",
+                            "function": {
+                                "name": m.group(1),
+                                "arguments": _json.loads(m.group(2)),
+                            },
+                        }
+                    )
+                except _json.JSONDecodeError:
+                    continue
+
+        return tool_calls if tool_calls else None
+
     def chat(
         self,
         messages: List[Dict[str, str]],
         max_tokens: int = 0,
         temperature: float = -1.0,
+        tools: Optional[List[Dict[str, Any]]] = None,
     ) -> Dict:
         """Generate a response using Qwen2.5-Instruct chat template.
 
@@ -98,9 +154,17 @@ class Qwen25Adapter(AbstractLLMAdapter):
             messages: List of { role, content } dicts.
             max_tokens: Max new tokens (0 = use instance default).
             temperature: Sampling temperature (< 0 = use instance default).
+            tools: Optional OpenAI-format tool definitions. When provided,
+                   the template is rendered with tool context and the response
+                   is parsed for tool_call markers.
 
         Returns:
-            { content: str, model: str, usage: { prompt_tokens, completion_tokens } }
+            {
+              content: str | None,
+              tool_calls: list | None,
+              model: str,
+              usage: { prompt_tokens, completion_tokens }
+            }
         """
         self._ensure_loaded()
 
@@ -109,12 +173,15 @@ class Qwen25Adapter(AbstractLLMAdapter):
         max_new_tokens = max_tokens if max_tokens > 0 else self._max_new_tokens_default
         temp = temperature if temperature >= 0 else self._temperature_default
 
-        # Apply Qwen2.5 chat template
-        text = self._tokenizer.apply_chat_template(
-            messages,
-            tokenize=False,
-            add_generation_prompt=True,
-        )
+        # Apply Qwen2.5 chat template (with tools when provided)
+        template_kwargs: Dict[str, Any] = {
+            "tokenize": False,
+            "add_generation_prompt": True,
+        }
+        if tools:
+            template_kwargs["tools"] = tools
+
+        text = self._tokenizer.apply_chat_template(messages, **template_kwargs)
         model_inputs = self._tokenizer([text], return_tensors="pt").to(self._model.device)
         prompt_token_count = model_inputs["input_ids"].shape[1]
 
@@ -129,11 +196,35 @@ class Qwen25Adapter(AbstractLLMAdapter):
 
         # Strip the prompt tokens from the output
         new_ids = generated_ids[:, prompt_token_count:]
-        content = self._tokenizer.batch_decode(new_ids, skip_special_tokens=True)[0].strip()
+        content = self._tokenizer.batch_decode(new_ids, skip_special_tokens=False)[0].strip()
         completion_token_count = new_ids.shape[1]
+
+        # Parse tool calls when tools were injected
+        tool_calls = self._parse_tool_calls(content) if tools else None
+
+        # Strip tool-call markers from content when tool_calls are present
+        if tool_calls:
+            content_clean = re.sub(r"<tool_call>.*?</tool_call>", "", content, flags=re.DOTALL)
+            content_clean = re.sub(r"✿FUNCTION✿.*?✿", "", content_clean, flags=re.DOTALL)
+            content_clean = content_clean.strip()
+            return {
+                "content": content_clean or None,
+                "tool_calls": tool_calls,
+                "model": self._model_id,
+                "usage": {
+                    "prompt_tokens": prompt_token_count,
+                    "completion_tokens": completion_token_count,
+                },
+            }
+
+        # Plain text path — strip special tokens manually
+        content = self._tokenizer.decode(
+            new_ids[0], skip_special_tokens=True
+        ).strip()
 
         return {
             "content": content,
+            "tool_calls": None,
             "model": self._model_id,
             "usage": {
                 "prompt_tokens": prompt_token_count,

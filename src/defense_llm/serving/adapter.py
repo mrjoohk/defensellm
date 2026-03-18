@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 
 class AbstractLLMAdapter(ABC):
@@ -19,16 +19,27 @@ class AbstractLLMAdapter(ABC):
         messages: List[Dict[str, str]],
         max_tokens: int = 512,
         temperature: float = 0.1,
+        tools: Optional[List[Dict[str, Any]]] = None,
     ) -> Dict:
         """Send a chat completion request.
 
         Args:
-            messages: List of { role: "system"|"user"|"assistant", content: str }.
+            messages: List of { role: "system"|"user"|"assistant"|"tool", content: str }.
             max_tokens: Maximum tokens to generate.
             temperature: Sampling temperature.
+            tools: Optional list of OpenAI-format tool definitions. When provided,
+                   the LLM may return tool_calls instead of (or in addition to) content.
 
         Returns:
-            dict: { content: str, model: str, usage: { prompt_tokens: int, completion_tokens: int } }
+            dict with keys:
+              content (str | None): Text response. None when tool_calls are present.
+              tool_calls (list | None): List of tool call dicts when the LLM requests
+                  tool execution. Format:
+                  [{"id": str, "type": "function",
+                    "function": {"name": str, "arguments": dict}}]
+                  None when producing a plain text response.
+              model (str): Model identifier.
+              usage (dict): {"prompt_tokens": int, "completion_tokens": int}
 
         Raises:
             RuntimeError: (E_INTERNAL) if the adapter call fails.

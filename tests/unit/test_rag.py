@@ -39,8 +39,8 @@ class TestChunkDocument:
         result = chunk_document("DOC-001", "v1.0", DUMMY_TEXT)
         for chunk in result["chunks"]:
             assert chunk.doc_id == "DOC-001"
-            assert chunk.doc_rev == "v1.0"
-            assert chunk.page >= 1
+            assert chunk.version == "v1.0"
+            assert chunk.page_range is not None
             assert chunk.section_id.startswith("sec-")
             assert chunk.text
 
@@ -59,9 +59,9 @@ class TestChunkDocument:
 
     def test_page_parsing(self):
         result = chunk_document("DOC-001", "v1.0", DUMMY_TEXT)
-        pages = {c.page for c in result["chunks"]}
-        assert 1 in pages
-        assert 2 in pages  # [PAGE 2] marker in DUMMY_TEXT
+        pages = {c.page_range for c in result["chunks"]}
+        assert "1" in pages
+        assert "2" in pages  # [PAGE 2] marker in DUMMY_TEXT
 
     def test_security_label_assigned(self):
         result = chunk_document("DOC-001", "v1.0", DUMMY_TEXT, security_label="RESTRICTED")
@@ -133,8 +133,8 @@ class TestHybridSearch:
 class TestPackageCitations:
     def test_required_fields_present(self):
         chunks = [
-            {"chunk_id": "c1", "doc_id": "DOC-001", "doc_rev": "v1.0",
-             "page": 1, "section_id": "sec-0001", "text": "테스트 내용입니다."}
+            {"chunk_id": "c1", "doc_id": "DOC-001", "version": "v1.0",
+             "page_range": "1", "section_id": "sec-0001", "text": "테스트 내용입니다."}
         ]
         citations = package_citations(chunks)
         assert len(citations) == 1
@@ -147,16 +147,16 @@ class TestPackageCitations:
     def test_snippet_hash_is_sha256(self):
         import hashlib
         chunks = [
-            {"chunk_id": "c1", "doc_id": "DOC-001", "doc_rev": "v1.0",
-             "page": 1, "section_id": "sec-0001", "text": "테스트"}
+            {"chunk_id": "c1", "doc_id": "DOC-001", "version": "v1.0",
+             "page_range": "1", "section_id": "sec-0001", "text": "테스트"}
         ]
         citations = package_citations(chunks)
         expected_hash = hashlib.sha256("테스트".encode("utf-8")).hexdigest()
         assert citations[0]["snippet_hash"] == expected_hash
 
     def test_duplicate_text_same_hash(self):
-        chunk = {"chunk_id": "c1", "doc_id": "DOC-001", "doc_rev": "v1.0",
-                 "page": 1, "section_id": "sec-0001", "text": "동일 텍스트"}
+        chunk = {"chunk_id": "c1", "doc_id": "DOC-001", "version": "v1.0",
+                 "page_range": "1", "section_id": "sec-0001", "text": "동일 텍스트"}
         c1 = package_citations([chunk])
         c2 = package_citations([chunk])
         assert c1[0]["snippet_hash"] == c2[0]["snippet_hash"]
@@ -170,8 +170,8 @@ class TestPackageCitations:
 
     def test_multiple_chunks_produce_multiple_citations(self):
         chunks = [
-            {"chunk_id": f"c{i}", "doc_id": "DOC-001", "doc_rev": "v1.0",
-             "page": i, "section_id": f"sec-{i:04d}", "text": f"내용 {i}"}
+            {"chunk_id": f"c{i}", "doc_id": "DOC-001", "version": "v1.0",
+             "page_range": str(i), "section_id": f"sec-{i:04d}", "text": f"내용 {i}"}
             for i in range(3)
         ]
         citations = package_citations(chunks)

@@ -26,6 +26,7 @@ def _make_mock_tokenizer(prompt_token_ids=None):
     mock_tok.return_value = encoded
     mock_tok.eos_token_id = 0
     mock_tok.batch_decode.return_value = ["모의 응답 텍스트입니다."]
+    mock_tok.decode.return_value = "모의 응답 텍스트입니다."
     return mock_tok
 
 

@@ -52,7 +52,7 @@ class TestEvalRunner:
             {
                 "id": "S1",
                 "question": "KF-21 최대 고도",
-                "expected_answer_keywords": ["15000", "고도"],
+                "expected_answer": {"must_include": ["15000", "고도"]},
             }
         ]
         report = runner.run(samples)
@@ -64,7 +64,7 @@ class TestEvalRunner:
             {
                 "id": "S1",
                 "question": "KF-21 최대 고도",
-                "expected_answer_keywords": ["15000m"],
+                "expected_answer": {"must_include": ["15000m"]},
             }
         ]
         report = runner.run(samples)
@@ -76,7 +76,7 @@ class TestEvalRunner:
             {
                 "id": "S1",
                 "question": "q",
-                "expected_citation_doc_ids": ["DOC-001"],
+                "required_evidence": [{"doc_id": "DOC-001"}],
             }
         ]
         report = runner.run(samples)
@@ -88,7 +88,7 @@ class TestEvalRunner:
             {
                 "id": "S1",
                 "question": "q",
-                "expected_citation_doc_ids": ["DOC-999"],
+                "required_evidence": [{"doc_id": "DOC-999"}],
             }
         ]
         report = runner.run(samples)
