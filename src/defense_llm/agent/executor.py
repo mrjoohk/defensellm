@@ -97,6 +97,7 @@ class Executor:
         request_id: Optional[str] = None,
         query: Optional[str] = None,
         agent_mode: Optional[bool] = None,
+        max_agent_turns: Optional[int] = None,
     ) -> dict:
         """Execute a tool plan (pipeline mode) or run the agent loop.
 
@@ -118,6 +119,7 @@ class Executor:
         error_code: Optional[str] = None
         citations: List[dict] = []
         answer_text = ""
+        tool_call_log: List[dict] = []
 
         # Derive query_str for audit log
         if use_agent and query:
@@ -127,8 +129,8 @@ class Executor:
 
         try:
             if use_agent and query:
-                answer_text, citations, error_code = self._run_agent_loop(
-                    query, user_context
+                answer_text, citations, error_code, tool_call_log = self._run_agent_loop(
+                    query, user_context, max_turns=max_agent_turns
                 )
             else:
                 answer_text, citations, error_code = self._run_plan(
@@ -150,6 +152,7 @@ class Executor:
             citations=citations,
             security_label=user_context.get("clearance", "PUBLIC"),
             error_code=error_code,
+            tool_call_log=tool_call_log if tool_call_log else None,
         )
 
         self._audit.write(
@@ -173,6 +176,7 @@ class Executor:
         self,
         query: str,
         user_context: dict,
+        max_turns: Optional[int] = None,
     ):
         """ReAct agent loop: Observe → Think → Act until done or max_turns exceeded.
 
@@ -184,7 +188,7 @@ class Executor:
              or max_agent_turns is reached.
 
         Returns:
-            Tuple (answer: str, citations: List[dict], error_code: Optional[str])
+            Tuple (answer, citations, error_code, tool_call_log)
         """
         # Determine available tools
         available_tools = [
@@ -206,8 +210,11 @@ class Executor:
         collected_chunks: List[dict] = []
         db_results: List[dict] = []
         answer = ""
+        tool_call_log: List[dict] = []
 
-        for _turn in range(self._max_agent_turns):
+        effective_turns = max_turns if max_turns is not None else self._max_agent_turns
+
+        for _turn in range(effective_turns):
             resp = self._llm.chat(messages, tools=tool_defs)
             tool_calls = resp.get("tool_calls")
 
@@ -247,6 +254,15 @@ class Executor:
                     except Exception as exc:
                         tool_result = {"error": f"{E_INTERNAL}: {exc}"}
 
+                # Accumulate tool call trace for web display
+                tool_call_log.append({
+                    "turn": _turn,
+                    "tool_name": tool_name,
+                    "args_summary": str(arguments)[:200],
+                    "result_summary": str(tool_result)[:200],
+                    "error": tool_result.get("error"),
+                })
+
                 messages.append(
                     {
                         "role": "tool",
@@ -256,16 +272,16 @@ class Executor:
                 )
         else:
             # Max turns exceeded
-            answer = f"[에이전트 루프 최대 턴({self._max_agent_turns}) 초과]"
+            answer = f"[에이전트 루프 최대 턴({effective_turns}) 초과]"
             citations_out = package_citations(collected_chunks) if collected_chunks else []
-            return answer, citations_out, E_LOOP_LIMIT
+            return answer, citations_out, E_LOOP_LIMIT, tool_call_log
 
         # Sentinel-based "no docs" handling
         if answer == _NO_DOCS_SENTINEL:
-            return "질의와 관련된 근거 문서를 찾을 수 없습니다.", [], None
+            return "질의와 관련된 근거 문서를 찾을 수 없습니다.", [], None, tool_call_log
 
         citations_out = package_citations(collected_chunks) if collected_chunks else []
-        return answer, citations_out, None
+        return answer, citations_out, None, tool_call_log
 
     def _dispatch_tool(
         self,
@@ -646,6 +662,7 @@ class Executor:
         citations: List[dict],
         security_label: str,
         error_code: Optional[str] = None,
+        tool_call_log: Optional[List[dict]] = None,
     ) -> dict:
         response_body = {
             "request_id": request_id,
@@ -660,6 +677,8 @@ class Executor:
         }
         if error_code:
             response_body["error"] = error_code
+        if tool_call_log:  # agent mode에서만 포함 — pipeline 응답에는 키 없음
+            response_body["tool_call_log"] = tool_call_log
 
         response_str = json.dumps(response_body, ensure_ascii=False, sort_keys=True)
         response_body["hash"] = hashlib.sha256(response_str.encode()).hexdigest()

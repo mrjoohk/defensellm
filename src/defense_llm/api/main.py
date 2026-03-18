@@ -81,9 +81,20 @@ async def lifespan(app: FastAPI):
         except Exception:
             pass  # start fresh if corrupt
 
-    # Use Qwen25Adapter for production
-    from ..serving.qwen_adapter import Qwen25Adapter
-    llm = Qwen25Adapter(model_id="Qwen/Qwen2.5-1.5B-Instruct", preload=True)
+    # LLM adapter selection via env var: DEFENSE_LLM_LLM_ADAPTER=vllm|qwen (default: qwen)
+    _llm_adapter_type = os.environ.get("DEFENSE_LLM_LLM_ADAPTER", "qwen").lower()
+    _model_id = os.environ.get("DEFENSE_LLM_MODEL_NAME", "Qwen/Qwen2.5-1.5B-Instruct")
+
+    if _llm_adapter_type == "vllm":
+        from ..serving.vllm_adapter import VLLMAdapter
+        llm = VLLMAdapter(
+            model_id=_model_id,
+            base_url=os.environ.get("DEFENSE_LLM_VLLM_BASE_URL", "http://localhost:8000/v1"),
+            api_key=os.environ.get("DEFENSE_LLM_VLLM_API_KEY", "EMPTY"),
+        )
+    else:
+        from ..serving.qwen_adapter import Qwen25Adapter
+        llm = Qwen25Adapter(model_id=_model_id, preload=True)
 
     audit_logger = AuditLogger(DB_PATH)
 
@@ -92,7 +103,7 @@ async def lifespan(app: FastAPI):
         index=index,
         db_path=DB_PATH,
         audit_logger=audit_logger,
-        model_version="Qwen/Qwen2.5-1.5B-Instruct",
+        model_version=llm.model_name,
         index_version=_load_index_version(INDEX_PATH),
         index_path=INDEX_PATH,
     )
@@ -103,6 +114,7 @@ async def lifespan(app: FastAPI):
             "executor": executor,
             "audit_logger": audit_logger,
             "llm": llm,
+            "llm_adapter_type": _llm_adapter_type,
         }
     )
 
@@ -178,6 +190,8 @@ class QueryRequest(BaseModel):
     top_k: int = Field(default=5, ge=1, le=20)
     show_citations: bool = True
     online_mode: bool = False
+    agent_mode: bool = False
+    max_agent_turns: int = Field(default=10, ge=1, le=30)
 
 
 class IndexResponse(BaseModel):
@@ -210,6 +224,7 @@ def health():
         "chunks_indexed": chunk_count,
         "model": model_name,
         "index_version": _load_index_version(INDEX_PATH),
+        "llm_adapter": _state.get("llm_adapter_type", "qwen"),
     }
 
 
@@ -249,7 +264,13 @@ def query(req: QueryRequest):
             step["params"]["top_k"] = req.top_k
             step["params"]["online_mode"] = req.online_mode
 
-    response = executor.execute(plan, user_context)
+    response = executor.execute(
+        plan,
+        user_context,
+        query=req.question,
+        agent_mode=req.agent_mode,
+        max_agent_turns=req.max_agent_turns,
+    )
     if not req.show_citations:
         response.pop("citations", None)
 

@@ -7,7 +7,7 @@ export default function MetaPanel({ response }) {
 
   if (!response) return null
 
-  const { request_id, security_label, version, hash, error } = response
+  const { request_id, security_label, version, hash, error, tool_call_log } = response
 
   return (
     <>
@@ -31,6 +31,18 @@ export default function MetaPanel({ response }) {
                 <span className="meta-row__key">error</span>
                 <span className="meta-row__val"><span className="badge badge-error">{error}</span></span>
               </div>
+            )}
+            {tool_call_log !== undefined && (
+              <>
+                <div className="meta-row">
+                  <span className="meta-row__key">mode</span>
+                  <span className="meta-row__val"><span className="badge badge-info">AGENT</span></span>
+                </div>
+                <div className="meta-row">
+                  <span className="meta-row__key">agent_turns</span>
+                  <span className="meta-row__val">{tool_call_log.length}</span>
+                </div>
+              </>
             )}
             {version && (
               <>

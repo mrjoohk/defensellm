@@ -741,3 +741,45 @@ html, body, #root {
 
   .form-grid { grid-template-columns: 1fr; }
 }
+
+/* ── Agent Trace Panel ── */
+.trace-row {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  background: var(--bg-elevated);
+  font-size: 12px;
+}
+.trace-row--error { border-color: var(--red-dim); }
+.trace-row__header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+.trace-row__args,
+.trace-row__result {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+  align-items: flex-start;
+}
+.trace-row__label {
+  color: var(--text-muted);
+  font-size: 10px;
+  font-family: var(--font-mono);
+  width: 36px;
+  flex-shrink: 0;
+  text-transform: uppercase;
+  padding-top: 1px;
+}
+.trace-row__value {
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+.text-error { color: var(--red); }
+.badge-info { background: #1a3a6b; color: #58a6ff; border-color: #1f6feb; }

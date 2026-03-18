@@ -102,9 +102,14 @@ export default function App() {
           )}
 
           {health && (
-            <span className="text-mono text-small text-muted">
-              {health.model}
-            </span>
+            <>
+              <span className="badge badge-mono" style={{ textTransform: 'uppercase' }}>
+                {health.llm_adapter || 'qwen'}
+              </span>
+              <span className="text-mono text-small text-muted">
+                {health.model}
+              </span>
+            </>
           )}
         </div>
       </header>

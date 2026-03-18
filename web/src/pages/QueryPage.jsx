@@ -3,6 +3,7 @@ import SecurityBadge from '../components/SecurityBadge.jsx'
 import CitationPanel from '../components/CitationPanel.jsx'
 import MetaPanel from '../components/MetaPanel.jsx'
 import ErrorBanner from '../components/ErrorBanner.jsx'
+import AgentTracePanel from '../components/AgentTracePanel.jsx'
 
 const FIELDS = ['air', 'weapon', 'ground', 'sensor', 'comm']
 
@@ -18,6 +19,8 @@ export default function QueryPage({ userContext, health }) {
   const [fieldFilters, setFieldFilters] = useState([])
   const [topK, setTopK] = useState(5)
   const [onlineMode, setOnlineMode] = useState(false)
+  const [agentMode, setAgentMode] = useState(false)
+  const [maxAgentTurns, setMaxAgentTurns] = useState(10)
   const [loading, setLoading] = useState(false)
   const [response, setResponse] = useState(null)
   const [fetchError, setFetchError] = useState(null)
@@ -65,6 +68,8 @@ export default function QueryPage({ userContext, health }) {
           top_k: topK,
           show_citations: true,
           online_mode: onlineMode,
+          agent_mode: agentMode,
+          max_agent_turns: maxAgentTurns,
         }),
       })
       const data = await res.json()
@@ -149,6 +154,29 @@ export default function QueryPage({ userContext, health }) {
               />
               Online Fallback
             </label>
+
+            <div className="topbar__divider" />
+            <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: agentMode ? 'var(--cyan)' : '#aaa' }}>
+              <input
+                type="checkbox"
+                checked={agentMode}
+                onChange={e => setAgentMode(e.target.checked)}
+              />
+              Agent Mode
+            </label>
+            {agentMode && (
+              <>
+                <span className="composer__label">Turns</span>
+                <input
+                  type="number"
+                  className="composer__input-sm"
+                  value={maxAgentTurns}
+                  min={1}
+                  max={30}
+                  onChange={e => setMaxAgentTurns(Number(e.target.value))}
+                />
+              </>
+            )}
 
             <div className="composer__spacer" />
 
@@ -240,6 +268,7 @@ export default function QueryPage({ userContext, health }) {
         {response ? (
           <>
             <CitationPanel citations={response.citations || []} query={submittedQuery} answer={response?.data?.answer} />
+            <AgentTracePanel toolCallLog={response.tool_call_log} />
             <MetaPanel response={response} />
           </>
         ) : (

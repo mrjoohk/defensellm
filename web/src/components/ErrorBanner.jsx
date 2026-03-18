@@ -17,6 +17,12 @@ const ERROR_CONFIG = {
     title: '내부 오류 (E_INTERNAL)',
     hint: '시스템 내부 오류가 발생했습니다. request_id를 기록하고 관리자에게 지원을 요청하세요.',
   },
+  E_LOOP_LIMIT: {
+    cls: 'banner-warn',
+    icon: '⟳',
+    title: '에이전트 루프 한도 초과 (E_LOOP_LIMIT)',
+    hint: '최대 턴 수에 도달하여 완전한 답변을 생성하지 못했습니다. max_agent_turns를 늘리거나 질문을 구체화하세요.',
+  },
 }
 
 export default function ErrorBanner({ errorCode, requestId }) {
