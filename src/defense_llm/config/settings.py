@@ -25,6 +25,8 @@ class AppConfig:
     chunk_max_tokens: int = 256
     chunk_overlap: int = 32
     top_k: int = 5
+    # Security toggle (개발 단계에서는 False로 비활성화)
+    security_enabled: bool = False
     # Agent loop settings
     agent_mode: bool = False
     max_agent_turns: int = 10
@@ -60,6 +62,7 @@ def load_config(config_dict: Optional[dict] = None, env_override: bool = True) -
             "DEFENSE_LLM_INDEX_VERSION": "index_version",
             "DEFENSE_LLM_AGENT_MODE": "agent_mode",
             "DEFENSE_LLM_MAX_AGENT_TURNS": "max_agent_turns",
+            "DEFENSE_LLM_SECURITY_ENABLED": "security_enabled",
             "DEFENSE_LLM_SCRIPT_TOOLS_ENABLED": "script_tools_enabled",
             "DEFENSE_LLM_VLLM_BASE_URL": "vllm_base_url",
             "DEFENSE_LLM_VLLM_API_KEY": "vllm_api_key",
@@ -100,6 +103,7 @@ def load_config(config_dict: Optional[dict] = None, env_override: bool = True) -
         top_k=int(cfg.get("top_k", 5)),
         agent_mode=_bool(cfg.get("agent_mode", False), False),
         max_agent_turns=int(cfg.get("max_agent_turns", 10)),
+        security_enabled=_bool(cfg.get("security_enabled", False), False),
         script_tools_enabled=_bool(cfg.get("script_tools_enabled", False), False),
         script_allowed_paths=cfg.get("script_allowed_paths", []),
         vllm_base_url=cfg.get("vllm_base_url", "http://localhost:8000/v1"),

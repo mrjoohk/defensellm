@@ -142,16 +142,138 @@
 
 ---
 
-## 우선순위 요약
+---
 
-| 항목 | 우선순위 | 필요 시점 |
-|------|----------|-----------|
-| ~~실제 임베딩 모델 적용~~ | ~~P0~~ | ✅ 완료 (`rag/embedder.py`) |
-| ~~인덱스 영속성 구현~~ | ~~P0~~ | ✅ 완료 (`DocumentIndex.save/load`) |
-| ~~사용자 인증/세션~~ | ~~P0~~ | ✅ 완료 (`security/auth.py`) |
-| ~~vLLM 어댑터 구현~~ | ~~P0~~ | ✅ 완료 (`serving/qwen_adapter.py`) |
-| FAISS 인덱스 교체 | P1 | 성능 요구 시 |
-| FastAPI 엔드포인트 | P1 | HTTP API 필요 시 |
-| Postgres 전환 | P1 | 운영 규모 확대 시 |
-| 출력 마스킹 패턴 확장 | P2 | 도메인 전문가 협의 후 |
-| KG 연동 | P2 | 고급 추론 필요 시 |
+## 8. [신규] LLM 주도 Tool-Use Agent 루프 — 핵심 개선 방향
+
+> 사용자 지시: "LLM이 tool_use 커맨드를 agent에 전달 →
+> agent가 적합한 도구를 실행 → 결과를 분석하여 다음 단계 결정"
+
+### 현재 구조의 문제
+
+```
+현재 (Pipeline — LLM은 text gen만 담당):
+User → Classifier(regex) → build_plan(static) → Executor(Python 직접 호출) → LLM(답변 생성)
+
+목표 (Agent Loop — LLM이 tool 선택):
+User → LLM ─[tool_call JSON]→ ToolDispatcher ─[result]→ LLM ─(반복)→ Final Answer
+```
+
+LLM이 어떤 도구를 호출할지 결정하고, 결과를 보고 후속 행동을 결정하는 **ReAct / Function-Calling 루프**가 현재 없음.
+
+---
+
+### 8.1 Tool Schema → LLM 주입 (P0)
+
+- **현재**: `tool_schemas.py`에 스키마가 있으나, LLM 프롬프트에 전달되지 않음
+- **TODO**: LLM에게 tool 스키마를 system prompt 또는 `tools` 파라미터로 전달
+  - Qwen2.5 function-calling 포맷 지원 여부 확인 (Qwen2.5-Instruct는 지원)
+  - 형식: `{"name": "search_docs", "description": "...", "parameters": {...}}`
+- **파일**: `src/defense_llm/agent/executor.py`, `src/defense_llm/serving/qwen_adapter.py`
+- **우선순위**: P0
+
+### 8.2 LLM tool_call 응답 파싱 및 라우팅 (P0)
+
+- **현재**: LLM 응답은 무조건 `content` 텍스트로만 처리
+- **TODO**: LLM이 반환한 `tool_call` JSON을 파싱하여 해당 도구로 라우팅
+  ```python
+  # 기대 LLM 응답 구조
+  {
+    "tool_calls": [
+      {"name": "search_docs", "arguments": {"query": "KF-21 고도", "top_k": 5}}
+    ]
+  }
+  ```
+- **파일**: `src/defense_llm/agent/executor.py` — `_dispatch_tool_call()` 신규 메서드
+- **우선순위**: P0
+
+### 8.3 Agent 루프 구현 (Observe → Think → Act → Observe …) (P0)
+
+- **현재**: `_run_plan()`은 plan 리스트를 순차 실행 (단방향)
+- **TODO**: LLM이 `FINISH` 또는 최종 답변을 생성할 때까지 루프 반복
+  ```
+  while not finished:
+      llm_response = llm.chat(messages + tool_results)
+      if llm_response.has_tool_call:
+          result = execute_tool(llm_response.tool_call)
+          messages.append(tool_result_message(result))
+      else:
+          finished = True; answer = llm_response.content
+  ```
+- **파일**: `src/defense_llm/agent/executor.py` — `execute()` 재구조화
+- **우선순위**: P0
+
+### 8.4 MockLLM에 tool_call 시뮬레이션 추가 (P0)
+
+- **현재**: `MockLLMAdapter.chat()`은 항상 `content` 텍스트만 반환
+- **TODO**: `response_fn`을 이용해 tool_call JSON 반환 가능하도록 확장
+  ```python
+  def tool_call_fn(messages):
+      # 첫 번째 호출: tool_call 반환
+      if is_first_call(messages):
+          return {"tool_calls": [{"name": "search_docs", "arguments": {...}}]}
+      # 두 번째 호출: 결과 기반 최종 답변
+      return {"content": "KF-21의 최대 순항 고도는 ..."}
+  ```
+- **파일**: `src/defense_llm/serving/mock_llm.py`
+- **우선순위**: P0
+
+### 8.5 Rule-based Planner → LLM Intent Planner로 전환 (P1)
+
+- **현재**: `classifier.py`는 regex 패턴 매칭
+- **TODO**: 1단계 — LLM에게 intent 분류를 위임 (query → QueryType 분류 프롬프트)
+  - Fallback: LLM 분류 실패 시 기존 regex 사용
+  - 2단계 — Planner 자체를 LLM이 tool 선택으로 대체 (8.3과 통합)
+- **파일**: `src/defense_llm/agent/planner_rules/classifier.py`
+- **우선순위**: P1
+
+### 8.6 Tool 실행 결과 구조화 및 LLM 재전달 포맷 (P0)
+
+- **현재**: `collected_chunks`를 텍스트로 이어붙여 `context_text`로 전달
+- **TODO**: tool 실행 결과를 표준 `tool_result` 메시지 포맷으로 LLM에 전달
+  ```json
+  {"role": "tool", "tool_call_id": "...", "content": "[문서1] KF-21 최대 고도 15,000m..."}
+  ```
+- **파일**: `src/defense_llm/agent/executor.py` — `_build_tool_result_message()`
+- **우선순위**: P0
+
+### 8.7 최대 루프 횟수 및 안전 종료 (P1)
+
+- **TODO**: Agent 루프에 `max_turns` 제한 추가 (기본 5회)
+  - 초과 시 `E_LOOP_LIMIT` 에러 코드 반환 + 감사 로그 기록
+- **파일**: `src/defense_llm/agent/executor.py`
+- **우선순위**: P1
+
+### 8.8 보안 검증을 Tool 실행 직전에 수행 (P0)
+
+- **현재**: `check_access()`는 `search_docs` 단계에서만 호출
+- **TODO**: LLM이 tool_call을 생성한 직후, dispatch 전에 보안 검증 게이트 추가
+  - LLM이 security_refusal을 호출할 수 없는 경우도 Python 레이어에서 차단
+- **파일**: `src/defense_llm/agent/executor.py` — `_security_gate(tool_name, params, user_context)`
+- **우선순위**: P0
+
+---
+
+## 우선순위 요약 (업데이트)
+
+| 항목 | 우선순위 | 상태 |
+|------|----------|------|
+| ~~실제 임베딩 모델 적용~~ | ~~P0~~ | ✅ 완료 |
+| ~~인덱스 영속성 구현~~ | ~~P0~~ | ✅ 완료 |
+| ~~사용자 인증/세션~~ | ~~P0~~ | ✅ 완료 |
+| ~~vLLM 어댑터 구현~~ | ~~P0~~ | ✅ 완료 |
+| **Tool Schema → LLM 주입** | **P0** | 미착수 |
+| **tool_call 응답 파싱/라우팅** | **P0** | 미착수 |
+| **Agent 루프 (ReAct)** | **P0** | 미착수 |
+| **MockLLM tool_call 시뮬레이션** | **P0** | 미착수 |
+| **Tool 결과 LLM 재전달 포맷** | **P0** | 미착수 |
+| **보안 검증 게이트 (dispatch 전)** | **P0** | 미착수 |
+| LLM Intent 분류기 (Planner 대체) | P1 | 미착수 |
+| Agent 루프 max_turns 제한 | P1 | 미착수 |
+| FAISS 인덱스 교체 | P1 | 미착수 |
+| ABAC 정책 파일 외부화 | P1 | 미착수 |
+| Prompt Template 정교화 | P1 | 미착수 |
+| Postgres 전환 | P1 | 미착수 |
+| 출력 마스킹 패턴 확장 | P2 | 미착수 |
+| KG 연동 | P2 | 미착수 |
+| Docker/컨테이너 배포 | P2 | 미착수 |

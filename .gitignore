@@ -40,3 +40,12 @@ curl_out.json
 # OS files
 .DS_Store
 Thumbs.db
+
+# Log / debug outputs
+*.log
+debug_output.txt
+curl_kr_out.json
+eval_report.json
+
+# Claude Cowork internal
+.claude/

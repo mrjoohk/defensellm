@@ -77,6 +77,7 @@ class Executor:
         agent_mode: bool = False,
         max_agent_turns: int = 10,
         script_tools_enabled: bool = False,
+        security_enabled: bool = False,
     ) -> None:
         self._llm = llm_adapter
         self._index = index
@@ -89,6 +90,7 @@ class Executor:
         self._agent_mode = agent_mode
         self._max_agent_turns = max_agent_turns
         self._script_tools_enabled = script_tools_enabled
+        self._security_enabled = security_enabled  # 개발 단계: False = 보안 로직 비활성화
 
     def execute(
         self,
@@ -305,14 +307,16 @@ class Executor:
             )
 
         if tool_name == "search_docs":
-            access = check_access(
-                user=user_context,
-                resource_security_labels=arguments.get(
-                    "security_label_filter", ["PUBLIC"]
-                ),
-            )
-            if not access["allowed"]:
-                return {"error": f"{E_AUTH}: {access['reason']}"}
+            # security_enabled=False(개발 기본값)이면 접근 제어 건너뜀
+            if self._security_enabled:
+                access = check_access(
+                    user=user_context,
+                    resource_security_labels=arguments.get(
+                        "security_label_filter", ["PUBLIC"]
+                    ),
+                )
+                if not access["allowed"]:
+                    return {"error": f"{E_AUTH}: {access['reason']}"}
 
             results = self._index.search(
                 query=arguments["query"],
@@ -418,13 +422,14 @@ class Executor:
                 )
 
             elif tool == "search_docs":
-                # Access check before search
-                access = check_access(
-                    user=user_context,
-                    resource_security_labels=params.get("security_label_filter", ["PUBLIC"]),
-                )
-                if not access["allowed"]:
-                    raise PermissionError(f"{E_AUTH}: {access['reason']}")
+                # security_enabled=False(개발 기본값)이면 접근 제어 건너뜀
+                if self._security_enabled:
+                    access = check_access(
+                        user=user_context,
+                        resource_security_labels=params.get("security_label_filter", ["PUBLIC"]),
+                    )
+                    if not access["allowed"]:
+                        raise PermissionError(f"{E_AUTH}: {access['reason']}")
 
                 query = params["query"]
                 

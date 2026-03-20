@@ -37,12 +37,17 @@ _DOC_PATTERNS: List[Pattern] = [
 ]
 
 
-def classify_query(query: str, user_context: dict = None) -> QueryType:
+def classify_query(
+    query: str,
+    user_context: dict = None,
+    security_enabled: bool = False,
+) -> QueryType:
     """Classify a query into one of the defined QueryTypes (UF-030).
 
     Args:
         query: The user's natural language query.
         user_context: Optional dict with role/clearance (reserved for future use).
+        security_enabled: If False (개발 기본값), SECURITY_RESTRICTED 분류를 건너뜀.
 
     Returns:
         QueryType enum value.
@@ -52,10 +57,11 @@ def classify_query(query: str, user_context: dict = None) -> QueryType:
 
     text = query.strip()
 
-    # Security restriction check — highest priority
-    for pat in _SECURITY_PATTERNS:
-        if pat.search(text):
-            return QueryType.SECURITY_RESTRICTED
+    # Security restriction check — highest priority (security_enabled=True 일 때만 동작)
+    if security_enabled:
+        for pat in _SECURITY_PATTERNS:
+            if pat.search(text):
+                return QueryType.SECURITY_RESTRICTED
 
     has_structured = any(p.search(text) for p in _STRUCTURED_PATTERNS)
     has_doc = any(p.search(text) for p in _DOC_PATTERNS)
