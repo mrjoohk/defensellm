@@ -83,6 +83,40 @@ _TOOL_SCHEMAS: Dict[str, dict] = {
             "encoding": {"type": str},
         },
     },
+    # -----------------------------------------------------------------------
+    # Python code execution (inline, no file required)
+    # -----------------------------------------------------------------------
+    "execute_python": {
+        "required": ["code"],
+        "properties": {
+            "code": {"type": str},
+            "timeout": {"type": int},
+        },
+    },
+    # -----------------------------------------------------------------------
+    # Battlefield briefing tools
+    # -----------------------------------------------------------------------
+    "ingest_battlefield_data": {
+        "required": ["raw_data"],
+        "properties": {
+            "raw_data": {"type": str},
+            "format_hint": {"type": str},   # "csv" | "json" | "auto"
+        },
+    },
+    "generate_briefing": {
+        "required": [],
+        "properties": {
+            "question": {"type": str},
+            "search_doctrine": {"type": bool},
+        },
+    },
+    "recommend_coa": {
+        "required": [],
+        "properties": {
+            "question": {"type": str},
+            "constraints": {"type": list},
+        },
+    },
 }
 
 # ---------------------------------------------------------------------------
@@ -151,6 +185,34 @@ _TOOL_DESCRIPTIONS: Dict[str, Dict[str, Any]] = {
             "data": "저장할 딕셔너리 리스트 (각 딕셔너리가 한 행)",
             "csv_path": "CSV 파일을 저장할 절대 경로",
             "encoding": "파일 인코딩 (기본값: utf-8-sig, Excel 호환)",
+        },
+    },
+    "execute_python": {
+        "tool": "Python 코드를 인라인으로 실행하고 stdout/stderr 결과를 반환합니다. 계산, 데이터 처리, 수식 검증 등에 사용합니다.",
+        "params": {
+            "code": "실행할 Python 코드 문자열",
+            "timeout": "최대 실행 대기 시간(초, 기본값: 10)",
+        },
+    },
+    "ingest_battlefield_data": {
+        "tool": "전장 상황 CSV 또는 JSON 데이터를 파싱하여 구조화된 상황 객체로 변환합니다.",
+        "params": {
+            "raw_data": "전장 데이터 문자열 (CSV 또는 JSON)",
+            "format_hint": "데이터 포맷 힌트: csv | json | auto (기본값: auto)",
+        },
+    },
+    "generate_briefing": {
+        "tool": "수집된 전장 상황 데이터를 바탕으로 BLUF+SALUTE+COA 포맷의 브리핑을 생성합니다.",
+        "params": {
+            "question": "브리핑 요청 또는 특정 초점 질문 (선택)",
+            "search_doctrine": "관련 교범·규정을 RAG로 검색하여 브리핑에 반영할지 여부",
+        },
+    },
+    "recommend_coa": {
+        "tool": "전장 상황을 분석하여 3가지 COA(Course of Action) 권고안을 생성합니다.",
+        "params": {
+            "question": "COA 생성 시 고려할 특정 질문 또는 목표 (선택)",
+            "constraints": "적용할 제약조건 목록 (예: 가용 자산, ROE, 시간 제한)",
         },
     },
 }

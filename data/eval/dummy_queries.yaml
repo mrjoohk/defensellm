@@ -1,8 +1,0 @@
-- id: q-air-01
-  question: "What is the primary role of an air superiority fighter?"
-  expected_answer:
-    must_include:
-      - "control"
-      - "airspace"
-  required_evidence:
-    - doc_id: "DOC-AIR-WIKI"

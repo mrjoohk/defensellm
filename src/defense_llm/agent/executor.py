@@ -196,6 +196,8 @@ class Executor:
         available_tools = [
             "search_docs", "query_structured_db",
             "generate_answer", "format_response", "security_refusal",
+            "execute_python",
+            "ingest_battlefield_data", "generate_briefing", "recommend_coa",
         ]
         if self._script_tools_enabled:
             available_tools += [
@@ -211,6 +213,7 @@ class Executor:
         ]
         collected_chunks: List[dict] = []
         db_results: List[dict] = []
+        situation_data: dict = {}   # battlefield ingestion 결과 누적
         answer = ""
         tool_call_log: List[dict] = []
 
@@ -239,6 +242,12 @@ class Executor:
                 tc_id = tc.get("id", f"call_{_turn}")
                 tool_name = tc["function"]["name"]
                 arguments = tc["function"]["arguments"]
+                # LLM이 arguments를 JSON 문자열로 반환하는 경우 파싱
+                if isinstance(arguments, str):
+                    try:
+                        arguments = json.loads(arguments)
+                    except json.JSONDecodeError:
+                        arguments = {}
 
                 validation = validate_tool_call(tool_name, arguments)
                 if not validation["valid"]:
@@ -249,7 +258,7 @@ class Executor:
                     try:
                         tool_result = self._dispatch_tool(
                             tool_name, arguments, user_context,
-                            collected_chunks, db_results,
+                            collected_chunks, db_results, situation_data,
                         )
                     except PermissionError as exc:
                         tool_result = {"error": str(exc)}
@@ -292,6 +301,7 @@ class Executor:
         user_context: dict,
         collected_chunks: List[dict],
         db_results: List[dict],
+        situation_data: Optional[dict] = None,
     ) -> dict:
         """Dispatch a validated tool call to its handler.
 
@@ -338,7 +348,17 @@ class Executor:
         if tool_name in ("generate_answer", "format_response"):
             return {"status": "acknowledged"}
 
-        # Script execution tools (require script_tools_enabled)
+        # ---------------------------------------------------------------
+        # execute_python — 인라인 Python 실행 (계산, 데이터 처리)
+        # script_tools_enabled 여부와 무관하게 항상 허용
+        # ---------------------------------------------------------------
+        if tool_name == "execute_python":
+            return self._execute_python(
+                code=arguments.get("code", ""),
+                timeout=arguments.get("timeout", 10),
+            )
+
+        # Script file creation/batch execution tools (require script_tools_enabled)
         if not self._script_tools_enabled:
             return {"error": f"{E_AUTH}: Script tools are disabled."}
 
@@ -390,6 +410,39 @@ class Executor:
                 encoding=arguments.get("encoding", "utf-8-sig"),
             )
             return result
+
+        # ---------------------------------------------------------------
+        # Battlefield briefing tools
+        # ---------------------------------------------------------------
+        if tool_name == "ingest_battlefield_data":
+            from .battlefield import ingest_battlefield_data
+            result = ingest_battlefield_data(
+                raw_data=arguments.get("raw_data", ""),
+                format_hint=arguments.get("format_hint", "auto"),
+            )
+            if situation_data is not None:
+                situation_data.update(result)
+            return {
+                "row_count": result.get("row_count", 0),
+                "columns":   result.get("columns", []),
+                "format":    result.get("format", "unknown"),
+                "summary":   result.get("summary", ""),
+                "error":     result.get("error"),
+            }
+
+        if tool_name == "generate_briefing":
+            return self._generate_briefing(
+                situation_data=situation_data or {},
+                collected_chunks=collected_chunks,
+                arguments=arguments,
+            )
+
+        if tool_name == "recommend_coa":
+            return self._recommend_coa(
+                situation_data=situation_data or {},
+                collected_chunks=collected_chunks,
+                arguments=arguments,
+            )
 
         return {"error": f"Unknown tool: '{tool_name}'"}
 
@@ -651,6 +704,89 @@ class Executor:
         finally:
             conn.close()
         return results
+
+    # ------------------------------------------------------------------
+    # New tool implementations
+    # ------------------------------------------------------------------
+
+    def _execute_python(self, code: str, timeout: int = 10) -> dict:
+        """실행: Python 코드를 서브프로세스로 실행하고 결과 반환."""
+        import subprocess
+        import sys
+
+        if not code.strip():
+            return {"error": "빈 코드", "success": False}
+        try:
+            result = subprocess.run(
+                [sys.executable, "-c", code],
+                capture_output=True,
+                text=True,
+                timeout=timeout,
+            )
+            return {
+                "stdout":     result.stdout.strip(),
+                "stderr":     result.stderr.strip(),
+                "returncode": result.returncode,
+                "success":    result.returncode == 0,
+            }
+        except subprocess.TimeoutExpired:
+            return {"error": f"실행 시간 초과 ({timeout}초)", "success": False}
+        except Exception as e:
+            return {"error": str(e), "success": False}
+
+    def _generate_briefing(
+        self,
+        situation_data: dict,
+        collected_chunks: List[dict],
+        arguments: dict,
+    ) -> dict:
+        """BLUF+SALUTE+COA 포맷 브리핑 생성."""
+        from .battlefield import build_briefing_context, BRIEFING_SYSTEM_PROMPT
+
+        if not situation_data and not collected_chunks:
+            return {"error": "브리핑을 생성할 상황 데이터가 없습니다. ingest_battlefield_data를 먼저 실행하세요."}
+
+        context = build_briefing_context(situation_data, collected_chunks if collected_chunks else None)
+        question = arguments.get("question", "전장 상황을 브리핑해주세요.")
+
+        messages = [
+            {"role": "system", "content": BRIEFING_SYSTEM_PROMPT},
+            {"role": "user", "content": f"요청: {question}\n\n{context}"},
+        ]
+        resp = self._llm.chat(messages, max_tokens=1024)
+        briefing_text = (resp.get("content") or "").strip()
+
+        return {"briefing": briefing_text, "status": "generated"}
+
+    def _recommend_coa(
+        self,
+        situation_data: dict,
+        collected_chunks: List[dict],
+        arguments: dict,
+    ) -> dict:
+        """COA(Course of Action) 3가지 권고안 생성."""
+        from .battlefield import build_briefing_context, COA_SYSTEM_PROMPT
+
+        context = build_briefing_context(situation_data, collected_chunks if collected_chunks else None)
+        question = arguments.get("question", "")
+        constraints = arguments.get("constraints", [])
+
+        constraint_text = ""
+        if constraints:
+            constraint_text = "\n\n제약조건:\n" + "\n".join(f"- {c}" for c in constraints)
+
+        user_content = context + constraint_text
+        if question:
+            user_content = f"요청: {question}\n\n" + user_content
+
+        messages = [
+            {"role": "system", "content": COA_SYSTEM_PROMPT},
+            {"role": "user", "content": user_content},
+        ]
+        resp = self._llm.chat(messages, max_tokens=1024)
+        coa_text = (resp.get("content") or "").strip()
+
+        return {"coa_recommendations": coa_text, "status": "generated"}
 
     def _build_context(self, chunks: List[dict], db_rows: List[dict]) -> str:
         parts = []

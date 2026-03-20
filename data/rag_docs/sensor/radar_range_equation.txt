@@ -1,6 +1,0 @@
-# Radar range equation
-
-# Radar range equation
-
-This is a fallback document for Radar range equation due to missing Wikipedia content.
-It serves as a placeholder for sensor domain knowledge.

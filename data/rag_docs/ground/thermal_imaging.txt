@@ -1,6 +1,0 @@
-# Thermal imaging
-
-# Thermal imaging
-
-This is a fallback document for Thermal imaging due to missing Wikipedia content.
-It serves as a placeholder for ground domain knowledge.

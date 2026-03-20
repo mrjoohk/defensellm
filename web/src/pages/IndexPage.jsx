@@ -88,14 +88,14 @@ export default function IndexPage() {
           <div className="dropzone__text">
             파일을 드래그하거나 클릭하여 업로드
           </div>
-          <div className="dropzone__sub">.txt, .md 파일 (UTF-8 / CP949)</div>
+          <div className="dropzone__sub">.txt, .md, .pdf 파일 (UTF-8 / CP949 / PDF)</div>
           {file && (
             <div className="dropzone__file">✓ {file.name} ({(file.size / 1024).toFixed(1)} KB)</div>
           )}
           <input
             ref={fileInputRef}
             type="file"
-            accept=".txt,.md,.text"
+            accept=".txt,.md,.text,.pdf"
             style={{ display: 'none' }}
             onChange={handleFileChange}
           />

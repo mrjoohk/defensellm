@@ -84,6 +84,8 @@ async def lifespan(app: FastAPI):
     # LLM adapter selection via env var: DEFENSE_LLM_LLM_ADAPTER=vllm|qwen (default: qwen)
     _llm_adapter_type = os.environ.get("DEFENSE_LLM_LLM_ADAPTER", "qwen").lower()
     _model_id = os.environ.get("DEFENSE_LLM_MODEL_NAME", "Qwen/Qwen2.5-1.5B-Instruct")
+    _security_enabled = os.environ.get("DEFENSE_LLM_SECURITY_ENABLED", "false").lower() in ("1", "true", "yes")
+    _script_tools_enabled = os.environ.get("DEFENSE_LLM_SCRIPT_TOOLS_ENABLED", "true").lower() in ("1", "true", "yes")
 
     if _llm_adapter_type == "vllm":
         from ..serving.vllm_adapter import VLLMAdapter
@@ -92,6 +94,9 @@ async def lifespan(app: FastAPI):
             base_url=os.environ.get("DEFENSE_LLM_VLLM_BASE_URL", "http://localhost:8000/v1"),
             api_key=os.environ.get("DEFENSE_LLM_VLLM_API_KEY", "EMPTY"),
         )
+    elif _llm_adapter_type == "mock":
+        from ..serving.mock_llm import MockLLMAdapter
+        llm = MockLLMAdapter()
     else:
         from ..serving.qwen_adapter import Qwen25Adapter
         llm = Qwen25Adapter(model_id=_model_id, preload=True)
@@ -106,6 +111,8 @@ async def lifespan(app: FastAPI):
         model_version=llm.model_name,
         index_version=_load_index_version(INDEX_PATH),
         index_path=INDEX_PATH,
+        security_enabled=_security_enabled,
+        script_tools_enabled=_script_tools_enabled,
     )
 
     _state.update(
@@ -115,6 +122,8 @@ async def lifespan(app: FastAPI):
             "audit_logger": audit_logger,
             "llm": llm,
             "llm_adapter_type": _llm_adapter_type,
+            "security_enabled": _security_enabled,
+            "script_tools_enabled": _script_tools_enabled,
         }
     )
 
@@ -247,7 +256,11 @@ def query(req: QueryRequest):
     security_label_filter = clearance_order[: user_clearance_idx + 1]
 
     # Classify and build plan
-    query_type = classify_query(req.question, user_context)
+    query_type = classify_query(
+        req.question,
+        user_context,
+        security_enabled=_state.get("security_enabled", False),
+    )
     plan = build_plan(
         query_type,
         context={
@@ -404,6 +417,85 @@ async def index_document(
         status="indexed",
         scanned_pages=parsed_pages,
     )
+
+
+class BriefingRequest(BaseModel):
+    raw_data: str = Field(..., min_length=1, description="전장 상황 CSV 또는 JSON 데이터")
+    format_hint: str = Field(default="auto", description="csv | json | auto")
+    question: str = Field(default="전장 상황을 브리핑해주세요.")
+    search_doctrine: bool = Field(default=False, description="관련 교범 RAG 검색 여부")
+    include_coa: bool = Field(default=True, description="COA 권고안 포함 여부")
+    constraints: List[str] = Field(default_factory=list, description="COA 제약조건")
+    user: UserContext = Field(default_factory=UserContext)
+
+
+@app.post("/api/briefing")
+def briefing(req: BriefingRequest):
+    """전장 상황 데이터(CSV/JSON) → BLUF+SALUTE+COA 브리핑 생성."""
+    from ..agent.battlefield import (
+        ingest_battlefield_data,
+        build_briefing_context,
+        BRIEFING_SYSTEM_PROMPT,
+        COA_SYSTEM_PROMPT,
+    )
+
+    executor: Executor = _state.get("executor")
+    llm = _state.get("llm")
+    if not executor or not llm:
+        raise HTTPException(status_code=503, detail="System not ready")
+
+    # 1. 데이터 파싱
+    situation = ingest_battlefield_data(req.raw_data, req.format_hint)
+    if situation.get("error"):
+        raise HTTPException(status_code=422, detail=situation["error"])
+
+    # 2. 교범 검색 (선택)
+    doctrine_chunks = []
+    if req.search_doctrine:
+        index = _state.get("index")
+        if index:
+            doctrine_chunks = index.search(query=req.question, top_k=3)
+
+    # 3. 브리핑 생성
+    context = build_briefing_context(situation, doctrine_chunks if doctrine_chunks else None)
+    briefing_messages = [
+        {"role": "system", "content": BRIEFING_SYSTEM_PROMPT},
+        {"role": "user", "content": f"요청: {req.question}\n\n{context}"},
+    ]
+    briefing_resp = llm.chat(briefing_messages, max_tokens=1024)
+    briefing_text = (briefing_resp.get("content") or "").strip()
+
+    # 4. COA 권고 (선택)
+    coa_text = ""
+    if req.include_coa:
+        constraint_text = ""
+        if req.constraints:
+            constraint_text = "\n\n제약조건:\n" + "\n".join(f"- {c}" for c in req.constraints)
+        coa_messages = [
+            {"role": "system", "content": COA_SYSTEM_PROMPT},
+            {"role": "user", "content": context + constraint_text},
+        ]
+        coa_resp = llm.chat(coa_messages, max_tokens=512)
+        coa_text = (coa_resp.get("content") or "").strip()
+
+    import json, uuid, hashlib as _hash
+    request_id = str(uuid.uuid4())
+    result = {
+        "request_id": request_id,
+        "data": {
+            "briefing": briefing_text,
+            "coa": coa_text,
+            "row_count": situation.get("row_count", 0),
+            "columns": situation.get("columns", []),
+        },
+        "citations": [{"doc_id": c.get("doc_id"), "text": c.get("text", "")[:120]}
+                      for c in doctrine_chunks[:3]] if doctrine_chunks else [],
+        "security_label": req.user.clearance,
+        "version": {"model": llm.model_name},
+    }
+    body_str = json.dumps(result, ensure_ascii=False, sort_keys=True)
+    result["hash"] = _hash.sha256(body_str.encode()).hexdigest()
+    return result
 
 
 @app.get("/api/audit/recent")
