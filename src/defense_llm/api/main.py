@@ -28,6 +28,7 @@ from pydantic import BaseModel, Field
 # ---------------------------------------------------------------------------
 # Internal imports
 # ---------------------------------------------------------------------------
+from ..config.settings import load_config_file
 from ..knowledge.db_schema import init_db, get_connection
 from ..knowledge.document_meta import register_document, compute_file_hash
 from ..rag.indexer import DocumentIndex
@@ -81,9 +82,16 @@ async def lifespan(app: FastAPI):
         except Exception:
             pass  # start fresh if corrupt
 
-    # LLM adapter selection via env var: DEFENSE_LLM_LLM_ADAPTER=vllm|qwen (default: qwen)
-    _llm_adapter_type = os.environ.get("DEFENSE_LLM_LLM_ADAPTER", "qwen").lower()
-    _model_id = os.environ.get("DEFENSE_LLM_MODEL_NAME", "Qwen/Qwen2.5-1.5B-Instruct")
+    # Load config.yaml (project root) — env vars take priority over file values
+    _file_cfg = load_config_file()
+    _llm_adapter_type = (
+        os.environ.get("DEFENSE_LLM_LLM_ADAPTER")
+        or _file_cfg.get("llm_adapter", "qwen")
+    ).lower()
+    _model_id = (
+        os.environ.get("DEFENSE_LLM_MODEL_NAME")
+        or _file_cfg.get("model_name", "Qwen/Qwen2.5-1.5B-Instruct")
+    )
 
     if _llm_adapter_type == "vllm":
         from ..serving.vllm_adapter import VLLMAdapter

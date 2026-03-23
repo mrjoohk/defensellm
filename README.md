@@ -9,10 +9,10 @@
 - **ReAct 에이전트 루프**: LLM이 tool_call을 직접 선택·실행하는 OpenAI Function-Calling 방식
 - **Agentic RAG + 코드 실행**: RAG 검색 → 스크립트 생성 → 배치 실행 → CSV 저장 전체 파이프라인 지원
 - **vLLM 지원**: `VLLMAdapter`로 `vllm serve` 엔드포인트에 연결, 프로덕션 확장 가능
-- **RBAC/ABAC 보안**: 검색 전/후 접근 제어, 스크립트 경로 화이트리스트, AST 기반 코드 검증
-- **완전 감사 로그**: request_id, 모델/인덱스 버전, citation, 응답 해시, 스크립트 실행 이력
-- **오프라인 동작**: `MockLLMAdapter` + `tool_call_sequence`로 외부 네트워크 없이 전체 에이전트 테스트
+- **보안 감사 로그**: request_id, 모델/인덱스 버전, citation, 응답 해시 완전 기록 (RBAC는 JWT 인증 레이어 추가 후 활성화 예정)
 - **어댑터 패턴**: `serving/` 레이어만 교체하여 Mock → Qwen(HuggingFace) → vLLM 전환
+- **config.yaml 모델 전환**: `config.yaml` 한 줄 수정으로 1.5B / 7B / 14B 모델 전환
+- **Windows 지원**: `scripts/*.bat` 배치 파일로 Windows 환경 실행
 
 ---
 
@@ -20,11 +20,11 @@
 
 ```
 사용자 프롬프트
-  → LLM (tool_call: search_docs)     ← RAG 검색
-  → LLM (tool_call: create_script)   ← Python 스크립트 생성
-  → LLM (tool_call: create_batch_script) ← 배치 래퍼 생성
+  → LLM (tool_call: search_docs)          ← RAG 검색
+  → LLM (tool_call: create_script)        ← Python 스크립트 생성
+  → LLM (tool_call: create_batch_script)  ← 배치 래퍼 생성
   → LLM (tool_call: execute_batch_script) ← 스크립트 실행
-  → LLM (tool_call: save_results_csv) ← 결과 CSV 저장
+  → LLM (tool_call: save_results_csv)     ← 결과 CSV 저장
   → LLM (최종 텍스트 응답)
   → 표준 응답 스키마 + 감사 로그
 ```
@@ -35,7 +35,7 @@
 
 ```
 src/defense_llm/
-├── config/          # 설정 로딩 (UF-001)
+├── config/          # 설정 로딩, config.yaml 지원 (UF-001)
 ├── knowledge/       # DB 스키마, 문서 메타, Glossary (UF-010~012)
 ├── rag/             # 청킹, 인덱싱, 검색, Citation (UF-020~022)
 ├── agent/
@@ -43,7 +43,7 @@ src/defense_llm/
 │   ├── script_tools.py   # 스크립트 생성/실행/CSV 저장 도구 (보안 게이트 포함)
 │   ├── tool_schemas.py   # OpenAI 형식 tool definitions (UF-032)
 │   └── planner_rules/    # 규칙 기반 플래너 (UF-030)
-├── security/        # RBAC/ABAC, 출력 마스킹 (UF-040~041)
+├── security/        # RBAC/ABAC (비활성화, 재활성화 예정), 출력 마스킹 (UF-040~041)
 ├── audit/           # 감사 로그 (UF-050)
 ├── serving/
 │   ├── adapter.py        # AbstractLLMAdapter (tools 파라미터 포함)
@@ -52,52 +52,98 @@ src/defense_llm/
 │   └── vllm_adapter.py   # VLLMAdapter (vllm serve OpenAI 호환 엔드포인트)
 └── eval/            # Eval Runner (UF-070)
 
+scripts/
+├── start_all.bat / ubuntu_start_all.sh   # 전체 서비스 실행
+├── start_api.bat / ubuntu_start_api.sh   # API 서버만 실행
+├── start_web.bat / ubuntu_start_web.sh   # 웹 UI만 실행
+├── stop_all.bat  / ubuntu_stop_all.sh    # 서비스 종료
+├── migrate_field_to_general.py           # field "general" 마이그레이션
+└── download_rag_docs.bat / .py           # RAG 문서 다운로드
+
 tests/
-├── unit/            # UF 단위 테스트 (208개 전체 통과)
+├── unit/            # UF 단위 테스트
 ├── integration/     # IF 통합 테스트 (IF-001~006)
 └── fixtures/        # 더미 문서, QA 샘플
 
-docs/
-├── 01_requirements.md
-├── 02_unit_functions.md
-├── 03_unit_test_coverage.md
-├── 04_integration_functions.md
-└── 05_integration_test_coverage.md
+config.yaml          # 모델·어댑터 설정 (model_name, llm_adapter)
 ```
 
 ---
 
-## 로컬 설치 및 테스트
+## 빠른 시작 (Windows)
 
-### 1. 가상환경 설정
+### 1. conda 환경 (dllm)
 
-```bash
-python -m venv .venv
-source .venv/bin/activate   # Windows: .venv\Scripts\activate
+```cmd
+conda activate dllm
+pip install -r requirements.txt
 ```
 
-### 2. 의존성 설치
+### 2. 모델 선택 (config.yaml)
 
-```bash
-pip install -e ".[dev]"
+```yaml
+# config.yaml
+model_name: Qwen/Qwen2.5-1.5B-Instruct   # 기본 (빠름)
+# model_name: Qwen/Qwen2.5-7B-Instruct   # 균형 (~16GB VRAM)
+# model_name: Qwen/Qwen2.5-14B-Instruct  # 고성능 (~32GB VRAM)
+
+llm_adapter: qwen   # qwen | vllm
 ```
 
-### 3. 전체 테스트 실행
+### 3. 서비스 실행
+
+```cmd
+scripts\start_all.bat
+```
+
+API: http://localhost:8000
+UI:  http://localhost:5173
+
+### 4. 서비스 종료
+
+```cmd
+scripts\stop_all.bat
+```
+
+---
+
+## 빠른 시작 (Ubuntu)
+
+### 1. conda 환경
 
 ```bash
+conda activate defensellm
+pip install -r requirements.txt
+```
+
+### 2. 서비스 실행
+
+```bash
+bash scripts/ubuntu_start_all.sh
+```
+
+---
+
+## 기존 데이터 마이그레이션
+
+field 값을 "general"로 통일하는 경우:
+
+```cmd
+C:\Users\user\anaconda3\envs\dllm\python scripts/migrate_field_to_general.py
+```
+
+---
+
+## 로컬 테스트
+
+```bash
+# 전체 테스트
 pytest -q
-# 208 passed
-```
 
-### 4. 커버리지 포함 실행
+# 커버리지 포함
+pytest --cov=src/defense_llm --cov-report=term-missing
 
-```bash
-pytest --cov=src/defense_llm --cov-report=term-missing --cov-report=xml
-```
-
-### 5. 에이전트 루프 테스트만 실행
-
-```bash
+# 에이전트 루프 테스트만
 pytest tests/unit/test_agent_loop.py tests/integration/test_agent_script_pipeline.py -v
 ```
 
@@ -161,21 +207,6 @@ resp = ex.execute(
     query="KF-21 속도 분석 후 결과를 CSV로 저장해줘",
 )
 print(resp["data"]["answer"])
-```
-
-### 스크립트 허용 경로 설정
-
-```python
-import defense_llm.agent.script_tools as st
-st.add_allowed_path(r"C:\User\users\llm_test")
-```
-
-또는 환경변수로 설정:
-
-```bash
-DEFENSE_LLM_AGENT_MODE=true
-DEFENSE_LLM_SCRIPT_TOOLS_ENABLED=true
-DEFENSE_LLM_VLLM_BASE_URL=http://localhost:8000/v1
 ```
 
 ---

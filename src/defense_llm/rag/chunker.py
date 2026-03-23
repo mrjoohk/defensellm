@@ -21,7 +21,7 @@ class Chunk:
     text: str
     token_count: int
     security_label: str = "INTERNAL"
-    doc_field: str = "air"
+    doc_field: str = "general"
     doc_type: str = "unknown"
     title: str = ""
     system: str = ""
@@ -42,7 +42,7 @@ def chunk_document(
     version: str,
     text: str,
     security_label: str = "INTERNAL",
-    doc_field: str = "air",
+    doc_field: str = "general",
     doc_type: str = "unknown",
     title: str = "",
     system: str = "",

@@ -40,3 +40,16 @@ curl_out.json
 # OS files
 .DS_Store
 Thumbs.db
+
+# Log / debug output
+*.log
+debug_output.txt
+eval_report.json
+curl_kr_out.json
+
+# Claude Code local state
+.claude/
+
+# scripts npm leftovers
+scripts/package-lock.json
+scripts/node_modules/

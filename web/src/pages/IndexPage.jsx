@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 
-const FIELD_OPTIONS = ['air', 'weapon', 'ground', 'sensor', 'comm']
+const FIELD_OPTIONS = ['general', 'air', 'weapon', 'ground', 'sensor', 'comm']
 const LABEL_OPTIONS = ['PUBLIC', 'INTERNAL', 'RESTRICTED', 'SECRET']
 
 export default function IndexPage() {
@@ -8,7 +8,7 @@ export default function IndexPage() {
   const [docId, setDocId] = useState('')
   const [docRev, setDocRev] = useState('v1')
   const [title, setTitle] = useState('')
-  const [field, setField] = useState('air')
+  const [field, setField] = useState('general')
   const [securityLabel, setSecurityLabel] = useState('INTERNAL')
   const [maxTokens, setMaxTokens] = useState(256)
   const [overlap, setOverlap] = useState(32)

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import os
 from dataclasses import dataclass, field
-from typing import Any, List, Optional
+from typing import Any, Dict, List, Optional
 
 # Error codes
 E_VALIDATION = "E_VALIDATION"
@@ -33,6 +33,42 @@ class AppConfig:
     # vLLM server settings
     vllm_base_url: str = "http://localhost:8000/v1"
     vllm_api_key: str = "EMPTY"
+
+
+_CONFIG_FILE_NAME = "config.yaml"
+
+
+def load_config_file(config_file: Optional[str] = None) -> Dict[str, Any]:
+    """Load settings from a YAML config file.
+
+    Searches for config.yaml in the following order:
+      1. Explicit path passed as *config_file*
+      2. DEFENSE_LLM_CONFIG_FILE environment variable
+      3. Project root (4 levels up from this file: src/defense_llm/config/settings.py)
+
+    Returns an empty dict if the file is not found (non-fatal).
+
+    Raises:
+        ValueError: (E_VALIDATION) if the file exists but cannot be parsed.
+    """
+    # Resolve candidate path
+    path = config_file or os.environ.get("DEFENSE_LLM_CONFIG_FILE")
+    if path is None:
+        _here = os.path.dirname(os.path.abspath(__file__))
+        _project_root = os.path.abspath(os.path.join(_here, "..", "..", ".."))
+        path = os.path.join(_project_root, _CONFIG_FILE_NAME)
+
+    if not os.path.exists(path):
+        return {}
+
+    try:
+        import yaml  # pyyaml
+
+        with open(path, "r", encoding="utf-8") as fh:
+            data = yaml.safe_load(fh)
+        return data if isinstance(data, dict) else {}
+    except Exception as e:
+        raise ValueError(f"{E_VALIDATION}: Failed to parse config file '{path}': {e}") from e
 
 
 def load_config(config_dict: Optional[dict] = None, env_override: bool = True) -> AppConfig:

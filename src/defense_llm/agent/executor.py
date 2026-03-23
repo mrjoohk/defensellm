@@ -305,14 +305,15 @@ class Executor:
             )
 
         if tool_name == "search_docs":
-            access = check_access(
-                user=user_context,
-                resource_security_labels=arguments.get(
-                    "security_label_filter", ["PUBLIC"]
-                ),
-            )
-            if not access["allowed"]:
-                return {"error": f"{E_AUTH}: {access['reason']}"}
+            # NOTE: RBAC check disabled — re-enable when JWT auth layer is added
+            # access = check_access(
+            #     user=user_context,
+            #     resource_security_labels=arguments.get(
+            #         "security_label_filter", ["PUBLIC"]
+            #     ),
+            # )
+            # if not access["allowed"]:
+            #     return {"error": f"{E_AUTH}: {access['reason']}"}
 
             results = self._index.search(
                 query=arguments["query"],
@@ -418,13 +419,13 @@ class Executor:
                 )
 
             elif tool == "search_docs":
-                # Access check before search
-                access = check_access(
-                    user=user_context,
-                    resource_security_labels=params.get("security_label_filter", ["PUBLIC"]),
-                )
-                if not access["allowed"]:
-                    raise PermissionError(f"{E_AUTH}: {access['reason']}")
+                # NOTE: RBAC check disabled — re-enable when JWT auth layer is added
+                # access = check_access(
+                #     user=user_context,
+                #     resource_security_labels=params.get("security_label_filter", ["PUBLIC"]),
+                # )
+                # if not access["allowed"]:
+                #     raise PermissionError(f"{E_AUTH}: {access['reason']}")
 
                 query = params["query"]
                 

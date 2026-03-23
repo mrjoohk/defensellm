@@ -66,7 +66,7 @@ export default function App() {
 
         <div className="topbar__status">
           {/* Role selector */}
-          <span className="text-muted text-small">Role</span>
+          <span className="text-muted text-small">Role (dev)</span>
           <select
             className="composer__select"
             value={role}
@@ -74,8 +74,6 @@ export default function App() {
           >
             <option value="admin">admin</option>
             <option value="analyst">analyst</option>
-            <option value="air_analyst">air_analyst</option>
-            <option value="weapon_analyst">weapon_analyst</option>
             <option value="viewer">viewer</option>
           </select>
 

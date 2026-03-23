@@ -1,6 +1,6 @@
 # project_summary.md — Defense LLM 프로젝트 요약
 
-최초 작성: 2026-03-03 | 최종 수정: 2026-03-18
+최초 작성: 2026-03-03 | 최종 수정: 2026-03-23
 
 ---
 
@@ -15,7 +15,7 @@
 |------|------|
 | 기본 모델 | Qwen2.5-1.5B-Instruct → 7B/14B/32B 업그레이드 경로 확보 |
 | 지식 소스 | RAG (하이브리드 BM25+Dense) + 정형 DB (플랫폼/무장/제약 테이블) + 방산 용어사전 |
-| 보안 원칙 | RBAC/ABAC 강제 적용, 출력 마스킹(좌표/주파수/sys_id), 사전·사후 검색 필터 |
+| 보안 원칙 | 출력 마스킹(좌표/주파수/sys_id), clearance 기반 검색 필터. RBAC는 JWT 인증 레이어 추가 후 재활성화 예정 |
 | 감사 원칙 | 모든 요청에 request_id·모델버전·인덱스버전·인용·응답해시 기록 (append-only SQLite) |
 | 아키텍처 원칙 | Rule-based Planner + LLM Executor, 어댑터 패턴으로 모델 교체 무중단 |
 
@@ -29,6 +29,7 @@
 | 4 통합기능 설계 | `docs/04_integration_functions.md` — IF-001~005 | ✅ |
 | 5 통합 테스트 | `tests/integration/` — SQLite temp DB, MockLLM | ✅ |
 | 6 Web UI | FastAPI + React/Vite (Query·Index·Audit 3개 페이지) | ✅ |
+| 7 Windows 지원 | `scripts/*.bat` 배치 파일, config.yaml 모델 전환 | ✅ |
 
 ### 1.3 핵심 모듈 구성
 
@@ -154,7 +155,10 @@ LLM은 텍스트 생성 역할만 담당하며, 도구 선택·실행은 Python 
 | Agent 루프 | 없음 (단방향 Pipeline) | LLM은 text gen만 담당 |
 | Tool 라우팅 | Python 코드 하드코딩 | LLM tool_call 파싱 없음 |
 | 인증 | JWTAuthManager (HS256) | ✅ 완료 |
-| 보안 강제 | RBAC/ABAC 기본 구현 | ABAC 정책 하드코딩 |
+| 보안 강제 | clearance 기반 인덱스 필터 작동 | RBAC 비활성화 (JWT 인증 레이어 추가 후 재활성화 예정) |
 | 인덱스 영속성 | `save()` / `load()` 구현 | ✅ 완료 |
-| Web UI | FastAPI + React (작동) | 실 모델 응답 연동됨 |
+| Web UI | FastAPI + React (작동) | 실 모델 응답 연동됨. field 필터 칩 제거, role 배지 단순화 |
+| field 분류 | "general" 단일 사용 중 | 규모 확장 시 air/weapon/ground/sensor/comm 부여 예정 |
+| Windows 실행 | `scripts/*.bat` 지원 | `start_all.bat` → API+UI 동시 실행 |
+| 모델 전환 | `config.yaml` `model_name` 수정 | 1.5B / 7B / 14B 전환 지원 |
 | 테스트 | unit + integration (pytest) | MockLLM, SQLite temp DB |

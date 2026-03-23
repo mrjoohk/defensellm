@@ -1,0 +1,22 @@
+# Defense LLM — Runtime Configuration
+# ---------------------------------------------------------------------------
+# LLM Model
+# ---------------------------------------------------------------------------
+# Qwen2.5 model variants (comment/uncomment to switch):
+#   Qwen/Qwen2.5-1.5B-Instruct   (기본, 빠름, 낮은 VRAM)
+#   Qwen/Qwen2.5-7B-Instruct     (균형, ~16GB VRAM)
+#   Qwen/Qwen2.5-14B-Instruct    (고성능, ~32GB VRAM)
+model_name: Qwen/Qwen2.5-1.5B-Instruct
+
+# LLM adapter backend: qwen (local HuggingFace) | vllm (vLLM server)
+llm_adapter: qwen
+
+# ---------------------------------------------------------------------------
+# vLLM server settings (llm_adapter: vllm 사용 시)
+# ---------------------------------------------------------------------------
+vllm_base_url: http://localhost:8000/v1
+vllm_api_key: EMPTY
+
+# ---------------------------------------------------------------------------
+# Priority order:  환경변수 > config.yaml > 코드 기본값
+# ---------------------------------------------------------------------------

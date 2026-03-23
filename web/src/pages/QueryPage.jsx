@@ -5,8 +5,6 @@ import MetaPanel from '../components/MetaPanel.jsx'
 import ErrorBanner from '../components/ErrorBanner.jsx'
 import AgentTracePanel from '../components/AgentTracePanel.jsx'
 
-const FIELDS = ['air', 'weapon', 'ground', 'sensor', 'comm']
-
 const EXAMPLE_QUERIES = [
   'KF-21 항공기 최대 순항 고도는?',
   '무기 적재 중량 제한 규정 문서를 검색하세요.',
@@ -16,7 +14,6 @@ const EXAMPLE_QUERIES = [
 
 export default function QueryPage({ userContext, health }) {
   const [question, setQuestion] = useState('')
-  const [fieldFilters, setFieldFilters] = useState([])
   const [topK, setTopK] = useState(5)
   const [onlineMode, setOnlineMode] = useState(false)
   const [agentMode, setAgentMode] = useState(false)
@@ -26,12 +23,6 @@ export default function QueryPage({ userContext, health }) {
   const [fetchError, setFetchError] = useState(null)
   const [submittedQuery, setSubmittedQuery] = useState('')
   const textareaRef = useRef(null)
-
-  const toggleField = (f) => {
-    setFieldFilters(prev =>
-      prev.includes(f) ? prev.filter(x => x !== f) : [...prev, f]
-    )
-  }
 
   const copyBundle = () => {
     if (!response) return
@@ -64,7 +55,6 @@ export default function QueryPage({ userContext, health }) {
         body: JSON.stringify({
           question,
           user: userContext,
-          field_filters: fieldFilters,
           top_k: topK,
           show_citations: true,
           online_mode: onlineMode,
@@ -95,9 +85,6 @@ export default function QueryPage({ userContext, health }) {
       <div className="query-layout__main">
         {/* Status strip */}
         <div className="flex-center gap-8 mb" style={{ marginBottom: 12, gap: 10, flexWrap: 'wrap' }}>
-          <span className="badge badge-mono">
-            {userContext.role}
-          </span>
           <SecurityBadge label={userContext.clearance} />
           {health && (
             <>
@@ -120,22 +107,7 @@ export default function QueryPage({ userContext, health }) {
             rows={3}
           />
 
-          {/* Field filter chips */}
           <div className="composer__controls">
-            <span className="composer__label">Field</span>
-            {FIELDS.map(f => (
-              <button
-                key={f}
-                className={`btn ${fieldFilters.includes(f) ? 'btn-primary' : 'btn-secondary'}`}
-                style={{ padding: '3px 10px', fontSize: 11 }}
-                onClick={() => toggleField(f)}
-              >
-                {f}
-              </button>
-            ))}
-
-            <div className="topbar__divider" />
-
             <span className="composer__label">top_k</span>
             <input
               type="number"

@@ -11,7 +11,7 @@ from .db_schema import get_connection
 E_VALIDATION = "E_VALIDATION"
 E_CONFLICT = "E_CONFLICT"
 
-VALID_FIELDS = {"air", "weapon", "ground", "sensor", "comm"}
+VALID_FIELDS = {"general", "air", "weapon", "ground", "sensor", "comm"}
 VALID_SECURITY_LABELS = {"PUBLIC", "INTERNAL", "RESTRICTED", "SECRET"}
 
 
