@@ -1,0 +1,59 @@
+{
+  "scenario_id": "SCN-039",
+  "timestamp": "2026-03-27T01:30:00Z",
+  "classification": "CONFIDENTIAL",
+  "threat": {
+    "type": "NAVAL",
+    "count": 2,
+    "movement": "ADVANCING",
+    "confidence": 0.85,
+    "location": {
+      "mgrs": "FP039111",
+      "lat": "37.52",
+      "lon": "127.02",
+      "alt_m": 120.0,
+      "description": "화력 지원 요청 지역"
+    },
+    "description": "화력 지원 계획 수립 — NAVAL"
+  },
+  "friendly_forces": {
+    "unit_id": "FIRES-1ARTY",
+    "unit_type": "ARTILLERY",
+    "strength": "BATTERY",
+    "location": {
+      "mgrs": "PL400100",
+      "lat": "37.44",
+      "lon": "126.95",
+      "alt_m": 120.0,
+      "description": "포병 진지"
+    },
+    "readiness": "READY"
+  },
+  "query": {
+    "intent": "FIRES_RECOMMEND",
+    "text": "NAVAL 위협에 대한 화력 지원 계획을 수립하라.",
+    "roe_level": "FIRE_AT_WILL",
+    "available_fires": [
+      "Naval Gun",
+      "MLRS",
+      "155mm SPH Battery"
+    ]
+  },
+  "terrain": {
+    "type": "OPEN",
+    "elevation_m": 80,
+    "vegetation": "SPARSE",
+    "urbanization": "RURAL"
+  },
+  "constraints": {
+    "ttl_minutes": 15,
+    "no_strike_zones": [
+      "VILLAGE_ALPHA"
+    ]
+  },
+  "metadata": {
+    "source": "HYPOTHETICAL",
+    "exercise_name": "EXERCISE IRON SHIELD 2026",
+    "label": "D-group: fires NAVAL"
+  }
+}

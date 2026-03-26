@@ -1,0 +1,52 @@
+{
+  "scenario_id": "SCN-018",
+  "timestamp": "2026-03-26T15:00:00Z",
+  "classification": "CONFIDENTIAL",
+  "threat": {
+    "type": "ARMOR",
+    "count": 24,
+    "movement": "ADVANCING",
+    "confidence": 0.9,
+    "location": {
+      "mgrs": "QB018789",
+      "lat": "37.55",
+      "lon": "127.05",
+      "alt_m": 120.0,
+      "description": "고위협 접근로"
+    },
+    "description": "고강도 ARMOR 위협 — WEAPONS_FREE ROE 적용"
+  },
+  "friendly_forces": {
+    "unit_id": "3ARTY-2DIV",
+    "unit_type": "ARMOR",
+    "strength": "BATTALION",
+    "location": {
+      "mgrs": "PL200200",
+      "lat": "37.45",
+      "lon": "126.90",
+      "alt_m": 120.0,
+      "description": "대대 전술 지휘소"
+    },
+    "readiness": "READY"
+  },
+  "query": {
+    "intent": "COA_RECOMMEND",
+    "text": "ARMOR 위협에 대한 최적 행동 방책 3가지를 제시하라.",
+    "roe_level": "WEAPONS_FREE"
+  },
+  "terrain": {
+    "type": "MOUNTAIN",
+    "elevation_m": 480,
+    "vegetation": "DENSE",
+    "urbanization": "RURAL"
+  },
+  "constraints": {
+    "ttl_minutes": 20,
+    "no_strike_zones": []
+  },
+  "metadata": {
+    "source": "HYPOTHETICAL",
+    "exercise_name": "EXERCISE IRON SHIELD 2026",
+    "label": "B-group: ARMOR x WEAPONS_FREE"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "scenario_id": "SCN-048",
+  "timestamp": "2026-03-27T06:00:00Z",
+  "classification": "CONFIDENTIAL",
+  "threat": {
+    "type": "INFANTRY",
+    "count": 120,
+    "movement": "ADVANCING",
+    "confidence": 0.92,
+    "location": {
+      "mgrs": "LO048000",
+      "lat": "37.53",
+      "lon": "127.03",
+      "alt_m": 120.0,
+      "description": "대규모 보병 접근"
+    },
+    "description": "대규모 보병 120명 접근 — 여단급 공세 징후"
+  },
+  "friendly_forces": {
+    "unit_id": "1INF-2REGT",
+    "unit_type": "INFANTRY",
+    "strength": "COMPANY",
+    "location": {
+      "mgrs": "PL048001",
+      "lat": "37.48",
+      "lon": "126.98",
+      "alt_m": 120.0,
+      "description": "방어 진지"
+    },
+    "readiness": "READY"
+  },
+  "query": {
+    "intent": "COA_RECOMMEND",
+    "text": "대규모 적 보병에 대한 방어 방책과 증원 요청 우선순위를 제시하라.",
+    "roe_level": "RETURN_FIRE"
+  },
+  "constraints": {
+    "ttl_minutes": 25,
+    "no_strike_zones": []
+  },
+  "metadata": {
+    "source": "HYPOTHETICAL",
+    "exercise_name": "EXERCISE IRON SHIELD 2026",
+    "label": "F-edge: large_count_120"
+  }
+}

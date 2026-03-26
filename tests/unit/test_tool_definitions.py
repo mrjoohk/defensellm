@@ -80,3 +80,70 @@ def test_descriptions_present():
     assert len(fn["description"]) > 0
     query_prop = fn["parameters"]["properties"]["query"]
     assert "description" in query_prop
+
+
+def test_search_docs_has_no_online_mode_param():
+    """online_mode must NOT appear in search_docs — it is a server-level setting."""
+    defs = get_tool_definitions_for_llm(["search_docs"])
+    props = defs[0]["function"]["parameters"]["properties"]
+    assert "online_mode" not in props, (
+        "online_mode must be removed from search_docs tool schema; "
+        "use online_mode_enabled on the Executor instead"
+    )
+
+
+def test_web_search_schema_registered():
+    defs = get_tool_definitions_for_llm(["web_search"])
+    assert len(defs) == 1
+    fn = defs[0]["function"]
+    assert fn["name"] == "web_search"
+    assert "query" in fn["parameters"]["required"]
+    assert len(fn["description"]) > 0
+
+
+def test_web_search_not_in_default_agent_tools():
+    """web_search is in the registry but must be explicitly requested.
+    The Executor adds it only when online_mode_enabled=True."""
+    default_agent_tools = [
+        "search_docs", "query_structured_db",
+        "generate_answer", "format_response", "security_refusal",
+    ]
+    defs = get_tool_definitions_for_llm(default_agent_tools)
+    names = [d["function"]["name"] for d in defs]
+    assert "web_search" not in names
+
+
+def test_threat_assess_schema_registered():
+    """threat_assess는 스키마에 등록되어 있어야 한다."""
+    defs = get_tool_definitions_for_llm(["threat_assess"])
+    assert len(defs) == 1
+    fn = defs[0]["function"]
+    assert fn["name"] == "threat_assess"
+    assert len(fn["description"]) > 0
+
+
+def test_threat_assess_required_fields():
+    """threat_assess 필수 필드: threat_type, count."""
+    defs = get_tool_definitions_for_llm(["threat_assess"])
+    params = defs[0]["function"]["parameters"]
+    assert "threat_type" in params["required"]
+    assert "count" in params["required"]
+
+
+def test_threat_assess_optional_fields_in_properties():
+    """movement, confidence, roe_level, available_fires 등은 optional properties에 있어야 한다."""
+    defs = get_tool_definitions_for_llm(["threat_assess"])
+    props = defs[0]["function"]["parameters"]["properties"]
+    for optional_field in ("movement", "confidence", "roe_level", "available_fires"):
+        assert optional_field in props, f"'{optional_field}' missing from threat_assess properties"
+
+
+def test_threat_assess_not_in_default_agent_tools():
+    """threat_assess는 기본 도구 목록에 없음 — battle_context 제공 시에만 활성화."""
+    default_agent_tools = [
+        "search_docs", "query_structured_db",
+        "generate_answer", "format_response", "security_refusal",
+    ]
+    defs = get_tool_definitions_for_llm(default_agent_tools)
+    names = [d["function"]["name"] for d in defs]
+    assert "threat_assess" not in names

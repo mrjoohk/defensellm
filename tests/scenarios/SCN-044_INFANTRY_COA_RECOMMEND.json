@@ -1,0 +1,48 @@
+{
+  "scenario_id": "SCN-044",
+  "timestamp": "2026-03-27T04:00:00Z",
+  "classification": "CONFIDENTIAL",
+  "threat": {
+    "type": "INFANTRY",
+    "count": 30,
+    "movement": "STATIONARY",
+    "confidence": 0.75,
+    "location": {
+      "mgrs": "TR044222",
+      "lat": "37.57",
+      "lon": "127.07",
+      "alt_m": 120.0,
+      "description": "산악 진지 방어"
+    },
+    "description": "산악 진지 방어"
+  },
+  "friendly_forces": {
+    "unit_id": "2MECH-1DIV",
+    "unit_type": "MECHANIZED",
+    "strength": "COMPANY",
+    "location": {
+      "mgrs": "PL500200",
+      "lat": "37.46",
+      "lon": "126.96",
+      "alt_m": 120.0,
+      "description": "기계화 보병 진지"
+    },
+    "readiness": "READY"
+  },
+  "query": {
+    "intent": "COA_RECOMMEND",
+    "text": "MOUNTAIN 지형에서 INFANTRY 위협에 대한 행동 방책을 제시하라.",
+    "roe_level": "RETURN_FIRE"
+  },
+  "terrain": {
+    "type": "MOUNTAIN",
+    "elevation_m": 650,
+    "vegetation": "VARIABLE",
+    "urbanization": "RURAL"
+  },
+  "metadata": {
+    "source": "HYPOTHETICAL",
+    "exercise_name": "EXERCISE IRON SHIELD 2026",
+    "label": "E-group: MOUNTAIN INFANTRY"
+  }
+}

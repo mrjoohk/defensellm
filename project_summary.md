@@ -1,6 +1,6 @@
 # project_summary.md — Defense LLM 프로젝트 요약
 
-최초 작성: 2026-03-03 | 최종 수정: 2026-03-23
+최초 작성: 2026-03-03 | 최종 수정: 2026-03-25
 
 ---
 
@@ -19,7 +19,7 @@
 | 감사 원칙 | 모든 요청에 request_id·모델버전·인덱스버전·인용·응답해시 기록 (append-only SQLite) |
 | 아키텍처 원칙 | Rule-based Planner + LLM Executor, 어댑터 패턴으로 모델 교체 무중단 |
 
-### 1.2 완성 범위 (Phase 1~6)
+### 1.2 완성 범위 (Phase 1~6 + PDF OCR)
 
 | Phase | 산출물 | 상태 |
 |-------|--------|------|
@@ -30,6 +30,7 @@
 | 5 통합 테스트 | `tests/integration/` — SQLite temp DB, MockLLM | ✅ |
 | 6 Web UI | FastAPI + React/Vite (Query·Index·Audit 3개 페이지) | ✅ |
 | 7 Windows 지원 | `scripts/*.bat` 배치 파일, config.yaml 모델 전환 | ✅ |
+| 8 PDF OCR 지원 | `rag/pdf_parser.py` — opendataloader_pdf + pytesseract 자동 감지 | ✅ |
 
 ### 1.3 핵심 모듈 구성
 
@@ -37,7 +38,7 @@
 |------|-----------|------|
 | config | `config/settings.py` | 환경변수 기반 설정 로드 |
 | knowledge | `knowledge/db_schema.py`, `document_meta.py`, `glossary.py` | SQLite DDL, 문서 메타 등록, 방산 용어 매핑 |
-| rag | `rag/chunker.py`, `indexer.py`, `retriever.py`, `embedder.py`, `citation.py` | 청킹·인덱싱·하이브리드 검색·인용 패키징 |
+| rag | `rag/chunker.py`, `indexer.py`, `retriever.py`, `embedder.py`, `citation.py`, **`pdf_parser.py`** | 청킹·인덱싱·하이브리드 검색·인용 패키징·**PDF/OCR 텍스트 추출** |
 | agent | `agent/planner_rules/classifier.py`, `plan_builder.py`, `executor.py`, `tool_schemas.py` | 분류→플랜→실행→스키마 검증 |
 | security | `security/rbac.py`, `masking.py`, `auth.py` | RBAC/ABAC, 출력 마스킹, JWT 인증 |
 | audit | `audit/logger.py`, `schema.py` | append-only 감사 로그 |
@@ -55,6 +56,54 @@ User Query
 ```
 
 LLM은 텍스트 생성 역할만 담당하며, 도구 선택·실행은 Python 코드가 결정한다.
+
+---
+
+## 1-A. PDF OCR 기능 상세 (2026-03-25 추가)
+
+### 배경 및 선택 근거
+
+방산 교범·규격서는 스캔 이미지(글자 그림) 형태로 배포되는 경우가 많다.
+기존 `index` 명령은 UTF-8 텍스트 파일(.txt)만 지원하여 PDF 직접 색인이 불가능했다.
+
+**판단 근거:**
+- `@opendataloader/pdf` (npm) — Node.js 전용, 이 프로젝트는 순수 Python → **부적합**
+- `opendataloader_pdf` (Python) — Java 내장 JAR로 오프라인 동작, RAG 파이프라인 최적화 → **채택**
+- Java 11.0.30 (OpenJDK) 이미 시스템 설치 확인 → 추가 의존성 부담 없음
+- `pytesseract` + `pdf2image` 이미 시스템에 설치 → OCR 폴백 즉시 사용 가능
+
+### 구현 내용
+
+| 구성요소 | 내용 |
+|---------|------|
+| 신규 파일 | `src/defense_llm/rag/pdf_parser.py` (UF-025) |
+| 1차 추출 | `opendataloader_pdf` Java JAR로 텍스트 레이어 PDF 파싱 |
+| 자동 감지 | 평균 chars/page < 50 이면 이미지 기반 PDF로 판단 |
+| OCR 폴백 | `pdf2image`로 페이지 이미지 변환 → `pytesseract` OCR |
+| CLI 연동 | `defense-llm index *.pdf` 자동 감지, `--ocr`, `--ocr-lang` 옵션 추가 |
+| 단위 테스트 | `tests/unit/test_pdf_parser.py` — 18/18 통과 |
+
+### 시스템 선행 요건 (시스템 설치 필요, pip 아님)
+
+| 구성요소 | Linux (Ubuntu) | Windows |
+|---------|---------------|---------|
+| Java 11+ | `apt install default-jre` | https://adoptium.net/ |
+| Tesseract | `apt install tesseract-ocr` | https://github.com/UB-Mannheim/tesseract/wiki |
+| 한국어 팩 | `apt install tesseract-ocr-kor` | Tesseract 설치 시 kor 팩 선택 |
+| Poppler | `apt install poppler-utils` | https://github.com/oschwartz10612/poppler-windows/releases/ |
+
+### 처리 흐름
+
+```
+PDF 파일 입력
+  → opendataloader_pdf (Java JAR) 텍스트 추출
+      ↓ 성공 + avg chars/page ≥ 50
+  → 텍스트 반환 (직접 추출)
+      ↓ 실패 OR avg chars/page < 50 (이미지 기반 PDF)
+  → pdf2image: PDF 페이지 → PIL Image 변환
+  → pytesseract: 이미지 → 텍스트 OCR
+  → [PAGE N] 마커 포함 텍스트 반환
+```
 
 ---
 
@@ -110,12 +159,12 @@ LLM은 텍스트 생성 역할만 담당하며, 도구 선택·실행은 Python 
 
 ### 3.2 P1 — RAG 품질 및 인프라 개선
 
-| 항목 | 작업 | 파일 |
-|------|------|------|
-| FAISS 벡터 인덱스 교체 | `SimpleVectorIndex` → `faiss-cpu` 또는 `hnswlib` ANN 인덱스 | `rag/indexer.py` |
-| BM25 라이브러리 교체 | 내장 구현 → `rank-bm25` 또는 Whoosh 연동 | `rag/indexer.py` |
-| PDF 파싱 지원 | PyMuPDF(`fitz`) 또는 `pdfplumber` 기반 청킹 추가 | `rag/chunker.py` or `rag/pdf_parser.py` |
-| LLM Intent 분류기 | regex → LLM 위임 (실패 시 regex fallback) | `agent/planner_rules/classifier.py` |
+| 항목 | 작업 | 파일 | 상태 |
+|------|------|------|------|
+| FAISS 벡터 인덱스 교체 | `SimpleVectorIndex` → `faiss-cpu` 또는 `hnswlib` ANN 인덱스 | `rag/indexer.py` | 미완 |
+| BM25 라이브러리 교체 | 내장 구현 → `rank-bm25` 또는 Whoosh 연동 | `rag/indexer.py` | 미완 |
+| **PDF OCR 지원** | **opendataloader_pdf(Java 엔진) + pytesseract 자동 감지** | **`rag/pdf_parser.py`** | **✅ 완료** |
+| LLM Intent 분류기 | regex → LLM 위임 (실패 시 regex fallback) | `agent/planner_rules/classifier.py` | 미완 |
 | Agent 루프 max_turns 제한 | 기본 5회, 초과 시 `E_LOOP_LIMIT` + 감사 로그 | `agent/executor.py` |
 | Prompt Template 정교화 | QueryType별 프롬프트 템플릿 분리 | `agent/prompt_templates/` |
 | ABAC 정책 외부화 | 하드코딩 → `security/policy.yaml` + 로더 | `security/rbac.py` |
@@ -162,3 +211,5 @@ LLM은 텍스트 생성 역할만 담당하며, 도구 선택·실행은 Python 
 | Windows 실행 | `scripts/*.bat` 지원 | `start_all.bat` → API+UI 동시 실행 |
 | 모델 전환 | `config.yaml` `model_name` 수정 | 1.5B / 7B / 14B 전환 지원 |
 | 테스트 | unit + integration (pytest) | MockLLM, SQLite temp DB |
+| PDF 문서 ingest | `rag/pdf_parser.py` | ✅ 완료 (opendataloader_pdf + pytesseract OCR) |
+| PDF OCR 자동 감지 | 평균 chars/page < 50 → OCR 자동 전환 | ✅ 완료 |

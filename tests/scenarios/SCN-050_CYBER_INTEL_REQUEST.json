@@ -1,0 +1,47 @@
+{
+  "scenario_id": "SCN-050",
+  "timestamp": "2026-03-27T07:00:00Z",
+  "classification": "CONFIDENTIAL",
+  "threat": {
+    "type": "CYBER",
+    "count": 1,
+    "movement": "UNKNOWN",
+    "confidence": 0.65,
+    "location": {
+      "mgrs": "LO050000",
+      "lat": "37.50",
+      "lon": "127.00",
+      "alt_m": 120.0,
+      "description": "C2 시스템"
+    },
+    "description": "C2 네트워크 침투 시도 탐지 — 지휘 통신 교란 위험"
+  },
+  "friendly_forces": {
+    "unit_id": "S6-HQ-1CORPS",
+    "unit_type": "SIGNAL",
+    "strength": "SECTION",
+    "location": {
+      "mgrs": "PL050001",
+      "lat": "37.50",
+      "lon": "127.00",
+      "alt_m": 120.0,
+      "description": "군단 사령부"
+    },
+    "readiness": "DEGRADED"
+  },
+  "query": {
+    "intent": "INTEL_REQUEST",
+    "text": "사이버 위협 출처 분석과 C2 시스템 보호 우선순위를 제시하라.",
+    "roe_level": "HOLD"
+  },
+  "intelligence": {
+    "source_reliability": "C",
+    "credibility": "3",
+    "sitrep": "비정상 네트워크 트래픽 탐지 — IDS 경보 발생"
+  },
+  "metadata": {
+    "source": "HYPOTHETICAL",
+    "exercise_name": "EXERCISE IRON SHIELD 2026",
+    "label": "F-edge: cyber_threat"
+  }
+}

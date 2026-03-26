@@ -1,0 +1,46 @@
+{
+  "scenario_id": "SCN-049",
+  "timestamp": "2026-03-27T06:30:00Z",
+  "classification": "CONFIDENTIAL",
+  "threat": {
+    "type": "MISSILE",
+    "count": 2,
+    "movement": "STATIONARY",
+    "confidence": 0.95,
+    "location": {
+      "mgrs": "LO049000",
+      "lat": "37.62",
+      "lon": "127.12",
+      "alt_m": 120.0,
+      "description": "미사일 발사 징후"
+    },
+    "description": "미사일 발사 카운트다운 징후 — TTL 5분"
+  },
+  "friendly_forces": {
+    "unit_id": "ADA-1BTY",
+    "unit_type": "ADA",
+    "strength": "BATTERY",
+    "location": {
+      "mgrs": "PL049001",
+      "lat": "37.47",
+      "lon": "126.97",
+      "alt_m": 120.0,
+      "description": "ADA 포대"
+    },
+    "readiness": "READY"
+  },
+  "query": {
+    "intent": "ROE_CHECK",
+    "text": "즉각 요격을 위한 ROE 검토 및 최적 화력 대응을 긴급 수행하라.",
+    "roe_level": "WEAPONS_FREE"
+  },
+  "constraints": {
+    "ttl_minutes": 5,
+    "no_strike_zones": []
+  },
+  "metadata": {
+    "source": "HYPOTHETICAL",
+    "exercise_name": "EXERCISE IRON SHIELD 2026",
+    "label": "F-edge: tight_ttl_5min"
+  }
+}

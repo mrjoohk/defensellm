@@ -1,7 +1,7 @@
 # Defense-LLM CLI 사용 매뉴얼
 
 > **대상**: 방산 도메인 sLLM/Agent 시스템 운용자 및 분석관
-> **버전**: 0.1.0 | **모델**: Qwen2.5-1.5B-Instruct (확장 가능)
+> **버전**: 0.1.1 | **모델**: Qwen2.5-1.5B-Instruct (확장 가능) | **최종 수정**: 2026-03-25
 
 ---
 
@@ -12,7 +12,7 @@
 3. [명령 구조](#3-명령-구조)
 4. [명령 상세](#4-명령-상세)
    - 4.1 [db init — DB 초기화](#41-db-init--db-초기화)
-   - 4.2 [index — 문서 색인](#42-index--문서-색인)
+   - 4.2 [index — 문서 색인 (PDF 포함)](#42-index--문서-색인-pdf-포함)
    - 4.3 [query — 질의응답](#43-query--질의응답)
    - 4.4 [eval — 정확도 평가](#44-eval--정확도-평가)
    - 4.5 [config check — 설정 검증](#45-config-check--설정-검증)
@@ -34,7 +34,8 @@
 
 | 기능 | 설명 |
 |------|------|
-| 문서 색인 | 텍스트 파일을 청킹하여 BM25 + 벡터 하이브리드 인덱스에 등록 |
+| 문서 색인 | 텍스트(.txt/.md) 및 **PDF 파일**을 청킹하여 BM25 + 벡터 하이브리드 인덱스에 등록 |
+| **PDF OCR** | **이미지 기반(스캔) PDF 자동 감지 → Tesseract OCR로 텍스트 추출** |
 | 자연어 질의 | 규칙 기반 Planner → LLM Executor → 근거 인용 답변 |
 | 보안 접근 제어 | RBAC/ABAC 기반 허가 등급별 문서 접근 필터링 |
 | 감사 로그 | 모든 요청에 대해 request_id / 모델버전 / citation 자동 저장 |
@@ -59,8 +60,36 @@ pip install -e ".[dev]"
 
 ```bash
 defense-llm --version
-# defense-llm, version 0.1.0
+# defense-llm, version 0.1.1
 ```
+
+### 2.2 PDF OCR 선행 요건 (시스템 레벨 설치)
+
+PDF 문서를 색인하려면 아래 시스템 패키지가 추가로 필요합니다.
+
+**Linux (Ubuntu)**
+
+```bash
+# Java 11+ (opendataloader_pdf 필수)
+apt install default-jre
+
+# Tesseract OCR + 한국어 팩 (이미지 기반 PDF OCR용)
+apt install tesseract-ocr tesseract-ocr-kor
+
+# Poppler (pdf2image 필수)
+apt install poppler-utils
+```
+
+**Windows**
+
+| 구성요소 | 다운로드 | 비고 |
+|---------|---------|------|
+| Java 11+ | https://adoptium.net/ | PATH 자동 등록 |
+| Tesseract | https://github.com/UB-Mannheim/tesseract/wiki | 설치 시 kor 언어 팩 선택 |
+| Poppler | https://github.com/oschwartz10612/poppler-windows/releases/ | `<poppler>/Library/bin`을 PATH에 추가 |
+
+> **참고**: 텍스트 레이어가 포함된 일반 PDF는 Java만 있으면 OCR 없이 추출 가능합니다.
+> OCR(pytesseract)은 스캔 이미지 PDF에만 자동으로 적용됩니다.
 
 ### 2.2 데이터 디렉토리 구성
 
@@ -135,9 +164,11 @@ DB 초기화 중: ./data/defense.db
 
 ---
 
-### 4.2 `index` — 문서 색인
+### 4.2 `index` — 문서 색인 (PDF 포함)
 
-텍스트 파일을 읽어 메타데이터를 등록하고, 청킹 후 인덱스에 추가합니다.
+텍스트 파일 또는 **PDF 파일**을 읽어 메타데이터를 등록하고, 청킹 후 인덱스에 추가합니다.
+`.pdf` 파일은 자동으로 `opendataloader_pdf`(Java 엔진)로 텍스트를 추출하며,
+이미지 기반(스캔) PDF는 Tesseract OCR이 자동으로 적용됩니다.
 
 **구문**
 
@@ -149,7 +180,7 @@ defense-llm index <파일경로> [옵션]
 
 | 인수 | 설명 |
 |------|------|
-| `<파일경로>` | 색인할 텍스트 파일 경로 (UTF-8) |
+| `<파일경로>` | 색인할 파일 경로: `.txt`, `.md` (UTF-8) 또는 `.pdf` |
 
 **옵션**
 
@@ -160,15 +191,28 @@ defense-llm index <파일경로> [옵션]
 | `--title` | | 파일명 | 문서 제목 |
 | `--field` | ✓ | — | 도메인 필드: `air` \| `weapon` \| `ground` \| `sensor` \| `comm` |
 | `--security-label` | | `INTERNAL` | 보안 등급: `PUBLIC` \| `INTERNAL` \| `RESTRICTED` \| `SECRET` |
-| `--max-tokens` | | `256` | 청크당 최대 토큰 수 |
-| `--overlap` | | `32` | 청크 간 중복 토큰 수 |
+| `--max-tokens` | | `512` | 청크당 최대 토큰 수 |
+| `--overlap` | | `64` | 청크 간 중복 토큰 수 |
+| `--ocr` | | — | **[PDF 전용]** 텍스트 레이어 무시, 항상 OCR 강제 적용 |
+| `--ocr-lang` | | `eng` | **[PDF 전용]** Tesseract 언어 코드. 한국어: `kor` 또는 `kor+eng` |
 | `--db-path` | | `./data/defense.db` | DB 경로 |
 | `--index-path` | | `./data/index` | 인덱스 저장 디렉토리 |
+
+**PDF 자동 처리 흐름**
+
+```
+PDF 입력
+  → opendataloader_pdf(Java)로 텍스트 추출 시도
+      ↓ 평균 50자/페이지 이상  →  텍스트 레이어 PDF (직접 추출)
+      ↓ 평균 50자/페이지 미만  →  이미지 기반 PDF
+                                   → pdf2image로 페이지 이미지 변환
+                                   → pytesseract OCR 적용
+```
 
 **예시**
 
 ```bash
-# 항공 도메인 교범 색인
+# 일반 텍스트 파일 색인 (기존 방식 동일)
 defense-llm index docs/kf21_manual.txt \
   --doc-id DOC-KF21-001 \
   --doc-rev v2.1 \
@@ -176,25 +220,56 @@ defense-llm index docs/kf21_manual.txt \
   --field air \
   --security-label INTERNAL
 
-# 소규모 청킹 (짧은 문서)
-defense-llm index docs/quick_ref.txt \
-  --doc-id DOC-REF-001 \
+# PDF 색인 (텍스트 레이어 자동 추출)
+defense-llm index docs/technical_spec.pdf \
+  --doc-id DOC-SPEC-001 \
+  --field air \
+  --security-label RESTRICTED
+
+# 스캔 PDF 색인 (한국어 OCR)
+defense-llm index docs/scanned_manual.pdf \
+  --doc-id DOC-SCAN-001 \
   --field weapon \
-  --max-tokens 128 --overlap 16
+  --ocr-lang kor+eng
+
+# 이미지 PDF OCR 강제 적용
+defense-llm index docs/image_only.pdf \
+  --doc-id DOC-IMG-001 \
+  --field air \
+  --ocr \
+  --ocr-lang kor
 ```
 
-**출력 예시**
+**출력 예시 (텍스트 레이어 PDF)**
 
 ```
-문서 등록: docs/kf21_manual.txt
-  doc_id=DOC-KF21-001, rev=v2.1, field=air, label=INTERNAL
+문서 등록: docs/technical_spec.pdf
+  doc_id=DOC-SPEC-001, rev=v1.0, field=air, label=INTERNAL
+  PDF 감지: opendataloader_pdf로 텍스트 추출 중…
+  ✓ 텍스트 레이어 PDF → 직접 추출 완료
   ✓ 메타데이터 등록 완료
-  청크 수: 47
-  ✓ 인덱싱 완료 → ./data/index (전체 청크: 47)
+  청크 수: 63
+  ✓ 인덱싱 완료 → ./data/index (전체 청크: 63)
+```
+
+**출력 예시 (이미지 기반 스캔 PDF)**
+
+```
+문서 등록: docs/scanned_manual.pdf
+  doc_id=DOC-SCAN-001, rev=v1.0, field=weapon, label=INTERNAL
+  PDF 감지: opendataloader_pdf로 텍스트 추출 중…
+  ✓ 이미지 기반 PDF → OCR 자동 적용 완료
+  ✓ 메타데이터 등록 완료
+  청크 수: 41
+  ✓ 인덱싱 완료 → ./data/index (전체 청크: 104)
 ```
 
 > **주의**: `--doc-id`와 `--doc-rev` 조합이 이미 등록된 경우 경고가 출력되고 인덱싱은 계속됩니다.
 > 새 버전 문서는 `--doc-rev v2.0` 처럼 다른 버전 번호를 사용하십시오.
+
+> **PDF OCR 제한**: Tesseract는 `eng`(영어) 언어 팩이 기본 설치됩니다.
+> 한국어 OCR을 사용하려면 `tesseract-ocr-kor` 팩을 별도 설치해야 합니다.
+> `tesseract --list-langs` 명령으로 설치된 언어 팩을 확인하십시오.
 
 ---
 
@@ -622,6 +697,26 @@ A. 아래 상황에서 `citations` 가 빈 배열로 반환됩니다.
 - 사용자 허가 등급이 부족하여 관련 문서가 필터링될 때
 - 질의와 유사도가 높은 청크가 없을 때
 - `SECURITY_RESTRICTED` 질의로 보안 거절될 때 (`error: E_AUTH`)
+
+---
+
+**Q. PDF 파일을 색인할 수 있나요?**
+
+A. 네. `defense-llm index` 명령에 `.pdf` 파일을 직접 지정하면 자동으로 처리됩니다.
+텍스트 레이어가 있는 PDF는 Java 기반 `opendataloader_pdf`로 고품질 추출하고,
+스캔 이미지 PDF는 `pytesseract` OCR이 자동으로 적용됩니다.
+
+```bash
+# 자동 감지 (권장)
+defense-llm index docs/manual.pdf --doc-id DOC-001 --field air
+
+# 한국어 스캔 PDF (명시적 OCR)
+defense-llm index docs/scanned.pdf --doc-id DOC-002 --field air --ocr-lang kor+eng
+```
+
+PDF 처리를 위해서는 Java 11+ 가 시스템에 설치되어 있어야 합니다.
+OCR을 사용하려면 추가로 Tesseract와 Poppler가 필요합니다.
+([설치 방법](#22-pdf-ocr-선행-요건-시스템-레벨-설치) 참조)
 
 ---
 

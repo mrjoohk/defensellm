@@ -1,0 +1,57 @@
+{
+  "scenario_id": "SCN-030",
+  "timestamp": "2026-03-26T21:00:00Z",
+  "classification": "CONFIDENTIAL",
+  "threat": {
+    "type": "AIR",
+    "count": 3,
+    "movement": "ADVANCING",
+    "confidence": 0.95,
+    "location": {
+      "mgrs": "RC030000",
+      "lat": "37.60",
+      "lon": "127.10",
+      "alt_m": 120.0,
+      "description": "OPEN 지역 AIR"
+    },
+    "description": "복합 위협 분석 요청 — AIR/OPEN"
+  },
+  "friendly_forces": {
+    "unit_id": "HQ-1CORPS",
+    "unit_type": "COMBINED_ARMS",
+    "strength": "BRIGADE",
+    "location": {
+      "mgrs": "PL300300",
+      "lat": "37.40",
+      "lon": "126.80",
+      "alt_m": 120.0,
+      "description": "여단 지휘소"
+    },
+    "readiness": "READY"
+  },
+  "query": {
+    "intent": "COMPOSITE",
+    "text": "위협 평가, IPB, 행동 방책, ROE 검증을 통합 수행하라. 지형: OPEN.",
+    "roe_level": "WEAPONS_FREE"
+  },
+  "terrain": {
+    "type": "OPEN",
+    "elevation_m": 200,
+    "vegetation": "MODERATE",
+    "urbanization": "MIXED"
+  },
+  "intelligence": {
+    "source_reliability": "B",
+    "credibility": "2",
+    "sitrep": "복합 정보 출처로부터 위협 징후 감지"
+  },
+  "constraints": {
+    "ttl_minutes": 30,
+    "no_strike_zones": []
+  },
+  "metadata": {
+    "source": "HYPOTHETICAL",
+    "exercise_name": "EXERCISE IRON SHIELD 2026",
+    "label": "C-group: COMPOSITE AIR"
+  }
+}

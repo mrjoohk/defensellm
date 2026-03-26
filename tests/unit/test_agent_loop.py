@@ -202,6 +202,226 @@ def test_pipeline_mode_backward_compat(tmp_db, tmp_audit, empty_index):
 
 
 # ---------------------------------------------------------------------------
+# _fallback_web_search internal correctness (mocked DDGS via sys.modules)
+# ---------------------------------------------------------------------------
+
+import sys
+import types
+
+def _make_ddgs_stub(results: list):
+    """Return a context-manager-compatible sys.modules patch for duckduckgo_search."""
+    import contextlib
+
+    @contextlib.contextmanager
+    def _ctx():
+        fake_ddgs_instance = types.SimpleNamespace(text=lambda q, max_results=5: results)
+        fake_module = types.ModuleType("duckduckgo_search")
+        fake_module.DDGS = lambda: fake_ddgs_instance
+        fake_module._instance = fake_ddgs_instance  # for inspection
+        old = sys.modules.get("duckduckgo_search")
+        sys.modules["duckduckgo_search"] = fake_module
+        try:
+            yield fake_module
+        finally:
+            if old is None:
+                sys.modules.pop("duckduckgo_search", None)
+            else:
+                sys.modules["duckduckgo_search"] = old
+    return _ctx()
+
+
+def test_fallback_web_search_chunk_document_called_with_version(tmp_db, tmp_audit):
+    """BUG-1 regression: chunk_document must be called with version=, not doc_rev=."""
+    from defense_llm.rag.indexer import DocumentIndex
+
+    index = DocumentIndex()
+    ex = Executor(
+        llm_adapter=MockLLMAdapter(fixed_response="ground"),
+        index=index, db_path=tmp_db, audit_logger=tmp_audit,
+        online_mode_enabled=True,
+    )
+    fake = [{"href": "https://ex.com/kf21", "title": "KF-21 전투기",
+             "body": "KF-21은 한국형 초음속 전투기입니다."}]
+
+    with _make_ddgs_stub(fake):
+        # BUG-1 fix: must NOT raise TypeError (version= not doc_rev=)
+        results = ex._fallback_web_search({"query": "KF-21 전투기", "top_k": 3})
+
+    assert isinstance(results, list)
+    assert len(results) >= 1, "Web chunk must be indexed and returned"
+
+
+def test_fallback_web_search_source_uri_stored_in_chunk(tmp_db, tmp_audit):
+    """BUG-3 regression: source_uri must be set to the web URL in each chunk."""
+    from defense_llm.rag.indexer import DocumentIndex
+
+    index = DocumentIndex()
+    ex = Executor(
+        llm_adapter=MockLLMAdapter(fixed_response="air"),
+        index=index, db_path=tmp_db, audit_logger=tmp_audit,
+        online_mode_enabled=True,
+    )
+    fake_url = "https://example.com/aircraft"
+    fake = [{"href": fake_url, "title": "항공기",
+             "body": "F-35 전투기는 스텔스 기능을 갖춘 5세대 전투기입니다."}]
+
+    with _make_ddgs_stub(fake):
+        ex._fallback_web_search({"query": "F-35 스텔스", "top_k": 2})
+
+    # Inspect stored chunks via DocumentIndex internal map
+    stored = list(index._chunks.values()) if hasattr(index, "_chunks") else []
+    if stored:
+        uris = [c.source_uri for c in stored]
+        assert fake_url in uris, f"source_uri must equal web URL; got: {uris}"
+
+
+def test_fallback_web_search_top_k_drives_fetch_count(tmp_db, tmp_audit):
+    """BUG-6 regression: DDGS fetch count must be >= top_k (not hardcoded 2)."""
+    import contextlib
+    from defense_llm.rag.indexer import DocumentIndex
+
+    called_with: list = []
+
+    @contextlib.contextmanager
+    def _ctx_spy():
+        def spy_text(q, max_results=5):
+            called_with.append(max_results)
+            return []
+        fake_inst = types.SimpleNamespace(text=spy_text)
+        fake_mod = types.ModuleType("duckduckgo_search")
+        fake_mod.DDGS = lambda: fake_inst
+        old = sys.modules.get("duckduckgo_search")
+        sys.modules["duckduckgo_search"] = fake_mod
+        try:
+            yield
+        finally:
+            if old is None:
+                sys.modules.pop("duckduckgo_search", None)
+            else:
+                sys.modules["duckduckgo_search"] = old
+
+    index = DocumentIndex()
+    ex = Executor(
+        llm_adapter=MockLLMAdapter(fixed_response="sensor"),
+        index=index, db_path=tmp_db, audit_logger=tmp_audit,
+        online_mode_enabled=True,
+    )
+
+    with _ctx_spy():
+        ex._fallback_web_search({"query": "레이더 센서", "top_k": 5})
+
+    assert called_with, "DDGS.text must have been called"
+    assert called_with[0] >= 5, f"max_results should be >= top_k=5, got {called_with[0]}"
+
+
+def test_fallback_web_search_empty_body_skipped(tmp_db, tmp_audit):
+    """Results with missing body or href must be silently skipped → empty list."""
+    from defense_llm.rag.indexer import DocumentIndex
+
+    index = DocumentIndex()
+    ex = Executor(
+        llm_adapter=MockLLMAdapter(fixed_response="comm"),
+        index=index, db_path=tmp_db, audit_logger=tmp_audit,
+        online_mode_enabled=True,
+    )
+    bad = [
+        {"href": "", "title": "no url", "body": "some text"},
+        {"href": "https://ok.com", "title": "ok", "body": ""},
+    ]
+
+    with _make_ddgs_stub(bad):
+        results = ex._fallback_web_search({"query": "통신 장비", "top_k": 3})
+
+    assert results == [], "All bad results should be skipped → empty list returned"
+
+
+# ---------------------------------------------------------------------------
+# web_search tool gating
+# ---------------------------------------------------------------------------
+
+def test_web_search_blocked_when_online_mode_disabled(tmp_db, tmp_audit, empty_index):
+    """LLM calls web_search but server has online_mode_enabled=False → E_AUTH in tool result,
+    loop continues and LLM produces a final text answer."""
+    web_tc = [
+        {
+            "id": "w0", "type": "function",
+            "function": {"name": "web_search", "arguments": {"query": "최신 방산 뉴스"}},
+        }
+    ]
+    mock = MockLLMAdapter(
+        fixed_response="온라인 검색이 불가합니다.",
+        tool_call_sequence=[web_tc, None],
+    )
+    # online_mode_enabled defaults to False
+    ex = make_executor(mock, empty_index, tmp_db, tmp_audit)
+    resp = ex.execute([], {"role": "analyst", "clearance": "PUBLIC"}, query="최신 정보 검색")
+
+    assert resp is not None
+    assert mock.call_count == 2
+    # tool_call_log must record the blocked call
+    log = resp.get("tool_call_log", [])
+    assert any(entry["tool_name"] == "web_search" for entry in log)
+    blocked = next(e for e in log if e["tool_name"] == "web_search")
+    assert "E_AUTH" in (blocked.get("error") or "")
+
+
+def test_web_search_absent_from_tool_defs_when_offline(tmp_db, tmp_audit, empty_index):
+    """When online_mode_enabled=False, web_search must NOT appear in the tool
+    definitions injected into the LLM (checked via tools param of MockLLMAdapter)."""
+    injected_tools: list = []
+
+    def capture_fn(messages, **kwargs):
+        tools = kwargs.get("tools") or []
+        injected_tools.extend(tools)
+        return {"content": "답변", "tool_calls": None}
+
+    from defense_llm.serving.mock_llm import MockLLMAdapter as Mock
+    mock = Mock(response_fn=lambda msgs: capture_fn(msgs, tools=[]))
+
+    # Patch chat to capture tools kwarg
+    original_chat = mock.chat
+    def patched_chat(messages, tools=None, **kw):
+        if tools:
+            injected_tools.extend(tools)
+        return original_chat(messages, tools=tools, **kw)
+    mock.chat = patched_chat
+
+    ex = make_executor(mock, empty_index, tmp_db, tmp_audit)
+    ex.execute([], {"role": "analyst", "clearance": "PUBLIC"}, query="test")
+
+    names = [t["function"]["name"] for t in injected_tools if "function" in t]
+    assert "web_search" not in names, f"web_search must not be injected when offline: {names}"
+    assert "search_docs" in names
+
+
+def test_web_search_present_in_tool_defs_when_online(tmp_db, tmp_audit, empty_index):
+    """When online_mode_enabled=True, web_search must appear in tool definitions."""
+    injected_tools: list = []
+
+    original_chat_cls = MockLLMAdapter
+
+    class CaptureMock(original_chat_cls):
+        def chat(self, messages, tools=None, **kw):
+            if tools:
+                injected_tools.extend(tools)
+            return super().chat(messages, tools=tools, **kw)
+
+    mock = CaptureMock(fixed_response="결과")
+    ex = Executor(
+        llm_adapter=mock,
+        index=empty_index,
+        db_path=tmp_db,
+        audit_logger=tmp_audit,
+        agent_mode=True,
+        online_mode_enabled=True,
+    )
+    ex.execute([], {"role": "analyst", "clearance": "PUBLIC"}, query="web test")
+
+    names = [t["function"]["name"] for t in injected_tools if "function" in t]
+    assert "web_search" in names, f"web_search must be injected when online: {names}"
+
+
+# ---------------------------------------------------------------------------
 # Script execution flow (6-turn)
 # ---------------------------------------------------------------------------
 

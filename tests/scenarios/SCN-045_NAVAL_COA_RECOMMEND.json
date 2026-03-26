@@ -1,0 +1,48 @@
+{
+  "scenario_id": "SCN-045",
+  "timestamp": "2026-03-27T04:30:00Z",
+  "classification": "CONFIDENTIAL",
+  "threat": {
+    "type": "NAVAL",
+    "count": 3,
+    "movement": "ADVANCING",
+    "confidence": 0.75,
+    "location": {
+      "mgrs": "TR045222",
+      "lat": "37.57",
+      "lon": "127.07",
+      "alt_m": 120.0,
+      "description": "해안 상륙 시도"
+    },
+    "description": "해안 상륙 시도"
+  },
+  "friendly_forces": {
+    "unit_id": "2MECH-1DIV",
+    "unit_type": "MECHANIZED",
+    "strength": "COMPANY",
+    "location": {
+      "mgrs": "PL500200",
+      "lat": "37.46",
+      "lon": "126.96",
+      "alt_m": 120.0,
+      "description": "기계화 보병 진지"
+    },
+    "readiness": "READY"
+  },
+  "query": {
+    "intent": "COA_RECOMMEND",
+    "text": "COASTAL 지형에서 NAVAL 위협에 대한 행동 방책을 제시하라.",
+    "roe_level": "RETURN_FIRE"
+  },
+  "terrain": {
+    "type": "COASTAL",
+    "elevation_m": 5,
+    "vegetation": "VARIABLE",
+    "urbanization": "RURAL"
+  },
+  "metadata": {
+    "source": "HYPOTHETICAL",
+    "exercise_name": "EXERCISE IRON SHIELD 2026",
+    "label": "E-group: COASTAL NAVAL"
+  }
+}

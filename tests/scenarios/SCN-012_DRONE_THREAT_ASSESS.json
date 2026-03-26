@@ -1,0 +1,48 @@
+{
+  "scenario_id": "SCN-012",
+  "timestamp": "2026-03-26T12:00:00Z",
+  "classification": "CONFIDENTIAL",
+  "threat": {
+    "type": "DRONE",
+    "count": 15,
+    "movement": "FLANKING",
+    "location": {
+      "mgrs": "PL012456",
+      "lat": "37.5",
+      "lon": "127.0",
+      "alt_m": 120.0,
+      "description": "DRONE 위협 지역"
+    },
+    "confidence": 0.8,
+    "description": "DRONE 위협 15개 탐지"
+  },
+  "friendly_forces": {
+    "unit_id": "1BN-3REGT",
+    "unit_type": "MECHANIZED",
+    "strength": "COMPANY",
+    "location": {
+      "mgrs": "PL099111",
+      "lat": "37.48",
+      "lon": "126.98",
+      "alt_m": 120.0,
+      "description": "아군 진지"
+    },
+    "readiness": "READY"
+  },
+  "query": {
+    "intent": "THREAT_ASSESS",
+    "text": "현재 DRONE 위협에 대한 위협 수준을 평가하고 권고 행동을 제시하라.",
+    "roe_level": "RETURN_FIRE"
+  },
+  "terrain": {
+    "type": "OPEN",
+    "elevation_m": 120,
+    "vegetation": "SPARSE",
+    "urbanization": "RURAL"
+  },
+  "metadata": {
+    "source": "HYPOTHETICAL",
+    "exercise_name": "EXERCISE IRON SHIELD 2026",
+    "label": "A-group: DRONE x RETURN_FIRE"
+  }
+}

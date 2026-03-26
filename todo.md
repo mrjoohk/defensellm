@@ -2,6 +2,48 @@
 
 이 파일은 현재 MVP 구현에서 의도적으로 생략하거나 TODO로 남긴 항목을 정리합니다.
 
+최종 수정: 2026-03-26
+
+---
+
+## 0. P0 — LLM 주도 Tool-Use Agent 루프 (핵심 구조 전환) ⚠️ 신규
+
+> 목표: LLM이 tool_use 커맨드를 생성 → Agent가 도구를 실행 → 결과를 분석하여 다음 단계 결정
+
+현재 구조는 Python 코드가 tool을 하드코딩 실행하며, LLM은 텍스트 생성 역할만 담당.
+목표 구조(ReAct / Agent Loop)로 전환이 필요하다.
+
+### ~~0.1 Tool Schema → LLM 주입~~ ✅ 완료 (2026-03-26 확인)
+- **구현**: `tool_schemas.py::get_tool_definitions_for_llm()` + `executor.py::_run_agent_loop()` line 204에서 `tool_defs` 주입
+- **파일**: `src/defense_llm/agent/executor.py`, `src/defense_llm/agent/tool_schemas.py`
+- **우선순위**: P0 → **완료**
+
+### ~~0.2 tool_call 응답 파싱·라우팅~~ ✅ 완료 (2026-03-26 확인)
+- **구현**: `executor.py::_dispatch_tool()` (line 286~391) — tool_name 기반 라우팅, PermissionError/Exception 핸들링 포함
+- **파일**: `src/defense_llm/agent/executor.py`
+- **우선순위**: P0 → **완료**
+
+### ~~0.3 Agent 루프 (Observe→Think→Act)~~ ✅ 완료 (2026-03-26 확인)
+- **구현**: `executor.py::_run_agent_loop()` (line 175~284); `max_turns=10`, 초과 시 `E_LOOP_LIMIT` + 감사 로그
+- **파일**: `src/defense_llm/agent/executor.py`
+- **우선순위**: P0 → **완료**
+
+### ~~0.4 MockLLM tool_call 시뮬레이션~~ ✅ 완료 (2026-03-26 확인)
+- **구현**: `mock_llm.py::tool_call_sequence` — 턴별 tool_call JSON 또는 None 반환, `response_fn` dict 반환도 지원
+- **테스트**: `tests/unit/test_mock_llm_tool_calls.py` 6케이스 통과
+- **파일**: `src/defense_llm/serving/mock_llm.py`
+- **우선순위**: P0 → **완료**
+
+### ~~0.5 Tool 결과 LLM 재전달 포맷~~ ✅ 완료 (2026-03-26 확인)
+- **구현**: `executor.py` line 266~272: `{"role":"tool","tool_call_id":"...","content":"..."}` 형식으로 messages에 append
+- **파일**: `src/defense_llm/agent/executor.py`
+- **우선순위**: P0 → **완료**
+
+### 0.6 보안 검증 게이트
+- **TODO**: tool_call dispatch 직전 `_security_gate()` 삽입 (RBAC 재활성화 연계)
+- **파일**: `src/defense_llm/agent/executor.py`
+- **우선순위**: P3 (테스트 단계 — 인증/보안 영역 비활성화 기간 동안 후순위)
+
 ---
 
 ## 1. 구현 미완성 항목 (기능 동작 가능하나 MVP 수준)
@@ -24,34 +66,58 @@
 - `DocumentIndex`에 embedder 주입 지원, L2-정규화 numpy cosine 유사도 사용
 - **우선순위**: P0 → **완료**
 
-### 1.4 PDF 파싱 미구현
-- **현재**: 텍스트 파일만 처리
-- **TODO**: PyMuPDF(`fitz`) 또는 `pdfplumber`를 이용한 PDF 청킹 지원
-- **파일**: `src/defense_llm/rag/chunker.py` 또는 별도 `src/defense_llm/rag/pdf_parser.py`
-- **우선순위**: P1
+### ~~1.4 PDF 파싱 미구현~~ ✅ 완료 (2026-03-25)
+- **구현**: `src/defense_llm/rag/pdf_parser.py` (UF-025)
+  - `opendataloader_pdf` (Java 내장 JAR) — 텍스트 레이어 PDF 고품질 추출
+  - `pytesseract` + `pdf2image` — 이미지 기반(스캔) PDF OCR 폴백
+  - 평균 50자/페이지 미만 시 OCR 자동 전환, `--ocr` / `--ocr-lang` CLI 옵션
+  - 단위 테스트 18/18 통과
+- **선행 요건**: Java 11+, Tesseract, Poppler (시스템 설치 필요)
+- **우선순위**: P1 → **완료**
 
 ### 1.5 FastAPI 엔드포인트 미구현
 - **현재**: 직접 파이썬 API만 있고 HTTP 엔드포인트 없음
 - **TODO**: `src/defense_llm/api/` 모듈 추가 (FastAPI 라우터, OpenAPI 스펙)
 - **우선순위**: P1
 
+### 1.6 LLM Intent 분류기 미구현 ⚠️ 신규
+- **현재**: `agent/planner_rules/classifier.py` — regex 패턴에만 의존 (도메인 신조어·문맥적 의도 구분 불가, MIXED_QUERY 과다 발생)
+- **TODO**: LLM에 분류를 위임하고 실패 시 regex fallback 구조로 전환
+- **파일**: `src/defense_llm/agent/planner_rules/classifier.py`
+- **우선순위**: P1
+
 ---
 
 ## 2. 보안 관련 미결 항목
 
-### 2.1 ABAC 정책 파일 외부화 미완성
+> **[테스트 단계 방침]** 인증/보안 영역 기능은 현재 비활성화 상태를 유지한다.
+> - RBAC 체크: `executor.py` lines 308–316, 422–428 — 주석 처리됨 (의도적)
+> - JWT 인증: `JWTAuthManager` 구현 완료되었으나 파이프라인 미연동 (의도적)
+> - 아래 항목들은 테스트 완료 후 재활성화 예정 → 모두 P3(후순위)
+
+### 2.1 RBAC 재활성화 (테스트 완료 후)
+- **현재**: `executor.py` `search_docs` 처리 시 `check_access()` 호출 주석 처리됨
+- **상태**: JWT(`security/auth.py`) 완료, executor 연동만 남음
+- **TODO**:
+  1. CLI `query` / FastAPI에서 JWT 토큰 추출 → `extract_user_context()` 호출
+  2. `executor.py` RBAC 주석 해제 (`check_access()` 호출 복원)
+  3. `_security_gate()` 구현(항목 0.6)과 연계
+- **파일**: `src/defense_llm/agent/executor.py`, `src/defense_llm/security/auth.py`, `src/defense_llm/cli.py`
+- **우선순위**: P3 (테스트 단계 종료 후 재활성화)
+
+### 2.2 ABAC 정책 파일 외부화 미완성
 - **현재**: `security/rbac.py`의 `_ROLE_FIELD_PERMISSIONS`이 코드에 하드코딩
 - **TODO**: YAML/JSON 정책 파일로 외부화하여 운영 시 코드 변경 없이 정책 수정 가능하도록
 - **파일**: `src/defense_llm/security/policy.yaml` 추가 + 로더 구현
-- **우선순위**: P1
+- **우선순위**: P3 (테스트 단계 — RBAC 재활성화 후 진행)
 
-### 2.2 출력 마스킹 패턴 확장 필요
+### 2.3 출력 마스킹 패턴 확장 필요
 - **현재**: 좌표, 주파수, sys_id 3가지 패턴
 - **TODO**: 실제 운용 시 도메인 전문가와 협의하여 추가 마스킹 패턴 정의
 - **파일**: `src/defense_llm/security/masking.py`의 `_MASK_RULES`
-- **우선순위**: P2
+- **우선순위**: P3
 
-### ~~2.3 사용자 인증/세션 관리 미구현~~ ✅ 완료
+### ~~2.4 사용자 인증/세션 관리 미구현~~ ✅ 완료
 - **구현**: `src/defense_llm/security/auth.py` — `JWTAuthManager`(HS256) + `extract_user_context()`
 - 환경변수 `DEFENSE_LLM_JWT_SECRET` 지원, RBAC 연동 검증
 - **우선순위**: P0 → **완료**
@@ -150,8 +216,15 @@
 | ~~인덱스 영속성 구현~~ | ~~P0~~ | ✅ 완료 (`DocumentIndex.save/load`) |
 | ~~사용자 인증/세션~~ | ~~P0~~ | ✅ 완료 (`security/auth.py`) |
 | ~~vLLM 어댑터 구현~~ | ~~P0~~ | ✅ 완료 (`serving/qwen_adapter.py`) |
+| ~~PDF 파싱 + OCR~~ | ~~P1~~ | ✅ 완료 (`rag/pdf_parser.py`) — 2026-03-25 |
+| ~~LLM Tool-Use Agent 루프 (0.1~0.5)~~ | ~~P0~~ | ✅ 완료 (2026-03-26 구현 확인) |
 | FAISS 인덱스 교체 | P1 | 성능 요구 시 |
+| LLM Intent 분류기 (1.6) | P1 | Agent 루프 전환 후 |
 | FastAPI 엔드포인트 | P1 | HTTP API 필요 시 |
 | Postgres 전환 | P1 | 운영 규모 확대 시 |
-| 출력 마스킹 패턴 확장 | P2 | 도메인 전문가 협의 후 |
 | KG 연동 | P2 | 고급 추론 필요 시 |
+| Docker 배포 | P2 | 운영 환경 구성 시 |
+| RBAC 재활성화 (2.1) | P3 | 테스트 단계 종료 후 |
+| ABAC 정책 외부화 (2.2) | P3 | RBAC 재활성화 후 |
+| 출력 마스킹 패턴 확장 (2.3) | P3 | 도메인 전문가 협의 후 |
+| 보안 검증 게이트 (0.6) | P3 | 테스트 단계 종료 후 |

@@ -1,0 +1,47 @@
+{
+  "scenario_id": "SCN-047",
+  "timestamp": "2026-03-27T05:30:00Z",
+  "classification": "CONFIDENTIAL",
+  "threat": {
+    "type": "MIXED",
+    "count": 30,
+    "movement": "UNKNOWN",
+    "confidence": 0.2,
+    "location": {
+      "mgrs": "LO047000",
+      "lat": "37.50",
+      "lon": "127.00",
+      "alt_m": 120.0,
+      "description": "불확실 위협 지역"
+    },
+    "description": "낮은 신뢰도 — 위협 존재 여부 불확실"
+  },
+  "friendly_forces": {
+    "unit_id": "RECON-1",
+    "unit_type": "RECONNAISSANCE",
+    "strength": "PLATOON",
+    "location": {
+      "mgrs": "PL047001",
+      "lat": "37.49",
+      "lon": "126.99",
+      "alt_m": 120.0,
+      "description": "정찰대 위치"
+    },
+    "readiness": "READY"
+  },
+  "query": {
+    "intent": "INTEL_REQUEST",
+    "text": "위협 실체 확인을 위한 정보 수집 우선순위를 제시하라.",
+    "roe_level": "HOLD"
+  },
+  "intelligence": {
+    "source_reliability": "F",
+    "credibility": "6",
+    "sitrep": "미확인 열상 감지 — 출처 불명"
+  },
+  "metadata": {
+    "source": "HYPOTHETICAL",
+    "exercise_name": "EXERCISE IRON SHIELD 2026",
+    "label": "F-edge: low_confidence"
+  }
+}

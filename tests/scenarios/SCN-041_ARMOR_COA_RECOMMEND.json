@@ -1,0 +1,48 @@
+{
+  "scenario_id": "SCN-041",
+  "timestamp": "2026-03-27T02:30:00Z",
+  "classification": "CONFIDENTIAL",
+  "threat": {
+    "type": "ARMOR",
+    "count": 10,
+    "movement": "ADVANCING",
+    "confidence": 0.75,
+    "location": {
+      "mgrs": "TR041222",
+      "lat": "37.57",
+      "lon": "127.07",
+      "alt_m": 120.0,
+      "description": "도심 기갑 침투"
+    },
+    "description": "도심 기갑 침투"
+  },
+  "friendly_forces": {
+    "unit_id": "2MECH-1DIV",
+    "unit_type": "MECHANIZED",
+    "strength": "COMPANY",
+    "location": {
+      "mgrs": "PL500200",
+      "lat": "37.46",
+      "lon": "126.96",
+      "alt_m": 120.0,
+      "description": "기계화 보병 진지"
+    },
+    "readiness": "READY"
+  },
+  "query": {
+    "intent": "COA_RECOMMEND",
+    "text": "URBAN 지형에서 ARMOR 위협에 대한 행동 방책을 제시하라.",
+    "roe_level": "RETURN_FIRE"
+  },
+  "terrain": {
+    "type": "URBAN",
+    "elevation_m": 30,
+    "vegetation": "VARIABLE",
+    "urbanization": "URBAN"
+  },
+  "metadata": {
+    "source": "HYPOTHETICAL",
+    "exercise_name": "EXERCISE IRON SHIELD 2026",
+    "label": "E-group: URBAN ARMOR"
+  }
+}

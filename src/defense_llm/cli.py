@@ -109,6 +109,15 @@ def db_init(db_path: str):
 @click.option("--date", default="", help="문서 날짜")
 @click.option("--language", default="en", help="문서 언어")
 @click.option("--source-uri", default="", help="문서 원본 URI")
+@click.option(
+    "--ocr", "force_ocr", is_flag=True, default=False,
+    help="[PDF 전용] 텍스트 추출을 건너뛰고 항상 OCR을 강제 적용합니다.",
+)
+@click.option(
+    "--ocr-lang", default="eng", show_default=True,
+    help="[PDF 전용] Tesseract OCR 언어 코드 (예: eng, kor, kor+eng). "
+         "한국어 문서는 kor 또는 kor+eng를 사용하십시오.",
+)
 @_DB_OPTION
 @_INDEX_OPTION
 def index_document(
@@ -126,14 +135,24 @@ def index_document(
     date: str,
     language: str,
     source_uri: str,
+    force_ocr: bool,
+    ocr_lang: str,
     db_path: str,
     index_path: str,
 ):
     """문서 파일을 읽어 청킹·인덱싱합니다.
 
     \b
+    지원 파일 형식:
+      .txt / .md  — UTF-8 텍스트 직접 읽기
+      .pdf        — opendataloader_pdf(Java 엔진)로 텍스트 추출,
+                    이미지 기반 PDF는 Tesseract OCR 자동 적용
+
+    \b
     예시:
       defense-llm index docs/manual.txt --doc-id DOC-001 --field air
+      defense-llm index docs/scanned.pdf --doc-id DOC-002 --field air --ocr-lang kor+eng
+      defense-llm index docs/image_only.pdf --doc-id DOC-003 --field air --ocr --ocr-lang kor
     """
     from defense_llm.knowledge.db_schema import init_db
     from defense_llm.knowledge.document_meta import register_document, compute_file_hash
@@ -143,11 +162,33 @@ def index_document(
     _ensure_parent_dir(db_path)
     _ensure_parent_dir(index_path + "/.keep")
 
-    # Read file
+    # Read file — PDF goes through pdf_parser, others are decoded as UTF-8
     content = Path(file_path).read_bytes()
-    text = content.decode("utf-8", errors="replace")
     file_hash = compute_file_hash(content)
     resolved_title = title or Path(file_path).name
+
+    if Path(file_path).suffix.lower() == ".pdf":
+        from defense_llm.rag.pdf_parser import extract_text_from_pdf
+        click.echo(f"  PDF 감지: opendataloader_pdf로 텍스트 추출 중…")
+        try:
+            text = extract_text_from_pdf(
+                file_path,
+                force_ocr=force_ocr,
+                language=ocr_lang,
+            )
+            # Report whether OCR was applied (heuristic: check for OCR-style markers)
+            from defense_llm.rag.pdf_parser import is_image_based_pdf
+            if force_ocr:
+                click.secho("  ✓ OCR 강제 적용 완료", fg="cyan")
+            elif is_image_based_pdf(file_path):
+                click.secho("  ✓ 이미지 기반 PDF → OCR 자동 적용 완료", fg="cyan")
+            else:
+                click.secho("  ✓ 텍스트 레이어 PDF → 직접 추출 완료", fg="green")
+        except RuntimeError as e:
+            click.secho(f"  ✗ PDF 추출 실패: {e}", fg="red", err=True)
+            sys.exit(1)
+    else:
+        text = content.decode("utf-8", errors="replace")
 
     click.echo(f"문서 등록: {file_path}")
     click.echo(f"  doc_id={doc_id}, rev={doc_rev}, field={field}, label={security_label}")
